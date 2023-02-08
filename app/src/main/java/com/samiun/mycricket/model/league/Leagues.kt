@@ -1,8 +1,14 @@
 package com.samiun.mycricket.model.league
 
-data class Data(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.samiun.mycricket.utils.Constants
+
+@Entity(tableName = Constants.databaseName)
+data class Leagues(
     val code: String,
     val country_id: Int,
+    @PrimaryKey
     val id: Int,
     val image_path: String,
     val name: String,
