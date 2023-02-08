@@ -7,7 +7,33 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.samiun.mycricket.HomeFragment"
+        android:name="com.samiun.mycricket.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.samiun.mycricket.ui.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFragment"
+        android:name="com.samiun.mycricket.ui.PlayerFragment"
+        android:label="fragment_player"
+        tools:layout="@layout/fragment_player" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.samiun.mycricket.ui.TeamFragment"
+        android:label="fragment_team"
+        tools:layout="@layout/fragment_team" />
 </navigation>

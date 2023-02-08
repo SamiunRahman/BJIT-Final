@@ -1,10 +1,11 @@
-package com.samiun.mycricket
+package com.samiun.mycricket.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.samiun.mycricket.R
 import com.samiun.mycricket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
