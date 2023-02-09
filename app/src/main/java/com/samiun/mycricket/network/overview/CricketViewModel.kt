@@ -9,6 +9,7 @@ import com.samiun.mycricket.data.CricketDatabase
 import com.samiun.mycricket.data.CricketRepository
 import com.samiun.mycricket.model.country.Data
 import com.samiun.mycricket.network.CricketApi
+import com.samiun.mycricket.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 class CricketViewModel(application: Application): AndroidViewModel(application){
@@ -24,9 +25,12 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     fun getCountries(){
         viewModelScope.launch {
             try {
-                Log.d("Overview Fragment", "getCountries: ")
-                _countries.value = CricketApi.retrofitService.getCountries().data
+               // Log.d("Overview Fragment", "getCountries: ")
+                _countries.value = CricketApi.retrofitService.getCountries(Constants.apikey).data
+                countries.value?.let { Log.d("Api", "getCountries: ${it.get(0).name}") }
+
                 countries.value?.let { addCountryList(it) }
+
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()

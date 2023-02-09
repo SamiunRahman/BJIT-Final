@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.samiun.mycricket.utils.Constants
 
-@Entity(tableName = Constants.databaseName)
+@Entity(tableName = "leagues")
 data class Leagues(
     val code: String,
     val country_id: Int,

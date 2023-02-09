@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.samiun.mycricket.R
 import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -30,6 +31,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewmd
+        viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
+
+        viewModel.getCountries()
     }
 }

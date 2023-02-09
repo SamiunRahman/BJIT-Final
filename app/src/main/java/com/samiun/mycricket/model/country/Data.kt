@@ -4,13 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.samiun.mycricket.utils.Constants
 
-@Entity(tableName = Constants.databaseName)
+@Entity(tableName = "Countries")
 data class Data(
-    val continent_id: Int,
+    val continent_id: Int?,
     @PrimaryKey
-    val id: Int,
-    val image_path: String,
-    val name: String,
-    val resource: String,
-    val updated_at: String
+    val id: Int?,
+    val image_path: String?,
+    val name: String?,
+    val resource: String?,
+    val updated_at: String?
 )
