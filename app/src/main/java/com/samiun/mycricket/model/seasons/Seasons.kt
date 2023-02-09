@@ -1,5 +1,5 @@
 package com.samiun.mycricket.model.seasons
 
 data class Seasons(
-    val `data`: List<Data>
+    val `data`: List<SeasonEntity>
 )

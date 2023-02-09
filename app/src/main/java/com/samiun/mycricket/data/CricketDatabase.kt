@@ -4,10 +4,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.samiun.mycricket.model.country.Data
+import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.team.TeamEntity
+import com.samiun.mycricket.model.team.Teams
 import com.samiun.mycricket.utils.Constants
 
-@Database(entities = [Data::class, Leagues::class], version = 9, exportSchema = false)
+@Database(entities = [Data::class, Leagues::class,TeamEntity::class, FixtureEntity::class], version =11, exportSchema = false)
 abstract class CricketDatabase: RoomDatabase() {
     abstract fun cricketDao(): CricketDao
 

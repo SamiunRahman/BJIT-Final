@@ -1,16 +1,18 @@
-package com.samiun.mycricket.model.country
+package com.samiun.mycricket.model.team
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.samiun.mycricket.utils.Constants
 
-@Entity(tableName = "Countries")
-data class Data(
-    val continent_id: Int?,
+@Entity(tableName = "teams")
+
+data class TeamEntity(
+    val code: String?,
+    val country_id: Int?,
     @PrimaryKey
     val id: Int?,
     val image_path: String?,
     val name: String?,
+    val national_team: Boolean?,
     val resource: String?,
     val updated_at: String?
 )

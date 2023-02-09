@@ -1,6 +1,10 @@
 package com.samiun.mycricket.model.venue
 
-data class Data(
+import androidx.room.Entity
+
+@Entity(tableName = "leagues")
+
+data class VenueEntity(
     val capacity: Int,
     val city: String,
     val country_id: Int,
