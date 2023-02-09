@@ -13,9 +13,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_item"
             android:layout_width="match_parent"
-            android:padding="4dp"
             android:layout_height="wrap_content"
-            android:clickable="true">
+            android:clickable="true"
+            android:padding="4dp">
 
 
             <TextView
@@ -25,9 +25,9 @@
                 android:padding="5dp"
                 android:textSize="20sp"
 
-                app:layout_constraintBottom_toBottomOf="@+id/home_toss"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/home_toss"
-                app:layout_constraintTop_toTopOf="@+id/home_toss"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Home" />
 
             <ImageView
@@ -45,13 +45,13 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/home_team"
+                app:layout_constraintEnd_toStartOf="@+id/away_toss"
+                app:layout_constraintTop_toTopOf="@+id/away_toss"
                 tools:text="Away" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/away_toss"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
 
@@ -66,9 +66,9 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/home_team"
                 app:layout_constraintStart_toEndOf="@+id/home_team"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/home_team"
                 tools:text="160/6 (18.5)" />
 
             <TextView
@@ -77,10 +77,18 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/away_toss"
                 app:layout_constraintEnd_toStartOf="@+id/away_team"
                 app:layout_constraintTop_toTopOf="@+id/away_team"
                 tools:text="yet to bat" />
+
+            <TextView
+                android:id="@+id/match_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/home_toss"
+                app:layout_constraintTop_toBottomOf="@+id/away_toss" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

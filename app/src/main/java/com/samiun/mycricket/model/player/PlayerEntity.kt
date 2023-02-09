@@ -1,6 +1,11 @@
 package com.samiun.mycricket.model.player
 
-data class Data(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "leagues")
+
+data class PlayerEntity(
     val battingstyle: String,
     val bowlingstyle: String,
     val country_id: Int,
@@ -8,6 +13,7 @@ data class Data(
     val firstname: String,
     val fullname: String,
     val gender: String,
+    @PrimaryKey
     val id: Int,
     val image_path: String,
     val lastname: String,

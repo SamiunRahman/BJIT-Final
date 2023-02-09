@@ -1,7 +1,13 @@
 package com.samiun.mycricket.model.seasons
 
-data class Data(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "leagues")
+
+data class SeasonEntity(
     val code: String,
+    @PrimaryKey
     val id: Int,
     val league_id: Int,
     val name: String,

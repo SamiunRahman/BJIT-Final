@@ -1,5 +1,5 @@
 package com.samiun.mycricket.model.player
 
 data class Player(
-    val `data`: List<Data>
+    val `data`: List<PlayerEntity>
 )
