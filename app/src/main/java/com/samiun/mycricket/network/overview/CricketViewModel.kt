@@ -10,6 +10,8 @@ import com.samiun.mycricket.data.CricketRepository
 import com.samiun.mycricket.model.country.Data
 import com.samiun.mycricket.model.fixture.Fixture
 import com.samiun.mycricket.model.fixture.FixtureEntity
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.CricketApi
@@ -22,10 +24,13 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val countries: LiveData<List<Data>> = _countries
 
     private val _leagues = MutableLiveData<List<Leagues>>()
-    private val leagues: LiveData<List<Leagues>> = _leagues
+    private val leagues: LiveData<List<Leagues>> get() = _leagues
 
     private val _fixture = MutableLiveData<List<FixtureEntity>>()
-    private val fixture: LiveData<List<FixtureEntity>> = _fixture
+    private val fixture: LiveData<List<FixtureEntity>> get() = _fixture
+
+    private val _fixturewithrun = MutableLiveData<List<FixtureWithRunEntity>>()
+    private val fixturewithrun: LiveData<List<FixtureWithRunEntity>> get()  = _fixturewithrun
 
     private val _team = MutableLiveData<List<TeamEntity>>()
     private val team: LiveData<List<TeamEntity>> = _team
@@ -34,11 +39,13 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val repository: CricketRepository
 
     val readFixtureEntity :LiveData<List<FixtureEntity>>
+    val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>>
 
     init{
         val cricketDao = CricketDatabase.getDatabase(application).cricketDao()
         repository = CricketRepository(cricketDao)
         readFixtureEntity = repository.readFixtureEntity
+        readFixtureWithRunEntity = repository.readFixtureWithRunEntity
         //readTeam = repository.readTeam(id)
     }
 
@@ -110,10 +117,19 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         }
     }
 
+
+
     private fun addFixtureList(fixture: List<FixtureEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addFixtures(fixture)
             Log.d("FIXTURE", "FIXTURE: ${fixture.get(0).elected}")
+        }
+    }
+
+    private fun addFixtureWithRun(fixtureWithRunEntity: List<FixtureWithRunEntity>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addFixturesWithRun(fixtureWithRunEntity)
+            Log.d("FIXTURE With Run", "FIXTURE With Run: ${fixtureWithRunEntity.get(0)}")
         }
     }
 
@@ -137,6 +153,78 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private fun addTeam(teams: List<TeamEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTeams(teams)
+        }
+    }
+
+    fun getFixtureWithRun(fixtureID: Int): LiveData<List<FixtureWithRunEntity>> {
+/*        viewModelScope.launch {
+            try {
+                Log.d("Fixture with Run", "Fixtuer: $fixtureID")
+                _fixturewithrun.value = CricketApi.retrofitService.getFixturewithRun(fixtureID, Constants.api_token, "runs").data
+                fixturewithrun.value?.let {
+                    Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
+                }
+                //fixturewithrun.value?.let { addFixtureWithRun(it) }
+
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.d("Overview Fragment excaption","$e")
+            }
+        }
+        return fixturewithrun.value*/
+
+        viewModelScope.launch {
+            try {
+                Log.d("Fixture with Run", "Fixtuer: $fixtureID")
+                _fixturewithrun.value = CricketApi.retrofitService.getFixturewithRun(fixtureID, Constants.api_token, "runs").data
+                fixturewithrun.value?.let {
+                   // Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
+                }
+                //fixturewithrun.value?.let { addFixtureWithRun(it) }
+
+            } catch (e: java.lang.Exception) {
+                _fixturewithrun.value = listOf()
+                Log.d("Overview Fragment exception", "$e")
+            }
+        }
+        return fixturewithrun
+
+    }
+
+/*    fun getLocalTeamById(id: Int) {
+        viewModelScope.launch(Dispatchers.Main) {
+            try {
+                localTeam = CricketApi.retrofitService.getTeamById(id).data
+            } catch (e: Exception) {
+                localTeam = null
+                Log.d(TAG, "getTeamById: $e")
+            }
+        }
+    }
+
+    private fun addFixtureWithRun(fixtureWithRunEntities: List<FixtureWithRunEntity>) {
+        viewModelScope.launch{
+            try {
+
+            }
+        }
+    }*/
+
+    fun getFixturesWithRun(){
+        viewModelScope.launch {
+            try {
+                Log.d("Overview Fragment with runs", "Fixtue: ")
+                _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun().data
+                fixturewithrun.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
+
+                fixturewithrun.value?.let { addFixtureWithRun(it) }
+
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.d("Overview Fragment excaption","$e")
+            }
         }
     }
 }

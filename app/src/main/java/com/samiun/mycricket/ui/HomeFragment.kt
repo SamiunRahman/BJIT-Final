@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.RecentMatchAdapter
+import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -50,16 +50,25 @@ class HomeFragment : Fragment() {
         viewModel.getLeagues()
         viewModel.getFixtures()
         viewModel.getTeams()
+        viewModel.getFixturesWithRun()
 
 
-        viewModel.readFixtureEntity.observe(viewLifecycleOwner){
+        viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
-            recentRecyclerView.adapter = RecentMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
+            recentRecyclerView.adapter = RecentMatchAdapter(requireContext(), viewModel, viewModel.readFixtureWithRunEntity.value!!)
         }
         binding.swipeToRefresh.setOnRefreshListener {
             //getTypeArticles(type)
             binding.swipeToRefresh.isRefreshing = false
+        }
+
+
+        upcomingRecyclerView = binding.upcomingMatchesRv
+        viewModel.readFixtureEntity.observe(viewLifecycleOwner){
+            val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
+            recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
+            upcomingRecyclerView.adapter = UpcomingMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
         }
     }
 
