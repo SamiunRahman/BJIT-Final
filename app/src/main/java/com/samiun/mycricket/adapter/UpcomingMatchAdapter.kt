@@ -27,6 +27,7 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
         val homescore = itemView.home_team_score
         val awayscore = itemView.away_team_score
 
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingMatchViewHolder {

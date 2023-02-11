@@ -38,7 +38,7 @@
                         android:id="@+id/live_matches_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#B71C1C"
+                        android:background="@color/colorPrimary"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:padding="4dp"
@@ -58,7 +58,7 @@
                         android:clipToPadding="false"
                         android:padding="6dp"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-
+                        tools:visibility="gone"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/live_matches_tv"
@@ -66,6 +66,18 @@
                         tools:itemCount="2"
                         tools:listitem="@layout/match_list" />
 
+                    <TextView
+                        android:id="@+id/no_live_matches"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:padding="6dp"
+                        android:visibility="gone"
+                        android:background="@color/white"
+                        android:text="No Live Matches Available!"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/live_matches_tv" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,7 +103,7 @@
                         android:id="@+id/recent_matches_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#B71C1C"
+                        android:background="@color/colorPrimary"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:padding="4dp"
@@ -138,7 +150,7 @@
                         android:id="@+id/upcoming_matches_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#B71C1C"
+                        android:background="@color/colorPrimary"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:padding="4dp"
@@ -160,6 +172,7 @@
                         app:spanCount="1"
                         tools:itemCount="20"
                         tools:listitem="@layout/match_list" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

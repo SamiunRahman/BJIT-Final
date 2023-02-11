@@ -3,6 +3,7 @@ package com.samiun.mycricket.network
 import com.samiun.mycricket.model.country.Country
 import com.samiun.mycricket.model.fixture.Fixture
 import com.samiun.mycricket.model.fixture.FixtureEntity
+import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetails
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
 import com.samiun.mycricket.model.team.Teams
@@ -67,6 +68,13 @@ interface CricketApiService{
         @Query("api_token") apiToken: String,
         @Query("include") runs: String
     ): FixtureWithRun
+
+    @GET("fixtures")
+    suspend fun getMatchDetails(
+        @Query("fixture_id") fixture_id: Int,
+        @Query("api_token") apiToken: String,
+        @Query("include") details: String
+    ): FixtureWithDetails
 
 }
 

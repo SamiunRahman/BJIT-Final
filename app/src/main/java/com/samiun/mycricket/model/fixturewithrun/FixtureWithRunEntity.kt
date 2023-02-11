@@ -1,10 +1,11 @@
 package com.samiun.mycricket.model.fixturewithrun
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
+import android.os.Parcelable
+import androidx.room.*
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
+@Parcelize
 @Entity(tableName = "Fixturerun")
 data class FixtureWithRunEntity(
     var draw_noresult: String?,
@@ -14,11 +15,11 @@ data class FixtureWithRunEntity(
     @PrimaryKey
     var id: Int?,
     @Ignore
-    var last_period: Any?,
+    var last_period:@RawValue Any?,
     var league_id: Int?,
     var live: Boolean?,
     @Ignore
-    var localteam_dl_data: LocalteamDlData?,
+    var localteam_dl_data: @RawValue LocalteamDlData?,
     var localteam_id: Int?,
     var man_of_match_id: Int?,
     var man_of_series_id: Int?,
@@ -29,7 +30,7 @@ data class FixtureWithRunEntity(
     var rpc_overs: String?,
     var rpc_target: String?,
     @TypeConverters
-    var runs: List<Run>?,
+    var runs:@RawValue List<Run>?,
     var season_id: Int?,
     var second_umpire_id: Int?,
     var stage_id: Int?,
@@ -42,12 +43,12 @@ data class FixtureWithRunEntity(
     var type: String?,
     var venue_id: Int?,
     @Ignore
-    var visitorteam_dl_data: VisitorteamDlData?,
+    var visitorteam_dl_data: @RawValue VisitorteamDlData?,
     var visitorteam_id: Int?,
     @Ignore
-    var weather_report: List<Any>?,
+    var weather_report:@RawValue List<Any>?,
     var winner_team_id: Int?
-){
+) : Parcelable {
     constructor():this(
         null,
         null,
