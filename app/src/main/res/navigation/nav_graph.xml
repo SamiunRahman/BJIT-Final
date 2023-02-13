@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_detailsFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
+        <argument
+            android:name="fixturewithrun"
+            app:argType="com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity" />
     </fragment>
     <fragment
         android:id="@+id/playerFragment"

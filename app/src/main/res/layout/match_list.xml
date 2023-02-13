@@ -6,6 +6,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         app:cardElevation="5dp"
         android:layout_margin="3dp"
         app:cardCornerRadius="5dp">
