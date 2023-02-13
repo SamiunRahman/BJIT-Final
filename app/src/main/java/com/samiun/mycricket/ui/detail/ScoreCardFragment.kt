@@ -48,7 +48,6 @@ class ScoreCardFragment : Fragment() {
         val bowlingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
         val battingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
         val bowlingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
-
         var battingFirstId: Int
         val bowlingFirstId : Int
         if((data.localteam_id==data.toss_won_team_id && data.elected =="batting")||(data.visitorteam_id==data.toss_won_team_id && data.elected =="bowling")){
@@ -95,10 +94,6 @@ class ScoreCardFragment : Fragment() {
                 }
             }
         }
-
-
-binding.scoreCardFragmenttv.text = battingScore
-
 
 
     }
