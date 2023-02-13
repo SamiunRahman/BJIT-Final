@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.samiun.mycricket.ScoreCardFragmentArgs
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.model.fixturewithdetails.Batting
+import com.samiun.mycricket.model.fixturewithdetails.Bowling
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import kotlinx.coroutines.GlobalScope
@@ -45,6 +46,8 @@ class ScoreCardFragment : Fragment() {
         val bowling = data.bowling
         val battingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
         val bowlingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
+        val battingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
+        val bowlingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
 
         var battingFirstId: Int
         val bowlingFirstId : Int
@@ -63,18 +66,16 @@ class ScoreCardFragment : Fragment() {
             bowlingFirstTeam= viewModel.findTeamById(bowlingFirstId)
 
         }
-
-
-
-
         for(i in lineup!!){
             for(j in batting!!){
                 if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}\n"
+                    battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}  batting  First\n"
                     battingFirstBatting.add(j)
                 }
                 else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
                     bowlingFirstBatting.add(j)
+                    battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}  Bowling  First\n"
+
 
                 }
             }
@@ -83,8 +84,14 @@ class ScoreCardFragment : Fragment() {
 
         for(i in lineup!!){
             for(j in bowling!!){
-                if(j.player_id == i.id ){
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.runs} in ${j.overs}\n"
+                if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
+                    battingScore+=i.firstname+" "+i.lastname+" ${j.runs} in ${j.overs} batting First\n"
+                    battingFirstBowling.add(j)
+                }
+                else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
+                    battingScore+=i.firstname+" "+i.lastname+" ${j.runs} in ${j.overs} Bowling First\n"
+                    bowlingFirstBowling.add(j)
+
                 }
             }
         }
