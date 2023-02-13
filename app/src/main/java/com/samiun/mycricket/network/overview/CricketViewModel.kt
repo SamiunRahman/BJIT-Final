@@ -8,10 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.samiun.mycricket.data.CricketDatabase
 import com.samiun.mycricket.data.CricketRepository
 import com.samiun.mycricket.model.country.Data
-import com.samiun.mycricket.model.fixture.Fixture
 import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
-import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.team.TeamEntity
@@ -19,6 +17,7 @@ import com.samiun.mycricket.network.CricketApi
 import com.samiun.mycricket.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 class CricketViewModel(application: Application): AndroidViewModel(application){
 
     private val _countries = MutableLiveData<List<Data>>()
@@ -33,8 +32,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val _fixturewithrun = MutableLiveData<List<FixtureWithRunEntity>>()
     private val fixturewithrun: LiveData<List<FixtureWithRunEntity>> get()  = _fixturewithrun
 
-    private val _fixturewithDetails = MutableLiveData<FixtureWithDetailsData>()
-    private val fixturewithDetails: LiveData<FixtureWithDetailsData> get()  = _fixturewithDetails
+    private val _fixturewithDetails = MutableLiveData<FixtureWithDetailsData?>()
+    private val fixturewithDetails: LiveData<FixtureWithDetailsData?> get()  = _fixturewithDetails
+
 
     private val _team = MutableLiveData<List<TeamEntity>>()
     private val team: LiveData<List<TeamEntity>> = _team
@@ -181,23 +181,25 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     }
 
 
-    fun getDetailsByMatch(fixtureID: Int): LiveData<List<FixtureWithRunEntity>> {
+    fun getDetailsByMatch(fixtureID: Int): LiveData<FixtureWithDetailsData?> {
 
         viewModelScope.launch {
             try {
                 Log.d("Fixture with Run", "Fixtuer: $fixtureID")
-                _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID, Constants.api_token, "batting,bowling,lineup,balls").data
+//                _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID, Constants.api_token, "batting,bowling,lineup,balls").data
+                _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
+
                 fixturewithDetails.value?.let {
-                    // Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
                 }
-                //fixturewithrun.value?.let { addFixtureWithRun(it) }
+                Log.e("get details Api", "${fixturewithrun.value?.get(0)?.runs?.get(0)?.score}")
 
             } catch (e: java.lang.Exception) {
                 _fixturewithrun.value = listOf()
-                Log.d("Overview Fragment exception", "$e")
+                Log.d("Get Details api", "$e")
             }
         }
-        return fixturewithrun
+
+        return fixturewithDetails
 
     }
 

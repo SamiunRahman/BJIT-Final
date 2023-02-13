@@ -1,5 +1,11 @@
 package com.samiun.mycricket.model.fixturewithdetails
 
+import retrofit2.Callback
+
 data class FixtureWithDetails(
-    val `data`: FixtureWithDetailsData
-)
+    var `data`: FixtureWithDetailsData?
+) {
+    fun enqueue(callback: Callback<FixtureWithDetailsData>) {
+
+    }
+}
