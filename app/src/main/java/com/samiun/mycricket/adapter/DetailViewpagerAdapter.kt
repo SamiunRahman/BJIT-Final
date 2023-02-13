@@ -1,40 +1,65 @@
 package com.samiun.mycricket.adapter
 
+import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
+import com.samiun.mycricket.ui.detail.DetailStats
+import com.samiun.mycricket.ui.detail.MatchInforFragment
 import com.samiun.mycricket.ui.detail.ScoreCardFragment
+import com.samiun.mycricket.ui.detail.SummeryFragment
 
 
-class DetailViewpagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager,lifecycle){
+class DetailViewpagerAdapter(
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle,
+    val adapterData: FixtureWithDetailsData
+): FragmentStateAdapter(fragmentManager,lifecycle){
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
     override fun createFragment(position: Int): Fragment {
+        val args = Bundle()
+        Log.e("Get Details", "adapter: ${adapterData?.lineup?.size}")
 
         when(position){
             0->{
-              return ScoreCardFragment()
-
+                val fragment = MatchInforFragment()
+                fragment.arguments = Bundle().apply {
+                    putParcelable("matchdetails",adapterData)
+                }
+                return fragment
             }
             1-> {
-               return ScoreCardFragment()
+                val fragment = SummeryFragment()
+                fragment.arguments = Bundle().apply {
+                    putParcelable("matchdetails",adapterData)
+                }
+                return fragment
+
 
             }
             2->{
-                return ScoreCardFragment()
+                val fragment = ScoreCardFragment()
+                //args.putParcelable("matchdetails", adapterData)
+                fragment.arguments = Bundle().apply {
+                    putParcelable("matchdetails",adapterData)
+                }
+                return fragment
+
             }
 
-            3->{
-                return ScoreCardFragment()
-
-            }
 
             else ->{
-                return ScoreCardFragment()
-
+                val fragment = DetailStats()
+                fragment.arguments = Bundle().apply {
+                    putParcelable("matchdetails",adapterData)
+                }
+                return fragment
             }
 
         }

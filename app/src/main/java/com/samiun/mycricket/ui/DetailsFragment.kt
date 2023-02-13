@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,19 +44,35 @@ class DetailsFragment : Fragment() {
         val match = navArgs.fixturewithrun
         val tabLayout = binding.tabLayout
         val viewpager = binding.viewPager
-        val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle)
-        viewpager.adapter = tabAdapter
+//        val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle, detailData)
+//        viewpager.adapter = tabAdapter
 
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
         val id:Int = match.id!!
 
         viewModel.getDetailsByMatch(match.id!!).observe(viewLifecycleOwner){
-            Log.d("Get Details", "onViewCreated: ${it?.lineup?.size}")
             if (it != null) {
-                detailData = it
-                val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle)
+               // detailData = it
+                Log.e("Get Details", "onViewCreated: ${it?.lineup?.size}")
+
+                val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle, it)
                 viewpager.adapter = tabAdapter
-                Toast.makeText(requireContext(), "adapter created", Toast.LENGTH_SHORT).show()
+                TabLayoutMediator(tabLayout, viewpager) { tab, position ->
+                    when (position) {
+                        0 -> {
+                            tab.text = "Info"
+                        }
+                        1 -> {
+                            tab.text = "Summery"
+                        }
+                        2 -> {
+                            tab.text = "Score"
+                        }
+                        else -> {
+                            tab.text = "Statistics"
+                        }
+                    }
+                }.attach()
 
             }
 
@@ -98,24 +112,6 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = "Info"
-                }
-                1 -> {
-                    tab.text = "Live"
-                }
-                2 -> {
-                    tab.text = "Scorecard"
-                }
-                3 -> {
-                    tab.text = "Stats"
-                }
-                else -> {
-                    tab.text = "Points Table"
-                }
-            }
-        }.attach()
+
     }
 }
