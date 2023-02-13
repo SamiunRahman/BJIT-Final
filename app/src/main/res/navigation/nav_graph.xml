@@ -39,4 +39,14 @@
         android:name="com.samiun.mycricket.ui.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" />
+    <fragment
+        android:id="@+id/scoreCardFragment"
+        android:name="com.samiun.mycricket.ScoreCardFragment"
+        android:label="fragment_score_card"
+        tools:layout="@layout/fragment_score_card" />
+    <fragment
+        android:id="@+id/matchInforFragment"
+        android:name="com.samiun.mycricket.MatchInforFragment"
+        android:label="fragment_match_infor"
+        tools:layout="@layout/fragment_match_infor" />
 </navigation>

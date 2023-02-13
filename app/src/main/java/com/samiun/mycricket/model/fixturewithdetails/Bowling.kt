@@ -6,7 +6,7 @@ data class Bowling(
     val id: Int?,
     val medians: Int?,
     val noball: Int?,
-    val overs: Int?,
+    val overs: Double?,
     val player_id: Int?,
     val rate: Double?,
     val resource: String?,

@@ -13,7 +13,7 @@ class Constants {
         //API's
         const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
 
-        const val api_token ="guVnYTODeBOiVdvpzI2TSOy0ypXB1g3UlvYQ2mR7LjbVcEHogg7NAJTDvIAW"
+        const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
         const val COUNTRY_END_POINT = "countries"
         const val LEAGUES_END_POINT ="leagues?$api_token1"
 
