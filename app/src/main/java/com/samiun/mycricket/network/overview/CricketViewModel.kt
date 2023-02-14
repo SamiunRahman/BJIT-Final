@@ -130,10 +130,14 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     }
 
     fun getFixtures(){
+        val startDate = "2023-02-26T00:00:00.000000Z"
+        val endDate = "2023-04-10T00:00:00.000000Z"
         viewModelScope.launch {
             try {
                 Log.d("Overview Fragment", "Fixtue: ")
                 _fixture.value = CricketApi.retrofitService.getFixtures().data
+
+                //_fixture.value = CricketApi.retrofitService.getFixture(startDate,endDate).data
                 fixture.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
 
                 fixture.value?.let { addFixtureList(it) }

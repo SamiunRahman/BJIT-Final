@@ -53,7 +53,7 @@ interface CricketApiService{
     @GET(LEAGUES_END_POINT)
     suspend fun getLeagues(): League
 
-    @GET(FIXTURE_END_POINT)
+    @GET("fixtures?filter[starts_between]=2023-02-26T00:00:00.000000Z,2023-04-10T00:00:00.000000Z&${Constants.api_token1}")
     suspend fun getFixtures(): Fixture
 
     @GET(FIXTURE_WITH_RUN_END_POINT)
@@ -79,11 +79,19 @@ interface CricketApiService{
         @Query("include") runs: String
     ): FixtureWithRun
 
-    //@GET("fixtures/{fixture_id}")
-    @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&api_token=FMRNjV3cC2q6xE31ya2oXBTizo4H1AMoYDXtPWszp62FBn6FMz7UAWXvaWWd")
+
+    @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&${Constants.api_token1}")
     suspend fun getMatchDetails(
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
     ): FixtureWithDetails
+
+    @GET("fixtures?filter[starts_between]={START_DATE},{END_DATE}&${Constants.api_token1}")
+    suspend fun getFixture(
+        @Query(value = "START_DATE", encoded = false) startDate: String,
+        @Query(value = "END_DATE", encoded = false) endDate: String
+
+    ): Fixture
+
 
     @GET("team-rankings?${Constants.api_token1}")
     suspend fun getRanking(): Ranking
