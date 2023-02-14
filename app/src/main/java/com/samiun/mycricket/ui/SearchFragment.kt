@@ -1,4 +1,4 @@
-package com.samiun.mycricket
+package com.samiun.mycricket.ui
 
 import android.os.Bundle
 import android.view.*
@@ -6,9 +6,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.adapter.RecentMatchAdapter
+import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.SearchTeamAdapter
-import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.databinding.FragmentSearchBinding
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel

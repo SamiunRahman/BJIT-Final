@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.samiun.mycricket.SearchFragment"
+        android:name="com.samiun.mycricket.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

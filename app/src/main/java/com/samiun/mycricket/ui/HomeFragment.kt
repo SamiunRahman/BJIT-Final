@@ -16,6 +16,8 @@ import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 
+private lateinit var topviewModel: CricketViewModel
+
 class HomeFragment : Fragment() {
     private lateinit var viewModel: CricketViewModel
 
@@ -44,15 +46,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
+        topviewModel = viewModel
 
         recentRecyclerView = binding.recentMatchesRv
-
+/*
         viewModel.getCountries()
         viewModel.getLeagues()
         viewModel.getFixtures()
         viewModel.getTeams()
         viewModel.getFixturesWithRun()
-        viewModel.getRanking()
+        viewModel.getRanking()*/
 
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
@@ -92,6 +95,14 @@ class HomeFragment : Fragment() {
             }
 
         }
+    }
+    fun getArticlesBackgroud() {
+        topviewModel.getCountries()
+        topviewModel.getLeagues()
+        topviewModel.getFixtures()
+        topviewModel.getTeams()
+        topviewModel.getFixturesWithRun()
+        topviewModel.getRanking()
     }
 
 
