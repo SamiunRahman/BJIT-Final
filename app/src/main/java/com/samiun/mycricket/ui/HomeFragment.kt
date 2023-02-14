@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.RecentMatchAdapter
@@ -59,10 +60,10 @@ class HomeFragment : Fragment() {
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             recentRecyclerView.adapter = RecentMatchAdapter(requireContext(), viewModel, viewModel.readFixtureWithRunEntity.value!!)
         }
-        binding.swipeToRefresh.setOnRefreshListener {
-            //getTypeArticles(type)
-            binding.swipeToRefresh.isRefreshing = false
-        }
+//        binding.swipeToRefresh.setOnRefreshListener {
+//            //getTypeArticles(type)
+//            binding.swipeToRefresh.isRefreshing = false
+//        }
 
         upcomingRecyclerView = binding.upcomingMatchesRv
         viewModel.readFixtureEntity.observe(viewLifecycleOwner){
@@ -79,6 +80,7 @@ class HomeFragment : Fragment() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.ranking_bottom_nav->{
+                    findNavController().navigate(R.id.rankingFragment)
 
                     Toast.makeText(requireContext(), "Ranking Button Clicked", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
