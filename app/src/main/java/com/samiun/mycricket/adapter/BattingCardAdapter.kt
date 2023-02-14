@@ -11,7 +11,7 @@ import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.network.overview.CricketViewModel
 import kotlinx.android.synthetic.main.batting_card.view.*
 
-class BattingCardAdapter(private val context:Context, private val viewModel : CricketViewModel, private var arrayList:List<Batting>, private val lineup:List<Lineup>)
+class BattingCardAdapter(private val context:Context, private val viewModel : CricketViewModel, private var arrayList:MutableList<Batting>, private val lineup:List<Lineup>)
     :RecyclerView.Adapter<BattingCardAdapter.BattingCardViewHolder>(){
         class BattingCardViewHolder(
             binding: View

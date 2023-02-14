@@ -75,6 +75,9 @@
         <action
             android:id="@+id/action_matchInforFragment_to_playerFragment2"
             app:destination="@id/playerFragment" />
+        <argument
+            android:name="matchdetails"
+            app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
     </fragment>
     <fragment
         android:id="@+id/summeryFragment"
@@ -84,10 +87,17 @@
         <action
             android:id="@+id/action_summeryFragment_to_playerFragment"
             app:destination="@id/playerFragment" />
+        <argument
+            android:name="matchdetails"
+            app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
     </fragment>
     <fragment
         android:id="@+id/detailStats"
         android:name="com.samiun.mycricket.DetailStats"
         android:label="fragment_detail_stats"
-        tools:layout="@layout/fragment_detail_stats" />
+        tools:layout="@layout/fragment_detail_stats" >
+        <argument
+            android:name="matchdetails"
+            app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
+    </fragment>
 </navigation>

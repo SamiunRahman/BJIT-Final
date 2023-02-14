@@ -33,6 +33,25 @@ class Constants {
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             return dateFormat.format(time)
         }
+
+        fun dateFormat(inputDate: String): String{
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val outputFormat = SimpleDateFormat("EEE, MMM d")
+
+            val date = inputFormat.parse(inputDate)
+            val outputDate = outputFormat.format(date)
+
+            return outputDate
+        }
+        fun timeFormat(inputDate: String): String{
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val outputFormat = SimpleDateFormat("hh:mm a")
+
+            val date = inputFormat.parse(inputDate)
+            val time = outputFormat.format(date)
+
+            return time
+        }
     }
 
 }

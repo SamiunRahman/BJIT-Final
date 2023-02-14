@@ -45,7 +45,7 @@
                         android:padding="4dp"
                         tools:text= "Bangladesh"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="15dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
                         android:padding="4dp"
                         tools:text= "West Indies"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="15dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,7 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/recent_matches_cv"
+                android:id="@+id/firstbatsum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/recent_matches_tv"
+                        android:id="@+id/battingfirst_sum_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -94,7 +94,7 @@
                         android:gravity=""
                         android:padding="4dp"
                         android:layout_marginTop="5dp"
-                        android:text="Bangladesh Batting"
+                        tools:text="Bangladesh Batting"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -103,12 +103,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/batting"
+                        android:id="@+id/battingRv"
                         android:layout_width="match_parent"
                         android:layout_marginTop="4dp"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/recent_matches_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/battingfirst_sum_tv"
                         app:spanCount="1"
                         tools:itemCount="11"
                         tools:listitem="@layout/batting_card" />
@@ -119,7 +119,7 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/upcoming_matches_cv"
+                android:id="@+id/bowlingcardcv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -127,14 +127,14 @@
                 app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recent_matches_cv">
+                app:layout_constraintTop_toBottomOf="@id/firstbatsum">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/upcoming_matches_tv"
+                        android:id="@+id/bowlingfirst_sum_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -150,11 +150,11 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/bowling_rv"
+                        android:id="@+id/bowlingRv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/upcoming_matches_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/bowlingfirst_sum_tv"
                         app:spanCount="1"
                         tools:itemCount="6"
                         tools:listitem="@layout/batting_card" />

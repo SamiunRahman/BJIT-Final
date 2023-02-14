@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
@@ -52,7 +54,6 @@ class HomeFragment : Fragment() {
         viewModel.getTeams()
         viewModel.getFixturesWithRun()
 
-
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
@@ -63,13 +64,37 @@ class HomeFragment : Fragment() {
             binding.swipeToRefresh.isRefreshing = false
         }
 
-
         upcomingRecyclerView = binding.upcomingMatchesRv
         viewModel.readFixtureEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             upcomingRecyclerView.adapter = UpcomingMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
         }
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home_bottom_nav->{
+
+                    Toast.makeText(requireContext(), "You are on home!", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ranking_bottom_nav->{
+
+                    Toast.makeText(requireContext(), "Ranking Button Clicked", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.search_bottom_nav->{
+                    Toast.makeText(requireContext(), "Search Button Clicked", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                else ->{
+                    Toast.makeText(requireContext(), "More Button Clicked", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+            }
+
+        }
     }
+
 
 }

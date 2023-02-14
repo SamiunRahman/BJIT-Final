@@ -7,20 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.ScoreCardFragmentArgs
+import com.samiun.mycricket.adapter.BattingCardAdapter
+import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.model.fixturewithdetails.Batting
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
+import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
+import kotlinx.android.parcel.RawValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ScoreCardFragment : Fragment() {
 
     val gerArgs: ScoreCardFragmentArgs by navArgs()
     private var _binding: FragmentScoreCardBinding? = null
     private val binding get() = _binding!!
+    private lateinit var battingRV : RecyclerView
+    private lateinit var bowlingRV: RecyclerView
 
 
     override fun onCreateView(
@@ -35,6 +44,11 @@ class ScoreCardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val  viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
+        battingRV = binding.battingRv
+        bowlingRV = binding.bowlingRv
+
+        val battingFirstBtn = binding.battingfirstScoreBtn
+        val bowlingFirstBtn = binding.bowlingfirstScoreBtn
 
 
         val data = gerArgs.matchdetails
@@ -63,6 +77,10 @@ class ScoreCardFragment : Fragment() {
         GlobalScope.launch {
             battingFirstTeam = viewModel.findTeamById(battingFirstId)
             bowlingFirstTeam= viewModel.findTeamById(bowlingFirstId)
+            withContext(Dispatchers.Main){
+                battingFirstBtn.text = battingFirstTeam.code
+                bowlingFirstBtn.text = bowlingFirstTeam.code
+            }
 
         }
         for(i in lineup!!){
@@ -74,8 +92,6 @@ class ScoreCardFragment : Fragment() {
                 else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
                     bowlingFirstBatting.add(j)
                     battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}  Bowling  First\n"
-
-
                 }
             }
         }
@@ -95,7 +111,39 @@ class ScoreCardFragment : Fragment() {
             }
         }
 
+        battingAdapter(viewModel,battingFirstBatting,lineup)
+        bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
+
+        binding.battingfirstScoreBtn.setOnClickListener{
+            battingAdapter(viewModel, battingFirstBatting, lineup)
+            bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
+
+        }
+        binding.bowlingfirstScoreBtn.setOnClickListener {
+            battingAdapter(viewModel,bowlingFirstBatting, lineup)
+            bowlingAdapter(viewModel,battingFirstBowling,lineup)
+
+        }
 
     }
 
+    private fun bowlingAdapter(
+        viewModel: CricketViewModel,
+        bowling: MutableList<Bowling>,
+        lineup: @RawValue List<Lineup>
+    ) {
+        val adapterViewState = bowlingRV.layoutManager?.onSaveInstanceState()
+        bowlingRV.layoutManager?.onRestoreInstanceState(adapterViewState)
+        bowlingRV.adapter = BowlingCardAdapter(requireContext(), viewModel, bowling, lineup)
+    }
+
+    private fun battingAdapter(
+        viewModel: CricketViewModel,
+        batting: MutableList<Batting>,
+        lineup: @RawValue List<Lineup>
+    ) {
+        val adapterViewState = battingRV.layoutManager?.onSaveInstanceState()
+        battingRV.layoutManager?.onRestoreInstanceState(adapterViewState)
+        battingRV.adapter = BattingCardAdapter(requireContext(), viewModel, batting, lineup)
+    }
 }
