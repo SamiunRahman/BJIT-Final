@@ -12,6 +12,7 @@ import com.samiun.mycricket.model.ranking.Team
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import kotlinx.android.synthetic.main.ranking_list.view.*
+import java.util.*
 
 class SearchTeamAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<TeamEntity>)
     : RecyclerView.Adapter<SearchTeamAdapter.SearchTeamViewHolder>(){
@@ -49,4 +50,20 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
         return data.size
 
     }
+
+    fun filter(text: String) {
+        val filteredList = ArrayList<TeamEntity>()
+        for (team in data) {
+            if (team.name?.lowercase(Locale.ROOT)?.contains(text.lowercase(Locale.ROOT)) == true) {
+                filteredList.add(team)
+            }
+        }
+        updateList(filteredList)
+    }
+
+    fun updateList(teamList: List<TeamEntity>) {
+        data = teamList
+        notifyDataSetChanged()
+    }
+
 }
