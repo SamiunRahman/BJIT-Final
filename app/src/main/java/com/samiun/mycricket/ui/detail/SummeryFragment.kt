@@ -5,56 +5,125 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
+import com.samiun.mycricket.ScoreCardFragmentArgs
+import com.samiun.mycricket.SummeryFragmentArgs
+import com.samiun.mycricket.adapter.BattingCardAdapter
+import com.samiun.mycricket.adapter.BowlingCardAdapter
+import com.samiun.mycricket.databinding.FragmentScoreCardBinding
+import com.samiun.mycricket.databinding.FragmentSummeryBinding
+import com.samiun.mycricket.model.fixturewithdetails.Batting
+import com.samiun.mycricket.model.fixturewithdetails.Bowling
+import com.samiun.mycricket.model.fixturewithdetails.Lineup
+import com.samiun.mycricket.model.team.TeamEntity
+import com.samiun.mycricket.network.overview.CricketViewModel
+import kotlinx.android.parcel.RawValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SummeryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SummeryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    val gerArgs: SummeryFragmentArgs by navArgs()
+    private var _binding: FragmentSummeryBinding? = null
+    private val binding get() = _binding!!
+    //private lateinit var battingRV : RecyclerView
+    //private lateinit var bowlingRV: RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_summery, container, false)
+        _binding = FragmentSummeryBinding.inflate(inflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SummeryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SummeryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val  viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
+
+        val data = gerArgs.matchdetails
+
+
+        var battingFirstTeam: TeamEntity
+        var bowlingFirstTeam: TeamEntity
+        val lineup = data.lineup
+        val batting = data.batting
+        val bowling = data.bowling
+        val battingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
+        val bowlingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
+        val battingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
+        val bowlingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
+        var battingFirstId: Int
+        val bowlingFirstId : Int
+        if((data.localteam_id==data.toss_won_team_id && data.elected =="batting")||(data.visitorteam_id==data.toss_won_team_id && data.elected =="bowling")){
+            battingFirstId = data.localteam_id!!
+            bowlingFirstId  = data.visitorteam_id!!
+        }
+        else{
+            bowlingFirstId = data.localteam_id!!
+            battingFirstId  = data.visitorteam_id!!
+        }
+
+
+        GlobalScope.launch {
+            battingFirstTeam = viewModel.findTeamById(battingFirstId)
+            bowlingFirstTeam= viewModel.findTeamById(bowlingFirstId)
+            withContext(Dispatchers.Main){
+                binding.battingfirstSumTv.text = "${battingFirstTeam.name} Batting"
+                binding.bowlingfirstSumTv.text = "${bowlingFirstTeam.name} Bowling"
+                binding.battingsecondSumTv.text = "${bowlingFirstTeam.name} Batting"
+                binding.battingfirstSumTv.text = "${battingFirstTeam.name} Bowling"
+            }
+
+        }
+        for(i in lineup!!){
+            for(j in batting!!){
+                if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
+                    battingFirstBatting.add(j)
+                }
+                else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
+                    bowlingFirstBatting.add(j)
                 }
             }
+        }
+
+        for(i in lineup!!){
+            for(j in bowling!!){
+                if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
+                    battingFirstBowling.add(j)
+                }
+                else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
+                    bowlingFirstBowling.add(j)
+
+                }
+            }
+        }
+
+
+        val battingFirstBattingSummery = battingFirstBatting.sortedWith(compareByDescending<Batting> { it.score }.thenBy { it.ball })
+            .take(3)
+        val bowlingFirstBattingSummery = bowlingFirstBatting.sortedWith(compareByDescending<Batting> { it.score }.thenBy { it.ball })
+            .take(3)
+        val battingFirstBowlingSummery = battingFirstBowling.sortedWith(compareByDescending<Bowling> { it.wickets }.thenBy { it.runs })
+            .take(3)
+        val bowlingFirstBowlingSummery = bowlingFirstBowling.sortedWith(compareByDescending<Bowling> { it.wickets }.thenBy { it.runs })
+            .take(3)
+
+
+        binding.battingfirstSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
+            battingFirstBattingSummery as MutableList<Batting>, lineup)
+        binding.battingsecondSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
+            bowlingFirstBattingSummery as MutableList<Batting>, lineup)
+
+        binding.bowlingfirstSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
+            bowlingFirstBowlingSummery as MutableList<Bowling>, lineup)
+        binding.bowlingsecondSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
+            battingFirstBowlingSummery as MutableList<Bowling>, lineup)
     }
 }

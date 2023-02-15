@@ -12,6 +12,7 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.CricketApi
 import com.samiun.mycricket.utils.Constants
@@ -20,36 +21,37 @@ import kotlinx.coroutines.launch
 
 class CricketViewModel(application: Application): AndroidViewModel(application){
 
+    //For API
     private val _countries = MutableLiveData<List<Data>>()
     private val countries: LiveData<List<Data>> = _countries
-
     private val _leagues = MutableLiveData<List<Leagues>>()
     private val leagues: LiveData<List<Leagues>> get() = _leagues
-
+    private val _ranking = MutableLiveData<List<RankingData>>()
+    private val ranking: LiveData<List<RankingData>> get() = _ranking
     private val _fixture = MutableLiveData<List<FixtureEntity>>()
     private val fixture: LiveData<List<FixtureEntity>> get() = _fixture
-
     private val _fixturewithrun = MutableLiveData<List<FixtureWithRunEntity>>()
     private val fixturewithrun: LiveData<List<FixtureWithRunEntity>> get()  = _fixturewithrun
-
     private val _fixturewithDetails = MutableLiveData<FixtureWithDetailsData?>()
     private val fixturewithDetails: LiveData<FixtureWithDetailsData?> get()  = _fixturewithDetails
-
-
     private val _team = MutableLiveData<List<TeamEntity>>()
     private val team: LiveData<List<TeamEntity>> = _team
+
 
 
     private val repository: CricketRepository
 
     val readFixtureEntity :LiveData<List<FixtureEntity>>
     val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>>
+    val readTeamEntity: LiveData<List<TeamEntity>>
+
 
     init{
         val cricketDao = CricketDatabase.getDatabase(application).cricketDao()
         repository = CricketRepository(cricketDao)
         readFixtureEntity = repository.readFixtureEntity
         readFixtureWithRunEntity = repository.readFixtureWithRunEntity
+        readTeamEntity = repository.readTeamEntity
         //readTeam = repository.readTeam(id)
     }
 
@@ -101,6 +103,29 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private fun addLeagueList(leagues: List<Leagues>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addLeague(leagues)
+        }
+    }
+
+    fun getRanking(){
+        viewModelScope.launch {
+            try {
+                // Log.d("Overview Fragment", "getCountries: ")
+                _ranking.value = CricketApi.retrofitService.getRanking().data
+                ranking.value?.let { Log.d("Api", "getCountries: ${it.get(0).team}") }
+
+                ranking.value?.let { addRanking(it) }
+
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.d("Over View Model","$e")
+            }
+        }
+    }
+
+    private fun addRanking(ranking: List<RankingData>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addRanking(ranking)
         }
     }
 
@@ -202,7 +227,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return fixturewithDetails
 
     }
-
 /*    fun getLocalTeamById(id: Int) {
         viewModelScope.launch(Dispatchers.Main) {
             try {
@@ -238,4 +262,19 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
         }
     }
+
+
+    fun getRanking(gender:String, format:String): LiveData<RankingData> {
+        val result = MutableLiveData<RankingData>()
+        viewModelScope.launch(Dispatchers.IO) {
+           val ranking = repository.getRanking(gender, format)
+            result.postValue(ranking)
+        }
+        return result
+    }
+
+//     fun getRanking(gender:String, format:String): RankingData{
+//        viewModelScope.launch(Dispatchers.IO) {  }
+//        return repository.getRanking(gender, format)
+//    }
 }
