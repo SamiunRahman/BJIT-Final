@@ -8,6 +8,7 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 
 class CricketRepository(private val cricketDao: CricketDao) {
@@ -17,6 +18,7 @@ class CricketRepository(private val cricketDao: CricketDao) {
     }
 
     val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>> = cricketDao.readFixtureWithRun()
+    val readTeamEntity: LiveData<List<TeamEntity>> = cricketDao.readTeamEntity()
 
     suspend fun addFixturesWithRun(fixtureWithRunEntity:List<FixtureWithRunEntity>){
         cricketDao.addFixtureWithRun(fixtureWithRunEntity)
@@ -37,6 +39,15 @@ class CricketRepository(private val cricketDao: CricketDao) {
 
     suspend fun readTeam(id: Int): TeamEntity{
         return cricketDao.readTeamId(id)
+    }
+
+
+    suspend fun addRanking(rankList: List<RankingData>){
+        cricketDao.addRanking(rankList)
+    }
+
+    suspend fun getRanking(gender:String, format:String): RankingData{
+        return cricketDao.getRanking(gender,format)
     }
 
 

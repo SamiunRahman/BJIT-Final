@@ -75,12 +75,6 @@
         android:name="com.samiun.mycricket.MatchInforFragment"
         android:label="fragment_match_infor"
         tools:layout="@layout/fragment_match_infor" >
-        <action
-            android:id="@+id/action_matchInforFragment_to_playerFragment"
-            app:destination="@id/playerFragment" />
-        <action
-            android:id="@+id/action_matchInforFragment_to_playerFragment2"
-            app:destination="@id/playerFragment" />
         <argument
             android:name="matchdetails"
             app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />

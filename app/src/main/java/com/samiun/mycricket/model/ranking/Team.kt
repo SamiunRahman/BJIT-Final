@@ -1,5 +1,7 @@
 package com.samiun.mycricket.model.ranking
 
+import androidx.room.PrimaryKey
+
 data class Team(
     val code: String,
     val country_id: Int,

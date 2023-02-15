@@ -7,6 +7,7 @@ import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetails
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
+import com.samiun.mycricket.model.ranking.Ranking
 import com.samiun.mycricket.model.team.Teams
 import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.Constants.Companion.BASE_URL
@@ -82,12 +83,11 @@ interface CricketApiService{
     @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&api_token=FMRNjV3cC2q6xE31ya2oXBTizo4H1AMoYDXtPWszp62FBn6FMz7UAWXvaWWd")
     suspend fun getMatchDetails(
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
-        /*@Query("fixture_id") fixture_id: Int,
-        @Query("include") details: String,
-        @Query("api_token") apiToken: String*/
+    ): FixtureWithDetails
 
+    @GET("team-rankings?${Constants.api_token1}")
+    suspend fun getRanking(): Ranking
 
-        ): FixtureWithDetails
 
 
 }
