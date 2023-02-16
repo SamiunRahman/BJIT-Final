@@ -105,9 +105,9 @@ interface CricketApiService{
     ): Fixture
 
 
-    @GET(FIXTURE_WITH_RUN_END_POINT)
+    @GET("fixtures?filter[starts_between]=2023-01-01T00:00:00.000000Z,2023-02-16T00:00:00.000000Z&include=runs&${Constants.api_token1}")
     suspend fun getFixtureWithRun(
-        @Query(value = "filter[starts_between]", encoded = false) p1: String
+        //@Query(value = "filter[starts_between]", encoded = false) p1: String
     ): FixtureWithRun
 
 

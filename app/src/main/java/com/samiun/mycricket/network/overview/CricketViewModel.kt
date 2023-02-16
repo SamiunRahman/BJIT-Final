@@ -265,12 +265,12 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
 
     fun getFixturesWithRun(){
-        val startDate = Constants.getTime(-30)//"2023-02-26T00:00:00.000000Z"
+        val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"
         val endDate = Constants.getTime(-100)//"2023-04-10T00:00:00.000000Z"
         viewModelScope.launch {
             try {
                 Log.d("Overview Fragment with runs", "Fixtue: ")
-                _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun("$startDate,$endDate").data
+                _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun().data
                 fixturewithrun.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
 
                 fixturewithrun.value?.let { addFixtureWithRun(it) }
@@ -278,7 +278,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Overview Fragment excaption","$e")
+                Log.e("Overview Fragment excaption","$e")
             }
         }
     }
