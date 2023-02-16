@@ -14,9 +14,12 @@ import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
+import com.samiun.mycricket.model.teamDetails.TeamDetails
+import com.samiun.mycricket.model.teamDetails.TeamDetailsData
 import com.samiun.mycricket.network.CricketApi
 import com.samiun.mycricket.utils.Constants
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CricketViewModel(application: Application): AndroidViewModel(application){
@@ -34,6 +37,12 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val fixturewithrun: LiveData<List<FixtureWithRunEntity>> get()  = _fixturewithrun
     private val _fixturewithDetails = MutableLiveData<FixtureWithDetailsData?>()
     private val fixturewithDetails: LiveData<FixtureWithDetailsData?> get()  = _fixturewithDetails
+
+    private val _teamDetails = MutableLiveData<TeamDetailsData?>()
+    private val teamDetails: LiveData<TeamDetailsData?> get()  = _teamDetails
+
+
+
     private val _team = MutableLiveData<List<TeamEntity>>()
     private val team: LiveData<List<TeamEntity>> = _team
 
@@ -130,15 +139,15 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     }
 
     fun getFixtures(){
-        val startDate = "2023-02-26T00:00:00.000000Z"
-        val endDate = "2023-04-10T00:00:00.000000Z"
+        val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"
+        val endDate = Constants.getTime(30)//"2023-04-10T00:00:00.000000Z"
         viewModelScope.launch {
             try {
                 Log.d("Overview Fragment", "Fixtue: ")
-                _fixture.value = CricketApi.retrofitService.getFixtures().data
+                _fixture.value = CricketApi.retrofitService.getFixtures("$startDate,$endDate").data
 
                 //_fixture.value = CricketApi.retrofitService.getFixture(startDate,endDate).data
-                fixture.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
+                //fixture.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
 
                 fixture.value?.let { addFixtureList(it) }
 
@@ -189,25 +198,25 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         }
     }
 
-    fun getFixtureWithRun(fixtureID: Int): LiveData<List<FixtureWithRunEntity>> {
-
-        viewModelScope.launch {
-            try {
-                Log.d("Fixture with Run", "Fixtuer: $fixtureID")
-                _fixturewithrun.value = CricketApi.retrofitService.getFixturewithRun(fixtureID, Constants.api_token, "runs").data
-                fixturewithrun.value?.let {
-                   // Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
-                }
-                //fixturewithrun.value?.let { addFixtureWithRun(it) }
-
-            } catch (e: java.lang.Exception) {
-                _fixturewithrun.value = listOf()
-                Log.d("Overview Fragment exception", "$e")
-            }
-        }
-        return fixturewithrun
-
-    }
+//    fun getFixtureWithRun(fixtureID: Int): LiveData<List<FixtureWithRunEntity>> {
+//
+//        viewModelScope.launch {
+//            try {
+//                Log.d("Fixture with Run", "Fixtuer: $fixtureID")
+//                _fixturewithrun.value = CricketApi.retrofitService.getFixturewithRun(fixtureID, Constants.api_token, "runs").data
+//                fixturewithrun.value?.let {
+//                   // Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
+//                }
+//                //fixturewithrun.value?.let { addFixtureWithRun(it) }
+//
+//            } catch (e: java.lang.Exception) {
+//                _fixturewithrun.value = listOf()
+//                Log.d("Overview Fragment exception", "$e")
+//            }
+//        }
+//        return fixturewithrun
+//
+//    }
 
 
     fun getDetailsByMatch(fixtureID: Int): LiveData<FixtureWithDetailsData?> {
@@ -215,9 +224,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         viewModelScope.launch {
             try {
                 Log.d("Fixture with Run", "Fixtuer: $fixtureID")
-//                _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID, Constants.api_token, "batting,bowling,lineup,balls").data
                 _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
-
                 fixturewithDetails.value?.let {
                 }
                 Log.e("get details Api", "${fixturewithrun.value?.get(0)?.runs?.get(0)?.score}")
@@ -231,30 +238,39 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return fixturewithDetails
 
     }
-/*    fun getLocalTeamById(id: Int) {
-        viewModelScope.launch(Dispatchers.Main) {
+
+
+    fun getTeamDetails(id: Int): LiveData<TeamDetailsData?> {
+
+        viewModelScope.launch {
             try {
-                localTeam = CricketApi.retrofitService.getTeamById(id).data
-            } catch (e: Exception) {
-                localTeam = null
-                Log.d(TAG, "getTeamById: $e")
+               // _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
+                Log.e("Team API", "getTeamDetails: $id" )
+                _teamDetails.value = CricketApi.retrofitService.getTeamDetails(id).data
+
+                _teamDetails.value?.let {
+                }
+                delay(1000)
+                Log.e("get Team Api", "${teamDetails.value!!.name}")
+
+            } catch (e: java.lang.Exception) {
+                _fixturewithrun.value = listOf()
+                Log.d("Get Match Details API", "$e")
             }
         }
+
+        return teamDetails
+
     }
 
-    private fun addFixtureWithRun(fixtureWithRunEntities: List<FixtureWithRunEntity>) {
-        viewModelScope.launch{
-            try {
-
-            }
-        }
-    }*/
 
     fun getFixturesWithRun(){
+        val startDate = Constants.getTime(-30)//"2023-02-26T00:00:00.000000Z"
+        val endDate = Constants.getTime(-100)//"2023-04-10T00:00:00.000000Z"
         viewModelScope.launch {
             try {
                 Log.d("Overview Fragment with runs", "Fixtue: ")
-                _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun().data
+                _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun("$startDate,$endDate").data
                 fixturewithrun.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
 
                 fixturewithrun.value?.let { addFixtureWithRun(it) }
@@ -277,8 +293,4 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return result
     }
 
-//     fun getRanking(gender:String, format:String): RankingData{
-//        viewModelScope.launch(Dispatchers.IO) {  }
-//        return repository.getRanking(gender, format)
-//    }
 }

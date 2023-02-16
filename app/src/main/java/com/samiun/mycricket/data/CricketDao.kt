@@ -13,7 +13,7 @@ import com.samiun.mycricket.model.team.TeamEntity
 @Dao
 interface CricketDao {
 
-    @Query("select * from Fixtures order by starting_at desc limit 5")
+    @Query("select * from Fixtures order by starting_at limit 5")
     fun readAllFixtures(): LiveData<List<FixtureEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -39,7 +39,7 @@ interface CricketDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addFixtureWithRun(fixture: List<FixtureWithRunEntity>)
 
-    @Query("select * from Fixturerun order by starting_at desc limit 5")
+    @Query("select * from Fixturerun order by starting_at limit 5")
     fun readFixtureWithRun(): LiveData<List<FixtureWithRunEntity>>
 
     @Query("select * from teams order by name")

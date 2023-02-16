@@ -21,7 +21,7 @@
             tools:layout_editor_absoluteX="-112dp">
 
             <ImageView
-                android:id="@+id/home_image"
+                android:id="@+id/team_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
@@ -36,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/home_image"
-                app:layout_constraintStart_toStartOf="@+id/home_image"
-                app:layout_constraintTop_toBottomOf="@+id/home_image"
+                app:layout_constraintEnd_toEndOf="@+id/team_image"
+                app:layout_constraintStart_toStartOf="@+id/team_image"
+                app:layout_constraintTop_toBottomOf="@+id/team_image"
                 tools:text="Bangladesh" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

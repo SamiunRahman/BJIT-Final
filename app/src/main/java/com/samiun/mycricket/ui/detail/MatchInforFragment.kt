@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.samiun.mycricket.MatchInforFragmentArgs
 import com.samiun.mycricket.R
-import com.samiun.mycricket.ScoreCardFragmentArgs
 import com.samiun.mycricket.databinding.FragmentMatchInforBinding
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.utils.Constants

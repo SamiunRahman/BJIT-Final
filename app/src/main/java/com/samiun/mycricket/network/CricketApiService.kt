@@ -9,6 +9,7 @@ import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
 import com.samiun.mycricket.model.ranking.Ranking
 import com.samiun.mycricket.model.team.Teams
+import com.samiun.mycricket.model.teamDetails.TeamDetails
 import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.Constants.Companion.BASE_URL
 import com.samiun.mycricket.utils.Constants.Companion.COUNTRY_END_POINT
@@ -53,11 +54,8 @@ interface CricketApiService{
     @GET(LEAGUES_END_POINT)
     suspend fun getLeagues(): League
 
-    @GET("fixtures?filter[starts_between]=2023-02-26T00:00:00.000000Z,2023-04-10T00:00:00.000000Z&${Constants.api_token1}")
-    suspend fun getFixtures(): Fixture
 
-    @GET(FIXTURE_WITH_RUN_END_POINT)
-    suspend fun getFixtureWithRun(): FixtureWithRun
+
 
     @GET(TEAM_END_POINT)
     suspend fun getTeams(): Teams
@@ -85,12 +83,32 @@ interface CricketApiService{
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
     ): FixtureWithDetails
 
-    @GET("fixtures?filter[starts_between]={START_DATE},{END_DATE}&${Constants.api_token1}")
-    suspend fun getFixture(
-        @Query(value = "START_DATE", encoded = false) startDate: String,
-        @Query(value = "END_DATE", encoded = false) endDate: String
 
+    //teams/10?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h
+
+    @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    suspend fun getTeamDetails(
+        @Path(value = "TEAM_ID", encoded = false) key: Int
+    ): TeamDetails
+//
+//    @GET("fixtures?filter[starts_between]={START_DATE},{END_DATE}&${Constants.api_token1}")
+//    suspend fun getFixture(
+//        @Query(value = "START_DATE", encoded = false) startDate: String,
+//        @Query(value = "END_DATE", encoded = false) endDate: String
+//
+//    ): Fixture
+
+
+    @GET("fixtures?&${Constants.api_token1}")
+    suspend fun getFixtures(
+        @Query(value = "filter[starts_between]", encoded = false) p1: String
     ): Fixture
+
+
+    @GET(FIXTURE_WITH_RUN_END_POINT)
+    suspend fun getFixtureWithRun(
+        @Query(value = "filter[starts_between]", encoded = false) p1: String
+    ): FixtureWithRun
 
 
     @GET("team-rankings?${Constants.api_token1}")

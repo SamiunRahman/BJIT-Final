@@ -2,25 +2,18 @@ package com.samiun.mycricket.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.adapter.RankingAdapter
 import com.samiun.mycricket.databinding.FragmentRankingBinding
-import com.samiun.mycricket.model.fixturewithdetails.Bowling
 import com.samiun.mycricket.network.overview.CricketViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RankingFragment : Fragment() {
-    var grid = 1
     private lateinit var viewModel: CricketViewModel
     private lateinit var rankingRecyclerView: RecyclerView
 
@@ -80,6 +73,29 @@ class RankingFragment : Fragment() {
             Log.d("ODI Ranking", "onViewCreated:$gender $format ")
 
         }
+
+//        val toggleGroup = binding.formatGroup
+//        toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+//            val odiButton = binding.odiranking
+//            if (isChecked) {
+//                odiButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+//            } else {
+//                odiButton.setBackgroundColor(resources.getColor(android.R.color.transparent))
+//            }
+//            val t20button = binding.t20ranking
+//            if (isChecked) {
+//                t20button.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+//            } else {
+//                t20button.setBackgroundColor(resources.getColor(android.R.color.transparent))
+//            }
+//            val testButton = binding.testranking
+//            if (isChecked) {
+//                testButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+//            } else {
+//                testButton.setBackgroundColor(resources.getColor(android.R.color.transparent))
+//            }
+//        }
+
         rankingRecyclerView = binding.rankingRv
         viewModel.getRanking("men", "T20I").observe(viewLifecycleOwner){
             rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)

@@ -20,9 +20,6 @@ private lateinit var topviewModel: CricketViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: CricketViewModel
-
-    lateinit var matchList: List<FixtureEntity>
-    private lateinit var liveRecyclerView: RecyclerView
     private lateinit var recentRecyclerView:RecyclerView
     private lateinit var upcomingRecyclerView: RecyclerView
 
@@ -49,13 +46,7 @@ class HomeFragment : Fragment() {
         topviewModel = viewModel
 
         recentRecyclerView = binding.recentMatchesRv
-/*
-        viewModel.getCountries()
-        viewModel.getLeagues()
-        viewModel.getFixtures()
-        viewModel.getTeams()
-        viewModel.getFixturesWithRun()
-        viewModel.getRanking()*/
+
 
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
@@ -65,8 +56,8 @@ class HomeFragment : Fragment() {
 
         upcomingRecyclerView = binding.upcomingMatchesRv
         viewModel.readFixtureEntity.observe(viewLifecycleOwner){
-            val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
-            recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
+            val adapterViewState = upcomingRecyclerView.layoutManager?.onSaveInstanceState()
+            upcomingRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             upcomingRecyclerView.adapter = UpcomingMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
         }
 

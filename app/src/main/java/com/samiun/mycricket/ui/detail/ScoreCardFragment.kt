@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.ScoreCardFragmentArgs
 import com.samiun.mycricket.adapter.BattingCardAdapter
 import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
@@ -62,8 +61,9 @@ class ScoreCardFragment : Fragment() {
         val bowlingFirstBatting : MutableList<Batting> = mutableListOf<Batting>()
         val battingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
         val bowlingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
-        var battingFirstId: Int
-        val bowlingFirstId : Int
+        var battingFirstId: Int=0
+        var bowlingFirstId : Int=0
+
         if((data.localteam_id==data.toss_won_team_id && data.elected =="batting")||(data.visitorteam_id==data.toss_won_team_id && data.elected =="bowling")){
             battingFirstId = data.localteam_id!!
             bowlingFirstId  = data.visitorteam_id!!
@@ -74,11 +74,13 @@ class ScoreCardFragment : Fragment() {
         }
 
 
+
         GlobalScope.launch {
             battingFirstTeam = viewModel.findTeamById(battingFirstId)
             bowlingFirstTeam= viewModel.findTeamById(bowlingFirstId)
+
             withContext(Dispatchers.Main){
-                battingFirstBtn.text = battingFirstTeam.code
+                battingFirstBtn.text = "$battingFirstTeam.code"
                 bowlingFirstBtn.text = bowlingFirstTeam.code
             }
 
@@ -117,6 +119,7 @@ class ScoreCardFragment : Fragment() {
         binding.battingfirstScoreBtn.setOnClickListener{
             battingAdapter(viewModel, battingFirstBatting, lineup)
             bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
+            //binding.battingScoreTv.text =
 
         }
         binding.bowlingfirstScoreBtn.setOnClickListener {

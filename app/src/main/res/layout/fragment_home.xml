@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/battingfirst_sum_tv"
+                        android:id="@+id/batting_score_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/battingfirst_sum_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/batting_score_tv"
                         app:spanCount="1"
                         tools:itemCount="5"
                         tools:listitem="@layout/match_list" />
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/bowlingfirst_sum_tv"
+                        android:id="@+id/bowling_score_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -168,7 +168,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/bowlingfirst_sum_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/bowling_score_tv"
                         app:spanCount="1"
                         tools:itemCount="4"
                         tools:listitem="@layout/match_list" />

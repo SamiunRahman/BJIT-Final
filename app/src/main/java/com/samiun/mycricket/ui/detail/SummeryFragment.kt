@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
-import com.samiun.mycricket.ScoreCardFragmentArgs
-import com.samiun.mycricket.SummeryFragmentArgs
 import com.samiun.mycricket.adapter.BattingCardAdapter
 import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
@@ -78,7 +76,7 @@ class SummeryFragment : Fragment() {
                 binding.battingfirstSumTv.text = "${battingFirstTeam.name} Batting"
                 binding.bowlingfirstSumTv.text = "${bowlingFirstTeam.name} Bowling"
                 binding.battingsecondSumTv.text = "${bowlingFirstTeam.name} Batting"
-                binding.battingfirstSumTv.text = "${battingFirstTeam.name} Bowling"
+                binding.bowlingsecondSumTv.text = "${battingFirstTeam.name} Bowling"
             }
 
         }
