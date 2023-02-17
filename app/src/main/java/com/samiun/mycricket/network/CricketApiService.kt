@@ -7,6 +7,7 @@ import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetails
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
+import com.samiun.mycricket.model.players.Players
 import com.samiun.mycricket.model.ranking.Ranking
 import com.samiun.mycricket.model.team.Teams
 import com.samiun.mycricket.model.teamDetails.TeamDetails
@@ -105,11 +106,17 @@ interface CricketApiService{
     ): Fixture
 
 
-    @GET("fixtures?filter[starts_between]=2023-01-01T00:00:00.000000Z,2023-02-16T00:00:00.000000Z&include=runs&${Constants.api_token1}")
+    @GET("fixtures?filter[starts_between]=2023-01-01T00:00:00.000000Z,2023-02-17T00:00:00.000000Z&include=runs&${Constants.api_token1}")
     suspend fun getFixtureWithRun(
         //@Query(value = "filter[starts_between]", encoded = false) p1: String
     ): FixtureWithRun
 
+
+
+    @GET("players?fields[players]=id,fullname,image_path,dateofbirth&${Constants.api_token1}")
+    suspend fun getPlayers(
+        //@Query(value = "filter[starts_between]", encoded = false) p1: String
+    ): Players
 
     @GET("team-rankings?${Constants.api_token1}")
     suspend fun getRanking(): Ranking

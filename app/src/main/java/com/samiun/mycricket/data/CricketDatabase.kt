@@ -8,6 +8,7 @@ import com.samiun.mycricket.model.country.Data
 import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.model.team.Teams
@@ -16,7 +17,7 @@ import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.RunsConverter
 import com.samiun.mycricket.utils.TeamsConverter
 
-@Database(entities = [Data::class, Leagues::class,TeamEntity::class, FixtureEntity::class, FixtureWithRunEntity::class, RankingData::class], version =14, exportSchema = false)
+@Database(entities = [Data::class, Leagues::class,TeamEntity::class, FixtureEntity::class, FixtureWithRunEntity::class, RankingData::class, PlayerData::class], version =15, exportSchema = false)
 @TypeConverters(RunsConverter::class, AnyTypeConverter::class, TeamsConverter::class)
 abstract class CricketDatabase: RoomDatabase() {
     abstract fun cricketDao(): CricketDao

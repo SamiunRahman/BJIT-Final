@@ -12,6 +12,7 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.model.teamDetails.TeamDetails
@@ -31,6 +32,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val leagues: LiveData<List<Leagues>> get() = _leagues
     private val _ranking = MutableLiveData<List<RankingData>>()
     private val ranking: LiveData<List<RankingData>> get() = _ranking
+
+    private val _player = MutableLiveData<List<PlayerData>>()
+    private val player: LiveData<List<PlayerData>> get() = _player
     private val _fixture = MutableLiveData<List<FixtureEntity>>()
     private val fixture: LiveData<List<FixtureEntity>> get() = _fixture
     private val _fixturewithrun = MutableLiveData<List<FixtureWithRunEntity>>()
@@ -53,6 +57,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     val readFixtureEntity :LiveData<List<FixtureEntity>>
     val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>>
     val readTeamEntity: LiveData<List<TeamEntity>>
+    val readPlayerData: LiveData<List<PlayerData>>
 
 
     init{
@@ -61,6 +66,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         readFixtureEntity = repository.readFixtureEntity
         readFixtureWithRunEntity = repository.readFixtureWithRunEntity
         readTeamEntity = repository.readTeamEntity
+        readPlayerData = repository.readPlayerData
         //readTeam = repository.readTeam(id)
     }
 
@@ -131,12 +137,33 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
         }
     }
-
     private fun addRanking(ranking: List<RankingData>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addRanking(ranking)
         }
     }
+
+    fun getPlayers(){
+        viewModelScope.launch {
+            try {
+                _player.value = CricketApi.retrofitService.getPlayers().data
+                player.value?.let { addPlayer(it) }
+
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.d("Over View Model Players ","$e")
+            }
+        }
+    }
+    private fun addPlayer(players: List<PlayerData>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addPlayers(players)
+        }
+    }
+
+
+
 
     fun getFixtures(){
         val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"

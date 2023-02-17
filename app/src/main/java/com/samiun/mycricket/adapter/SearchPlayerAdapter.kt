@@ -4,19 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
-import com.samiun.mycricket.model.ranking.Team
+import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import kotlinx.android.synthetic.main.ranking_list.view.*
 import java.util.*
 
-class SearchTeamAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<TeamEntity>)
-    : RecyclerView.Adapter<SearchTeamAdapter.SearchTeamViewHolder>(){
-    class SearchTeamViewHolder(
+class SearchPlayerAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<PlayerData>)
+    : RecyclerView.Adapter<SearchPlayerAdapter.SearchPlayerViewHolder>(){
+    class SearchPlayerViewHolder(
         binding: View
     ): RecyclerView.ViewHolder(binding){
         val teamRank = itemView.rank_position
@@ -26,15 +25,15 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchTeamViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchPlayerViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.ranking_list,parent,false)
-        return SearchTeamViewHolder(root)
+        return SearchPlayerViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: SearchTeamViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchPlayerViewHolder, position: Int) {
         val info = data[position]
         holder.teamRank.visibility = View.GONE
-        holder.teamname.text = info.name
+        holder.teamname.text = info.fullname
         Glide
             .with(context)
             .load(info.image_path)
@@ -51,16 +50,16 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
     }
 
     fun filter(text: String) {
-        val filteredList = ArrayList<TeamEntity>()
-        for (team in data) {
-            if (team.name?.lowercase(Locale.ROOT)?.contains(text.lowercase(Locale.ROOT)) == true) {
-                filteredList.add(team)
+        val filteredList = ArrayList<PlayerData>()
+        for (player in data) {
+            if (player.fullname?.lowercase(Locale.ROOT)?.contains(text.lowercase(Locale.ROOT)) == true) {
+                filteredList.add(player)
             }
         }
         updateList(filteredList)
     }
 
-    fun updateList(teamList: List<TeamEntity>) {
+    fun updateList(teamList: List<PlayerData>) {
         data = teamList
         notifyDataSetChanged()
     }

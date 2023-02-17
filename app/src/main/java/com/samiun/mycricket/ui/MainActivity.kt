@@ -42,7 +42,12 @@ class MainActivity : AppCompatActivity(), ConectivityChecker.ConnectivityReceive
             .build()
         WorkManager.getInstance().enqueueUniquePeriodicWork(
             "fetchData",
-            ExistingPeriodicWorkPolicy.KEEP,
+
+            /*
+            THis need to be changed
+
+            */
+            ExistingPeriodicWorkPolicy.REPLACE,
             work
         )
     }

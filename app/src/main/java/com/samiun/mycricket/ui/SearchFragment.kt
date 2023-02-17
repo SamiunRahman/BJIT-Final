@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
+import com.samiun.mycricket.adapter.SearchPlayerAdapter
 import com.samiun.mycricket.adapter.SearchTeamAdapter
 import com.samiun.mycricket.databinding.FragmentSearchBinding
+import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 
@@ -17,6 +19,8 @@ class SearchFragment : Fragment() {
 
     private lateinit var viewModel: CricketViewModel
     private lateinit var teamList: List<TeamEntity>
+    private lateinit var playerList: List<PlayerData>
+    var isTeamList = true
 
     private lateinit var searchRecyclerview: RecyclerView
     private var _binding: FragmentSearchBinding? = null
@@ -46,7 +50,30 @@ class SearchFragment : Fragment() {
             searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
             searchRecyclerview.adapter = SearchTeamAdapter(requireContext(), viewModel, it!!)
             teamList = it
+
         }
+
+        binding.teamSearch.setOnClickListener {
+            viewModel.readTeamEntity.observe(viewLifecycleOwner){
+                val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
+                searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
+                searchRecyclerview.adapter = SearchTeamAdapter(requireContext(), viewModel, it!!)
+                teamList = it
+                isTeamList = true
+            }
+        }
+
+        binding.playerSearch.setOnClickListener {
+            viewModel.readPlayerData.observe(viewLifecycleOwner){
+                val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
+                searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
+                searchRecyclerview.adapter =SearchPlayerAdapter(requireContext(), viewModel, it!!)
+                playerList = it
+                isTeamList = false
+            }
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -61,10 +88,18 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 if (searchRecyclerview.adapter != null) {
-                    val teamAdapter = searchRecyclerview.adapter as SearchTeamAdapter
-                    if (newText.length > 1) {
-                        teamAdapter.filter(newText)
-                    } else teamAdapter.updateList(teamList)
+                    if(isTeamList){
+                        val teamAdapter = searchRecyclerview.adapter as SearchTeamAdapter
+                        if (newText.length > 1) {
+                            teamAdapter.filter(newText)
+                        } else teamAdapter.updateList(teamList)
+                    }
+                    else {
+                        val teamAdapter = searchRecyclerview.adapter as SearchPlayerAdapter
+                        if (newText.length > 1) {
+                            teamAdapter.filter(newText)
+                        } else teamAdapter.updateList(playerList)
+                    }
                 }
                 return true
             }
