@@ -13,6 +13,7 @@ import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.officials.OfficialEntity
+import com.samiun.mycricket.model.playerDetails.PlayerDetailsData
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
@@ -55,6 +56,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
     private val _teamSquad = MutableLiveData<TeamSquadData>()
     private val teamSquad: LiveData<TeamSquadData> get()  = _teamSquad
+
+    private val _playerData = MutableLiveData<PlayerDetailsData>()
+    private val playerData: LiveData<PlayerDetailsData> get()  = _playerData
 
 
 
@@ -357,6 +361,29 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return teamSquad
 
     }
+
+    fun getPlayerCareer(id: Int): LiveData<PlayerDetailsData> {
+
+        viewModelScope.launch {
+            try {
+                // _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
+                Log.e("Team API", "getTeamDetails: $id" )
+                _playerData.value = CricketApi.retrofitService.getPlayerDetails().data
+
+                _playerData.value?.let {
+                }
+                delay(1000)
+
+            } catch (e: java.lang.Exception) {
+                _fixturewithrun.value = listOf()
+                Log.e("Cricket View Model Get Team Squad","$e")
+            }
+        }
+
+        return playerData
+
+    }
+
 
     fun getFixturesWithRun(){
         val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"

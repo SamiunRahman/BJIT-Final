@@ -144,9 +144,9 @@ interface CricketApiService{
 
 
 
-    @GET("players/{PLAYER_ID}?include=career?&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    @GET("players/239?include=career&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
     suspend fun getPlayerDetails(
-        @Path(value = "PLAYER_ID", encoded = false) key: Int
+       // @Path(value = "PLAYER_ID", encoded = false) key: Int
     ): PlayerDetails
 
 

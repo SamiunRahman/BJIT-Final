@@ -48,7 +48,11 @@
         android:id="@+id/playerFragment"
         android:name="com.samiun.mycricket.ui.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player" >
+        <argument
+            android:name="player_id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.samiun.mycricket.ui.TeamFragment"

@@ -97,6 +97,7 @@ class HomeFragment : Fragment() {
         topviewModel.getPlayers()
         topviewModel.getOfficials()
         topviewModel.getVenus()
+        topviewModel.getPlayerCareer(239)
     }
 
 
