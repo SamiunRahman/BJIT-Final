@@ -5,13 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.ranking.Team
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.ui.RankingFragmentDirections
+import com.samiun.mycricket.ui.SearchFragmentDirections
+import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
+import kotlinx.android.synthetic.main.ranking_list.view.rating
 import java.util.*
 
 class SearchTeamAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<TeamEntity>)
@@ -23,6 +30,7 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
         val teamImage = itemView.ranking_image
         val teamname = itemView.team_name
         val rating = itemView.rating
+        val item = itemView.ranking_item
 
     }
 
@@ -42,10 +50,19 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
             .error(R.drawable.not_found_image)
             .into(holder.teamImage)
 
+        holder.item.setOnClickListener {
+            val action = info.id?.let { it1 ->
+                SearchFragmentDirections.actionSearchFragmentToTeamFragment(
+                    it1
+                )
+            }
+            if (action != null) {
+                holder.itemView.findNavController().navigate(action)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        // Log.d("Ranking Adapter", "getItemCount: ${data.size}")
         return data.size
 
     }

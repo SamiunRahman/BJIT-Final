@@ -2,21 +2,21 @@ package com.samiun.mycricket.network
 
 import com.samiun.mycricket.model.country.Country
 import com.samiun.mycricket.model.fixture.Fixture
-import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetails
-import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
+import com.samiun.mycricket.model.officials.Official
+import com.samiun.mycricket.model.playerDetails.PlayerDetails
+import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.players.Players
 import com.samiun.mycricket.model.ranking.Ranking
 import com.samiun.mycricket.model.team.Teams
 import com.samiun.mycricket.model.teamDetails.TeamDetails
+import com.samiun.mycricket.model.teamsquad.TeamSquad
+import com.samiun.mycricket.model.venue.Venue
 import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.Constants.Companion.BASE_URL
 import com.samiun.mycricket.utils.Constants.Companion.COUNTRY_END_POINT
-import com.samiun.mycricket.utils.Constants.Companion.FIXTUREWITHRUN_END_POINT
-import com.samiun.mycricket.utils.Constants.Companion.FIXTURE_END_POINT
-import com.samiun.mycricket.utils.Constants.Companion.FIXTURE_WITH_RUN_END_POINT
 import com.samiun.mycricket.utils.Constants.Companion.LEAGUES_END_POINT
 import com.samiun.mycricket.utils.Constants.Companion.TEAM_END_POINT
 import com.samiun.mycricket.utils.Constants.Companion.UPCOMING_END_POINT
@@ -87,10 +87,7 @@ interface CricketApiService{
 
     //teams/10?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h
 
-    @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
-    suspend fun getTeamDetails(
-        @Path(value = "TEAM_ID", encoded = false) key: Int
-    ): TeamDetails
+
 //
 //    @GET("fixtures?filter[starts_between]={START_DATE},{END_DATE}&${Constants.api_token1}")
 //    suspend fun getFixture(
@@ -105,10 +102,11 @@ interface CricketApiService{
         @Query(value = "filter[starts_between]", encoded = false) p1: String
     ): Fixture
 
-
-    @GET("fixtures?filter[starts_between]=2023-01-01T00:00:00.000000Z,2023-02-17T00:00:00.000000Z&include=runs&${Constants.api_token1}")
+    @GET("fixtures")
     suspend fun getFixtureWithRun(
-        //@Query(value = "filter[starts_between]", encoded = false) p1: String
+        @Query("filter[starts_between]") p1: String = "${Constants.getTime(-100)},${Constants.getTime(0)}",
+        @Query("include") p2: String = "runs",
+        @Query("api_token") p3: String = Constants.api_token
     ): FixtureWithRun
 
 
@@ -121,8 +119,42 @@ interface CricketApiService{
     @GET("team-rankings?${Constants.api_token1}")
     suspend fun getRanking(): Ranking
 
+    @GET("venues?${Constants.api_token1}")
+    suspend fun getVenus(): Venue
+
+    @GET("officials?${Constants.api_token1}")
+    suspend fun getOfficials(): Official
 
 
+
+//    https://cricket.sportmonks.com/api/v2.0/venues
+//    https://cricket.sportmonks.com/api/v2.0/officials
+//    https://cricket.sportmonks.com/api/v2.0/leagues
+
+    @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&${Constants.api_token1}")
+    suspend fun getTeamDetails(
+        @Path(value = "TEAM_ID", encoded = false) key: Int
+    ): TeamDetails
+
+
+    @GET("teams/{TEAM_ID}/squad/23?&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    suspend fun getTeamSquad(
+        @Path(value = "TEAM_ID", encoded = false) key: Int
+    ): TeamSquad
+
+
+
+    @GET("players/{PLAYER_ID}?include=career?&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    suspend fun getPlayerDetails(
+        @Path(value = "PLAYER_ID", encoded = false) key: Int
+    ): PlayerDetails
+
+
+
+
+// players/:PLAYER_ID?include=career
+
+  //  https://cricket.sportmonks.com/api/v2.0/teams/:TEAM_ID/squad/:SEASON_ID
 }
 
 object CricketApi{

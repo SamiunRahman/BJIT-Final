@@ -12,11 +12,13 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.officials.OfficialEntity
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
-import com.samiun.mycricket.model.teamDetails.TeamDetails
 import com.samiun.mycricket.model.teamDetails.TeamDetailsData
+import com.samiun.mycricket.model.teamsquad.TeamSquadData
+import com.samiun.mycricket.model.venue.VenueEntity
 import com.samiun.mycricket.network.CricketApi
 import com.samiun.mycricket.utils.Constants
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +35,12 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val _ranking = MutableLiveData<List<RankingData>>()
     private val ranking: LiveData<List<RankingData>> get() = _ranking
 
+    private val _venues = MutableLiveData<List<VenueEntity>>()
+    private val venues: LiveData<List<VenueEntity>> get() = _venues
+
+    private val _officials = MutableLiveData<List<OfficialEntity>>()
+    private val official: LiveData<List<OfficialEntity>> get() = _officials
+
     private val _player = MutableLiveData<List<PlayerData>>()
     private val player: LiveData<List<PlayerData>> get() = _player
     private val _fixture = MutableLiveData<List<FixtureEntity>>()
@@ -44,6 +52,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
     private val _teamDetails = MutableLiveData<TeamDetailsData?>()
     private val teamDetails: LiveData<TeamDetailsData?> get()  = _teamDetails
+
+    private val _teamSquad = MutableLiveData<TeamSquadData>()
+    private val teamSquad: LiveData<TeamSquadData> get()  = _teamSquad
 
 
 
@@ -82,14 +93,28 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Over View Model","$e")
+                Log.e("Cricket View Model Countries","$e")
             }
         }
     }
 
-    suspend fun findTeamById(id: Int): TeamEntity{
+    fun findTeamById(id: Int): TeamEntity{
+        return repository.readTeam(id)
+    }
+
+
+    suspend fun findOfficialbyId(id: Int): OfficialEntity{
         viewModelScope.launch(Dispatchers.IO) {  }
-            return repository.readTeam(id)
+        return repository.readOfficial(id)
+    }
+    suspend fun findLeaguebyId(id: Int): Leagues{
+        viewModelScope.launch(Dispatchers.IO) {  }
+        return repository.readLeague(id)
+    }
+
+    suspend fun findVenueById(id: Int): VenueEntity{
+        viewModelScope.launch(Dispatchers.IO) {  }
+        return repository.readVenue(id)
     }
 
     private fun addCountryList(countryList: List<Data>) {
@@ -110,7 +135,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Over View Model","$e")
+                Log.e("Cricket View Model Leagues","$e")
             }
         }
     }
@@ -133,7 +158,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Over View Model","$e")
+                Log.e("Cricket View Model Ranking","$e")
             }
         }
     }
@@ -142,6 +167,45 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             repository.addRanking(ranking)
         }
     }
+
+    fun getVenus(){
+        viewModelScope.launch {
+            try {
+                _venues.value = CricketApi.retrofitService.getVenus().data
+                venues.value?.let { addVenues(it) }
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.e("Cricket View Model Venues","$e")
+            }
+        }
+    }
+    private fun addVenues(venues: List<VenueEntity>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addVenue(venues)
+        }
+    }
+
+
+    fun getOfficials(){
+        viewModelScope.launch {
+            try {
+                _officials.value = CricketApi.retrofitService.getOfficials().data
+                official.value?.let { addOfficilas(it) }
+            }
+            catch (e: java.lang.Exception) {
+                _countries.value = listOf()
+                Log.e("Cricket View Model Officials","$e")
+            }
+        }
+    }
+    private fun addOfficilas(official: List<OfficialEntity>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addOfficials(official)
+        }
+    }
+
+
 
     fun getPlayers(){
         viewModelScope.launch {
@@ -152,7 +216,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Over View Model Players ","$e")
+                Log.e("Cricket View Model Players","$e")
             }
         }
     }
@@ -181,7 +245,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Overview Fragment excaption","$e")
+                Log.e("Cricket View Model Fixture","$e")
             }
         }
     }
@@ -214,7 +278,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.d("Overview Fragment excaption","$e")
+                Log.e("Cricket View Model Teams","$e")
             }
         }
     }
@@ -225,25 +289,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         }
     }
 
-//    fun getFixtureWithRun(fixtureID: Int): LiveData<List<FixtureWithRunEntity>> {
-//
-//        viewModelScope.launch {
-//            try {
-//                Log.d("Fixture with Run", "Fixtuer: $fixtureID")
-//                _fixturewithrun.value = CricketApi.retrofitService.getFixturewithRun(fixtureID, Constants.api_token, "runs").data
-//                fixturewithrun.value?.let {
-//                   // Log.d("Api Fixture with run", "Fixture: ${it[0].runs?.get(0)?.score}")
-//                }
-//                //fixturewithrun.value?.let { addFixtureWithRun(it) }
-//
-//            } catch (e: java.lang.Exception) {
-//                _fixturewithrun.value = listOf()
-//                Log.d("Overview Fragment exception", "$e")
-//            }
-//        }
-//        return fixturewithrun
-//
-//    }
 
 
     fun getDetailsByMatch(fixtureID: Int): LiveData<FixtureWithDetailsData?> {
@@ -258,7 +303,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
             } catch (e: java.lang.Exception) {
                 _fixturewithrun.value = listOf()
-                Log.d("Get Details api", "$e")
+                Log.e("Cricket View Model Details By Match","$e")
             }
         }
 
@@ -282,7 +327,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
             } catch (e: java.lang.Exception) {
                 _fixturewithrun.value = listOf()
-                Log.d("Get Match Details API", "$e")
+                Log.e("Cricket View Model Get Team Details","$e")
             }
         }
 
@@ -291,6 +336,28 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     }
 
 
+    fun getTeamSquad(id: Int): LiveData<TeamSquadData> {
+
+        viewModelScope.launch {
+            try {
+                // _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
+                Log.e("Team API", "getTeamDetails: $id" )
+                _teamSquad.value = CricketApi.retrofitService.getTeamSquad(id).data
+
+                _teamSquad.value?.let {
+                }
+                delay(1000)
+
+            } catch (e: java.lang.Exception) {
+                _fixturewithrun.value = listOf()
+                Log.e("Cricket View Model Get Team Squad","$e")
+            }
+        }
+
+        return teamSquad
+
+    }
+
     fun getFixturesWithRun(){
         val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"
         val endDate = Constants.getTime(-100)//"2023-04-10T00:00:00.000000Z"
@@ -298,14 +365,13 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             try {
                 Log.d("Overview Fragment with runs", "Fixtue: ")
                 _fixturewithrun.value = CricketApi.retrofitService.getFixtureWithRun().data
-                fixturewithrun.value?.let { Log.d("Api", "Fixture: ${it.get(0).note}") }
 
                 fixturewithrun.value?.let { addFixtureWithRun(it) }
 
             }
             catch (e: java.lang.Exception) {
                 _countries.value = listOf()
-                Log.e("Overview Fragment excaption","$e")
+                Log.e("Cricket View Model Countries","$e")
             }
         }
     }

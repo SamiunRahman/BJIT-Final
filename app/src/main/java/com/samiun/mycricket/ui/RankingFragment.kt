@@ -1,5 +1,6 @@
 package com.samiun.mycricket.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.RankingAdapter
 import com.samiun.mycricket.databinding.FragmentRankingBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -36,6 +38,7 @@ class RankingFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
         var gender = "men"
@@ -44,6 +47,8 @@ class RankingFragment : Fragment() {
 
         binding.genderMan.setOnClickListener {
             gender = "men"
+
+            ///binding.genderMan.setBackgroundColor(R.color.colorOnPrimary)
             binding.testranking.visibility = View.VISIBLE
             rankingAdapter(gender,format)
             Log.d("Man Ranking", "onViewCreated:$gender $format ")

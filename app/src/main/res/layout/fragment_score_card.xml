@@ -141,7 +141,7 @@
                         android:fontFamily="sans-serif-light"
                         android:padding="4dp"
                         android:layout_marginTop="5dp"
-                        android:text="West Indies Bowling"
+                        tools:text="West Indies Bowling"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"

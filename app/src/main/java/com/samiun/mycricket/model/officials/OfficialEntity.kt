@@ -3,7 +3,7 @@ package com.samiun.mycricket.model.officials
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "leagues")
+@Entity(tableName = "officials")
 
 data class OfficialEntity(
     val country_id: Int,

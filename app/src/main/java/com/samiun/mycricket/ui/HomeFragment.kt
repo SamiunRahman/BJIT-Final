@@ -95,6 +95,8 @@ class HomeFragment : Fragment() {
         topviewModel.getFixturesWithRun()
         topviewModel.getRanking()
         topviewModel.getPlayers()
+        topviewModel.getOfficials()
+        topviewModel.getVenus()
     }
 
 

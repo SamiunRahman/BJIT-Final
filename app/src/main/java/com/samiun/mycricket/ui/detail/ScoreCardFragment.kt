@@ -13,6 +13,7 @@ import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.model.fixturewithdetails.Batting
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
+import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -51,7 +52,6 @@ class ScoreCardFragment : Fragment() {
 
 
         val data = gerArgs.matchdetails
-        var battingScore = ""
         var battingFirstTeam: TeamEntity
         var bowlingFirstTeam: TeamEntity
         val lineup = data.lineup
@@ -63,6 +63,7 @@ class ScoreCardFragment : Fragment() {
         val bowlingFirstBowling : MutableList<Bowling> = mutableListOf<Bowling>()
         var battingFirstId: Int=0
         var bowlingFirstId : Int=0
+        var isBattingFirstBatting = true
 
         if((data.localteam_id==data.toss_won_team_id && data.elected =="batting")||(data.visitorteam_id==data.toss_won_team_id && data.elected =="bowling")){
             battingFirstId = data.localteam_id!!
@@ -73,6 +74,11 @@ class ScoreCardFragment : Fragment() {
             battingFirstId  = data.visitorteam_id!!
         }
 
+        var battingcardString1 = ""
+        var battingcardString2 = ""
+        var bowlingcardString1 = ""
+        var bowlingcardString2 = ""
+
 
 
         GlobalScope.launch {
@@ -80,33 +86,36 @@ class ScoreCardFragment : Fragment() {
             bowlingFirstTeam= viewModel.findTeamById(bowlingFirstId)
 
             withContext(Dispatchers.Main){
-                battingFirstBtn.text = "$battingFirstTeam.code"
+                battingFirstBtn.text = battingFirstTeam.code
                 bowlingFirstBtn.text = bowlingFirstTeam.code
+                battingcardString1 = "${battingFirstTeam.name}  Batting"
+                battingcardString2 = "${bowlingFirstTeam.name}  Batting"
+                bowlingcardString1 = "${battingFirstTeam.name}  Bowling"
+                bowlingcardString2 = "${bowlingFirstTeam.name}  Bowling"
+
+                binding.battingScoreTv.text = battingcardString1
+                binding.bowlingScoreTv.text = bowlingcardString2
+
             }
 
         }
         for(i in lineup!!){
             for(j in batting!!){
                 if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}  batting  First\n"
                     battingFirstBatting.add(j)
                 }
                 else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
                     bowlingFirstBatting.add(j)
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.score} in ${j.ball}  Bowling  First\n"
                 }
             }
         }
-        battingScore+= "\n\n"
 
         for(i in lineup!!){
             for(j in bowling!!){
                 if(j.player_id == i.id && i.lineup!!.team_id==battingFirstId){
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.runs} in ${j.overs} batting First\n"
                     battingFirstBowling.add(j)
                 }
                 else if(j.player_id == i.id && i.lineup!!.team_id==bowlingFirstId){
-                    battingScore+=i.firstname+" "+i.lastname+" ${j.runs} in ${j.overs} Bowling First\n"
                     bowlingFirstBowling.add(j)
 
                 }
@@ -119,12 +128,15 @@ class ScoreCardFragment : Fragment() {
         binding.battingfirstScoreBtn.setOnClickListener{
             battingAdapter(viewModel, battingFirstBatting, lineup)
             bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
-            //binding.battingScoreTv.text =
+            binding.battingScoreTv.text = battingcardString1
+            binding.bowlingScoreTv.text = bowlingcardString2
 
         }
         binding.bowlingfirstScoreBtn.setOnClickListener {
             battingAdapter(viewModel,bowlingFirstBatting, lineup)
             bowlingAdapter(viewModel,battingFirstBowling,lineup)
+            binding.battingScoreTv.text = battingcardString2
+            binding.bowlingScoreTv.text = bowlingcardString1
 
         }
 

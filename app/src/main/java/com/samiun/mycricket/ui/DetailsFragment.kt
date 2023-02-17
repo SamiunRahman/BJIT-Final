@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,6 +18,7 @@ import com.samiun.mycricket.adapter.DetailViewpagerAdapter
 import com.samiun.mycricket.databinding.FragmentDetailsBinding
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
+import kotlinx.android.synthetic.main.fragment_match_infor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -49,6 +53,16 @@ class DetailsFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
         val id:Int = match.id!!
+
+
+        binding.homeImage.setOnClickListener {
+            val action = DetailsFragmentDirections.actionDetailsFragmentToTeamFragment(match.localteam_id!!)
+            findNavController().navigate(action)
+        }
+        binding.awayImage.setOnClickListener {
+            val action = DetailsFragmentDirections.actionDetailsFragmentToTeamFragment(match.visitorteam_id!!)
+            findNavController().navigate(action)
+        }
 
         viewModel.getDetailsByMatch(match.id!!).observe(viewLifecycleOwner){
             if (it != null) {
@@ -110,6 +124,9 @@ class DetailsFragment : Fragment() {
                     .error(R.drawable.not_found_image)
                     .into(binding.awayImage)
             }
+
+
+
         }
 
 

@@ -50,7 +50,6 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
             .into(holder.teamImage)
 
         holder.item.setOnClickListener {
-            Log.e("Ranking team api 1", "onBindViewHolder: ${info.id}" )
             val action = RankingFragmentDirections.actionRankingFragmentToTeamFragment(info.id)
             holder.itemView.findNavController().navigate(action)
         }
