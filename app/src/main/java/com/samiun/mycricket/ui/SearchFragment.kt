@@ -1,6 +1,8 @@
 package com.samiun.mycricket.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -89,16 +91,29 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 if (searchRecyclerview.adapter != null) {
                     if(isTeamList){
-                        val teamAdapter = searchRecyclerview.adapter as SearchTeamAdapter
-                        if (newText.length > 1) {
-                            teamAdapter.filter(newText)
-                        } else teamAdapter.updateList(teamList)
+                        try {
+                            val teamAdapter = searchRecyclerview.adapter as SearchTeamAdapter
+                            if (newText.length > 1) {
+                                teamAdapter.filter(newText)
+                            } else teamAdapter.updateList(teamList)
+                        }
+                        catch (e: Exception){
+                            Log.e(TAG, "onQueryTextChange: $e", )
+                        }
+
                     }
                     else {
-                        val teamAdapter = searchRecyclerview.adapter as SearchPlayerAdapter
-                        if (newText.length > 1) {
-                            teamAdapter.filter(newText)
-                        } else teamAdapter.updateList(playerList)
+                        try {
+                            val teamAdapter = searchRecyclerview.adapter as SearchPlayerAdapter
+                            if (newText.length > 1) {
+                                teamAdapter.filter(newText)
+                            } else teamAdapter.updateList(playerList)
+                        }
+                        catch (e:Exception){
+                            Log.e(TAG, "onQueryTextChange: $e", )
+
+                        }
+
                     }
                 }
                 return true

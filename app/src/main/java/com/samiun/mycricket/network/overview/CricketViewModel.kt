@@ -368,7 +368,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             try {
                 // _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
                 Log.e("Team API", "getTeamDetails: $id" )
-                _playerData.value = CricketApi.retrofitService.getPlayerDetails().data
+                _playerData.value = CricketApi.retrofitService.getPlayerDetails(id).data
 
                 _playerData.value?.let {
                 }

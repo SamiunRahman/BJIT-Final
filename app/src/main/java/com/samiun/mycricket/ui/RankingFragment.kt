@@ -107,33 +107,7 @@ class RankingFragment : Fragment() {
             Log.d("Ranking", "onViewCreated: ${it.team}")
         }
 
-//        viewModel.getRanking("man","T20").observe(viewLifecycleOwner){
-
         }
-
-//        binding.bottomNav.setOnItemSelectedListener {
-//            when(it.itemId){
-//                R.id.home_bottom_nav->{
-//                    findNavController().navigate(R.id.homeFragment)
-//                    Toast.makeText(requireContext(), "You are on home!", Toast.LENGTH_SHORT).show()
-//                    return@setOnItemSelectedListener true
-//                }
-//                R.id.ranking_bottom_nav->{
-//
-//                    Toast.makeText(requireContext(), "Your are on Ranking!", Toast.LENGTH_SHORT).show()
-//                    return@setOnItemSelectedListener true
-//                }
-//                R.id.search_bottom_nav->{
-//                    Toast.makeText(requireContext(), "Search Button Clicked", Toast.LENGTH_SHORT).show()
-//                    return@setOnItemSelectedListener true
-//                }
-//                else ->{
-//                    Toast.makeText(requireContext(), "More Button Clicked", Toast.LENGTH_SHORT).show()
-//                    return@setOnItemSelectedListener true
-//                }
-//            }
-//
-//        }
 
     fun rankingAdapter(gender:String, format: String){
         viewModel.getRanking(gender, format).observe(viewLifecycleOwner){
