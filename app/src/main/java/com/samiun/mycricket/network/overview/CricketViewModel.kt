@@ -12,6 +12,7 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
+import com.samiun.mycricket.model.liveScore.LiveScoreData
 import com.samiun.mycricket.model.officials.OfficialEntity
 import com.samiun.mycricket.model.playerDetails.PlayerDetailsData
 import com.samiun.mycricket.model.players.PlayerData
@@ -50,6 +51,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     private val fixturewithrun: LiveData<List<FixtureWithRunEntity>> get()  = _fixturewithrun
     private val _fixturewithDetails = MutableLiveData<FixtureWithDetailsData?>()
     private val fixturewithDetails: LiveData<FixtureWithDetailsData?> get()  = _fixturewithDetails
+
+    private val _liveScore = MutableLiveData<List<LiveScoreData>>()
+    private val liveScore: LiveData<List<LiveScoreData>> get()  = _liveScore
 
     private val _teamDetails = MutableLiveData<TeamDetailsData?>()
     private val teamDetails: LiveData<TeamDetailsData?> get()  = _teamDetails
@@ -312,6 +316,26 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         }
 
         return fixturewithDetails
+
+    }
+
+
+    fun getLiveMatch(): LiveData<List<LiveScoreData>> {
+
+        viewModelScope.launch {
+            try {
+                Log.d("Live with Run", "Fixtuer: ")
+                _liveScore.value = CricketApi.retrofitService.getLiveMatches().data
+                _liveScore.value?.let {
+                }
+                Log.e("get details Api", "${liveScore.value?.get(0)?.runs?.get(0)?.score}")
+
+            } catch (e: java.lang.Exception) {
+                Log.e("Cricket View Model Live Score By Match","$e")
+            }
+        }
+
+        return liveScore
 
     }
 

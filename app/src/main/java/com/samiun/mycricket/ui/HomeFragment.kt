@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
+import com.samiun.mycricket.adapter.LiveMatchAdapter
 import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
@@ -22,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: CricketViewModel
     private lateinit var recentRecyclerView:RecyclerView
     private lateinit var upcomingRecyclerView: RecyclerView
+    private lateinit var liveRecyclerView: RecyclerView
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -47,7 +49,13 @@ class HomeFragment : Fragment() {
 
         recentRecyclerView = binding.recentMatchesRv
 
+        liveRecyclerView = binding.liveMatchesRv
 
+        viewModel.getLiveMatch().observe(viewLifecycleOwner){
+            val adapterViewState = liveRecyclerView.layoutManager?.onSaveInstanceState()
+            liveRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
+            liveRecyclerView.adapter = LiveMatchAdapter(requireContext(), viewModel, it)
+        }
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
@@ -97,7 +105,8 @@ class HomeFragment : Fragment() {
         topviewModel.getPlayers()
         topviewModel.getOfficials()
         topviewModel.getVenus()
-        topviewModel.getPlayerCareer(239)
+        topviewModel.getLiveMatch()
+
     }
 
 

@@ -5,6 +5,7 @@ import com.samiun.mycricket.model.fixture.Fixture
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetails
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.league.League
+import com.samiun.mycricket.model.liveScore.LiveScore
 import com.samiun.mycricket.model.officials.Official
 import com.samiun.mycricket.model.playerDetails.PlayerDetails
 import com.samiun.mycricket.model.players.PlayerData
@@ -83,6 +84,12 @@ interface CricketApiService{
     suspend fun getMatchDetails(
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
     ): FixtureWithDetails
+
+
+
+    @GET("livescores?include=batting,bowling,lineup,balls,runs&${Constants.api_token1}")
+    suspend fun getLiveMatches(
+    ): LiveScore
 
 
     //teams/10?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h
