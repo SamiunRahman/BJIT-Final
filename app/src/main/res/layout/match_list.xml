@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -90,6 +91,52 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/home_toss"
                 app:layout_constraintTop_toBottomOf="@+id/away_toss" />
+
+            <TextView
+                android:id="@+id/isLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Live"
+                android:visibility="gone"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:background="#B71C1C"
+                android:textColor="@color/colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/isRecent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finished"
+                android:visibility="gone"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:background="#1B5E20"
+                android:textColor="@color/colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/isUpcoming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upcoming"
+                android:visibility="gone"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:background="#BF360C"
+                android:textColor="@color/colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

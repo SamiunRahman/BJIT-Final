@@ -1,4 +1,4 @@
-package com.samiun.mycricket.adapter
+package com.samiun. mycricket.adapter
 
 
 import android.content.Context
@@ -31,6 +31,7 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
         val homescore = itemView.home_team_score
         val awayscore = itemView.away_team_score
         val cardView = itemView.constraint_item
+        val status = itemView.isLive
 
     }
 
@@ -44,31 +45,56 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
         val match = arrayList[position]
         holder.notes.text = match.note
         Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
+        val runs = match.runs
+        holder.status.visibility = View.VISIBLE
 
-
+       Log.e("Live match", "onBindViewHolder: ${match}", )
 
 
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
 
+            val run1 = match.runs?.get(0)?.score
+            val wicket1 = match.runs?.get(0)?.wickets
+            val over1 = match.runs?.get(0)?.overs
+//            val run2 = match.runs?.get(1)?.score
+//            val wicket2 = match.runs?.get(1)?.wickets
+//            val over2 = match.runs?.get(1)?.overs
+
             withContext(Dispatchers.Main) {
 
                 try {
-                    holder.homescore.text = match.runs?.get(0)?.score.toString()
-                    holder.awayscore.text = match.runs?.get(1)?.score.toString()
-
 
                     if (hometeam != null) {
 
                         if(hometeam.id == match.runs?.get(0)?.team_id && match.runs!!.isNotEmpty()) {
-                            "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
-                            "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
+                            if(match.runs.size<2){
+                                "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
+                            }
+                            else{
+                                "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
+                                "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
 
+                            }
+
+                         //   holder.awayscore.text = "$run2/$wicket2\n$over2"
                         }
                         else{
-                            "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
-                            "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
+                            if(match.runs?.size ?:0 <2){
+                                "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
+                            }
+                            else{
+                                "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
+                                "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
+                            }
+
+                            Log.e("Live match", "onBindViewHolder: ${match.runs}", )
+
+
+                           // holder.awayscore.text = "$run1/$wicket1\n$over1"
+                           // holder.homescore.text = "$run2/$wicket2\n$over2"
+
                         }
 
                     }
@@ -76,6 +102,7 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
 
                 }
                 catch(e: Exception){
+                    Log.e("Live Match Exception", "onBindViewHolder: $e", )
                 }
 //
 //                if (hometeam != null) {
@@ -130,9 +157,11 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
 
             }
 
+
+            val fixtureWithRunEntity = FixtureWithRunEntity(match.draw_noresult.toString(),match.elected,match.first_umpire_id,match.follow_on,match.id,match.last_period,match.league_id,match.live,null,match.localteam_id,null,null,match.note,match.referee_id,match.resource,match.round,match.rpc_overs.toString(),match.rpc_target.toString(),match.runs,match.season_id,match.second_umpire_id,match.stage_id,match.starting_at,match.status,match.super_over,match.toss_won_team_id,match.total_overs_played,match.tv_umpire_id,match.type,match.venue_id,null,match.visitorteam_id,match.weather_report,null)
             holder.cardView.setOnClickListener {
-               // val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(match)
-              //  holder.itemView.findNavController().navigate(action)
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(fixtureWithRunEntity)
+                holder.itemView.findNavController().navigate(action)
             }
 
         }

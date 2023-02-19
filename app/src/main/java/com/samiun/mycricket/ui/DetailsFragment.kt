@@ -52,7 +52,7 @@ class DetailsFragment : Fragment() {
 //        viewpager.adapter = tabAdapter
 
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
-        val id:Int = match.id!!
+        val id:Int = match?.id!!
 
 
         binding.homeImage.setOnClickListener {
@@ -94,22 +94,29 @@ class DetailsFragment : Fragment() {
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
+            Log.e("Match Runs", "onViewCreated: ${match.runs}", )
 
             withContext(Dispatchers.Main) {
                 binding.homeTeamName.text = hometeam!!.name.toString()
                 binding.awayTeamName.text = awayteam!!.name.toString()
+                try{
+                    if(hometeam.id == match.runs?.get(0)?.team_id) {
+                        val homescore =hometeam.code.toString()+"\n"+ match.runs?.get(0)?.score.toString()+"/"+match.runs?.get(0)?.wickets.toString()+" ("+match.runs?.get(0)?.overs.toString()+")"
+                        val awayscore = awayteam.code.toString()+"\n"+match.runs?.get(1)?.score.toString()+"/"+match.runs?.get(1)?.wickets.toString()+" ("+match.runs?.get(1)?.overs.toString()+")"
+                        binding.detailScore.text = homescore+"\n"+awayscore
+                        Log.e("Match Runs", "onViewCreated: ${match.runs}", )
+                    }
+                    else{
+                        val awayscore =awayteam.code.toString()+"\n"+  match.runs?.get(0)?.score.toString()+"/"+match.runs?.get(0)?.wickets.toString()+" ("+match.runs?.get(0)?.overs.toString()+")"
+                        val homescore =hometeam.code.toString()+"\n"+ match.runs?.get(1)?.score.toString()+"/"+match.runs?.get(1)?.wickets.toString()+" ("+match.runs?.get(1)?.overs.toString()+")"
+                        binding.detailScore.text = homescore+"\n"+awayscore
 
-                if(hometeam.id == match.runs?.get(0)?.team_id) {
-                    val homescore =hometeam.code.toString()+"\n"+ match.runs?.get(0)?.score.toString()+"/"+match.runs?.get(0)?.wickets.toString()+" ("+match.runs?.get(0)?.overs.toString()+")"
-                    val awayscore = awayteam.code.toString()+"\n"+match.runs?.get(1)?.score.toString()+"/"+match.runs?.get(1)?.wickets.toString()+" ("+match.runs?.get(1)?.overs.toString()+")"
-                    binding.detailScore.text = homescore+"\n"+awayscore
+                    }
                 }
-                else{
-                    val awayscore =awayteam.code.toString()+"\n"+  match.runs?.get(0)?.score.toString()+"/"+match.runs?.get(0)?.wickets.toString()+" ("+match.runs?.get(0)?.overs.toString()+")"
-                    val homescore =hometeam.code.toString()+"\n"+ match.runs?.get(1)?.score.toString()+"/"+match.runs?.get(1)?.wickets.toString()+" ("+match.runs?.get(1)?.overs.toString()+")"
-                    binding.detailScore.text = homescore+"\n"+awayscore
+                catch (e: Exception){
+                    Log.e("Details Fragment exception", "onViewCreated: $e", )
+                }
 
-                }
                 Glide
                     .with(requireContext())
                     .load(hometeam.image_path)

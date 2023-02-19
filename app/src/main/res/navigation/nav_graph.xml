@@ -30,7 +30,9 @@
             app:destination="@id/teamFragment" />
         <argument
             android:name="fixturewithrun"
-            app:argType="com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity" />
+            app:argType="com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_detailsFragment_to_summeryFragment"
             app:destination="@id/summeryFragment" />
@@ -43,6 +45,9 @@
         <action
             android:id="@+id/action_detailsFragment_to_detailStats"
             app:destination="@id/detailStats" />
+        <action
+            android:id="@+id/action_detailsFragment_to_ballsFragment"
+            app:destination="@id/ballsFragment" />
     </fragment>
     <fragment
         android:id="@+id/playerFragment"
@@ -176,5 +181,14 @@
         android:label="fragment_team_stats"
         tools:layout="@layout/fragment_team_stats" >
         <argument android:name="teamdetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/ballsFragment"
+        android:name="com.samiun.mycricket.ui.detail.BallsFragment"
+        android:label="fragment_balls"
+        tools:layout="@layout/fragment_balls" >
+        <argument
+            android:name="matchdetails"
+            app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
     </fragment>
 </navigation>

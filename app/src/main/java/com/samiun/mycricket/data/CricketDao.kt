@@ -33,14 +33,14 @@ interface CricketDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCountry(data : List<Data>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFixtureWithRun(fixture: List<FixtureWithRunEntity>)
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addleague(data : List<Leagues>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFixture(fixture: List<FixtureEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

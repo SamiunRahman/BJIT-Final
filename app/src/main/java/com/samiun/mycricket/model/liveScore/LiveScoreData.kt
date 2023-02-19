@@ -23,7 +23,7 @@ data class LiveScoreData(
     val round: String?,
     val rpc_overs: Any?,
     val rpc_target: Any?,
-    val runs: List<Run>?,
+    val runs: List<com.samiun.mycricket.model.fixturewithrun.Run>?,
     val season_id: Int?,
     val second_umpire_id: Int?,
     val stage_id: Int?,
