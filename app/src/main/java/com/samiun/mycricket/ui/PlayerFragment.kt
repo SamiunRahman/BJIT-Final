@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -48,61 +49,19 @@ class PlayerFragment : Fragment() {
                 binding.playerName.text = it.fullname
                 binding.playerAge.text = Constants.calculateAge(it.dateofbirth)
                 binding.playerType.text= it.id.toString()
-                binding.playerCountry.text =getCountry(it.country_id!!)
+               // binding.playerCountry.text =getCountry(it.country_id!!)
 
                 val careers: List<Career> = it.career!!
                 var battingCareer = true
-
-                val matches = getMatches(careers)
-                val innings = getInnings(careers)
-                val runs = getRuns(careers)
-                val balls = getBalls(careers)
-                val highest = getHighest(careers)
-                val average = getAverage(careers)
-                val stirkerate  = getStrikerate(careers)
-
+                showBattingStats(careers)
+                binding.playerBatting.setOnClickListener {
+                    showBattingStats(careers)
+                }
+                binding.playerBowling.setOnClickListener {
+                    showBowlingStats(careers)
+                }
 
 
-
-                binding.playert20runs.text = runs[0].toString()
-                binding.playerOdruns.text = runs[1].toString()
-                binding.playerTestruns.text = runs[2].toString()
-
-                Log.e("Player Fragment", "Runs onViewCreated: ${runs[0]}, ${runs[1]}")
-
-               // getRuns(  careers,battingCareer,format)
-//
-//                binding.playerBatting.setOnClickListener {
-//                     battingCareer = "men"
-//
-//                    ///binding. battingCareerMan.setBackgroundColor(R.color.colorOnPrimary)
-//                    getRuns(  careers,battingCareer,format)
-//                    Log.d("Man Ranking", "onViewCreated:$ battingCareer $format ")
-//                }
-//                binding. playerBowling.setOnClickListener {
-//                     battingCareer = "women"
-//                    getRuns( battingCareer,format)
-//                    Log.d("Woman Ranking", "onViewCreated:$ battingCareer $format ")
-//
-//                }
-//                binding.testranking.setOnClickListener {
-//                    format = "TEST"
-//                    getRuns( battingCareer,format)
-//                    Log.d("Test Ranking", "onViewCreated:$ battingCareer $format ")
-//
-//                }
-//                binding.t20ranking.setOnClickListener {
-//                    format = "T20I"
-//                    getRuns( battingCareer,format)
-//                    Log.d("T20 Ranking", "onViewCreated:$ battingCareer $format ")
-//
-//                }
-//                binding.odiranking.setOnClickListener {
-//                    format = "ODI"
-//                    getRuns( battingCareer,format)
-//                    Log.d("ODI Ranking", "onViewCreated:$ battingCareer $format ")
-//
-//                }
 
             }
 
@@ -114,24 +73,253 @@ class PlayerFragment : Fragment() {
 
     }
 
-    private fun getStrikerate(careers: List<Career>): List<Int> {
-        val strikerate = mutableListOf<Int>()
+    private fun showBowlingStats(careers: List<Career>) {
+        binding.highestTV.text = "Wickets"
+        binding.averageTV.text = "Average"
+        binding.economy.text = "Economy"
+
+
+        val runs = getBowlingRuns(careers)
+        binding.playert20runs.text = runs[0].toString()
+        binding.playerOdruns.text = runs[1].toString()
+        binding.playerTestruns.text = runs[2].toString()
+        getBowlingMatches(careers)
+        getBowlingInnings(careers)
+        getBowlingBalls(careers)
+        getWickets(careers)
+        getBowlingAverage(careers)
+        getBowlingStrikerate(careers)
+        getBowlingBest(careers)
+
+    }
+
+    private fun getBowlingBest(careers: List<Career>) {
+        val runs = getBowlingRuns(careers)
+        val balls = getBowlingBalls(careers)
+        val t20 = 6* runs[0].toDouble()/balls[0].toDouble()
+        val odi = 6* runs[1].toDouble()/balls[1].toDouble()
+        val test = 6* runs[2].toDouble()/balls[2].toDouble()
+        binding.playert20economy.text = "%.2f".format(t20)
+        binding.playerOdieconomy.text = "%.2f".format(odi)
+        binding.playerTestEconomy.text = "%.2f".format(test)
+
+    }
+
+    private fun getBowlingStrikerate(careers: List<Career>): List<Double> {
+        val balls = getBowlingBalls(careers)
+        val wickets = getWickets(careers)
+        val sr  = mutableListOf<Double>()
+        val t20sr = balls[0].toDouble()/wickets[0].toDouble()
+        val odisr = balls[1].toDouble()/wickets[0].toDouble()
+        val testsr = balls[2].toDouble()/wickets[2].toDouble()
+        binding.playert20SR.text = "%.2f".format(t20sr)
+        binding.playerTestSR.text = "%.2f".format(testsr)
+        binding.playerOdSR.text ="%.2f".format(odisr)
+        sr.add(t20sr)
+        sr.add(odisr)
+        sr.add(testsr)
+        return sr
+    }
+
+    private fun getBowlingRuns(careers: List<Career>): List<Int> {
+        val runs = mutableListOf<Int>()
+        val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.bowling?.runs ?: 0 }
+        runs.add(t20)
+
+
+
+        val odi= careers.filter { it.type =="ODI"}
+            .sumOf { it.bowling?.runs ?: 0 }
+        runs.add(odi)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.bowling?.runs ?: 0 }
+        runs.add(test)
+        Log.e("Player Fragment", "Runs onViewCreated: ${runs[0]}, ${runs[1]}")
+
+        return runs
+    }
+
+    private fun getBowlingAverage(careers: List<Career>): List<Double> {
+        val runs = getRuns(careers)
+        val wickets = getWickets(careers)
+        val average  = mutableListOf<Double>()
+        val t20average = runs[0].toDouble()/wickets[0].toDouble()
+        val odiAverage = runs[1].toDouble()/wickets[0].toDouble()
+        val testAverage = runs[2].toDouble()/runs[2].toDouble()
+        binding.playert20average.text = "%.2f".format(t20average)
+        binding.playerTestaverage.text = "%.2f".format(testAverage)
+        binding.playerOdiaverage.text = "%.2f".format(odiAverage)
+        average.add(t20average)
+        average.add(odiAverage)
+        average.add(testAverage)
+        return average
+    }
+
+    private fun getWickets(careers: List<Career>): List<Int> {
+        val wickets = mutableListOf<Int>()
+        val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.bowling?.wickets ?: 0 }
+        wickets.add(t20)
+
+
+        val odi= careers.filter { it.type =="ODI"}
+            .sumOf { it.bowling?.wickets ?: 0 }
+        wickets.add(odi)
+
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.bowling?.wickets ?: 0 }
+        wickets.add(test)
+
+        binding.playert20highest.text = t20.toString()
+        binding.playerTesthighest.text = test.toString()
+        binding.playerOdiHighest.text = odi.toString()
+
+        return wickets
+
+    }
+
+    private fun getBowlingBalls(careers: List<Career>): List<Int> {
+        val balls = mutableListOf<Int>()
+        val listOver = mutableListOf<String>()
+        val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { (it.bowling?.overs?.toInt()?.times(6))?.plus(((it.bowling?.overs?.rem(1))?.times(10))?.toInt()!!) ?: 0 }
+        balls.add(t20)
+
+
+
+        val odi= careers.filter { it.type =="ODI"}
+            .sumOf { (it.bowling?.overs?.toInt()?.times(6))?.plus(((it.bowling?.overs?.rem(1))?.times(10))?.toInt()!!) ?: 0 }
+        balls.add(odi)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { (it.bowling?.overs?.toInt()?.times(6))?.plus(((it.bowling?.overs?.rem(1))?.times(10))?.toInt()!!) ?: 0 }
+        balls.add(test)
+
+        binding.playert20balls.text = t20.toString()
+        binding.playerTestballs.text = test.toString()
+        binding.playerOdiballs.text = odi.toString()
+
+        return balls
+    }
+
+    private fun getBowlingInnings(careers: List<Career>): List<Int> {
+
+        val innings = mutableListOf<Int>()
+        val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.bowling?.innings ?: 0 }
+        innings.add(t20)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.bowling?.innings ?: 0 }
+        innings.add(test)
+
+        val odi= careers.filter { it.type =="ODI"}
+            .sumOf { it.bowling?.innings ?: 0 }
+        innings.add(odi)
+
+        binding.playert20Innings.text = t20.toString()
+        binding.playerTestInnings.text = test.toString()
+        binding.playerOdInnigns.text = odi.toString()
+        return innings
+    }
+
+    private fun getBowlingMatches(careers: List<Career>): List<Int> {
+        val matches = mutableListOf<Int>()
+        val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.bowling?.matches ?: 0 }
+        matches.add(t20)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.bowling?.matches ?: 0 }
+        matches.add(test)
+
+        val odi= careers.filter { it.type =="ODI"}
+            .sumOf { it.bowling?.matches ?: 0 }
+        matches.add(odi)
+
+        binding.playert20matches.text = t20.toString()
+        binding.playerTestmathces.text = test.toString()
+        binding.playerOdimatches.text = odi.toString()
+
+        return matches
+    }
+
+    private fun showBattingStats(careers: List<Career>) {
+
+        binding.highestTV.text = "Highest"
+        binding.averageTV.text = "Average"
+        binding.economy.text = "100/50"
+
+        val runs = getRuns(careers)
+        binding.playert20runs.text = runs[0].toString()
+        binding.playerOdruns.text = runs[1].toString()
+        binding.playerTestruns.text = runs[2].toString()
+        getMatches(careers)
+        getInnings(careers)
+        getBalls(careers)
+        getHighest(careers)
+        getAverage(careers)
+        getStrikerate(careers)
+        getBattingRecords(careers)
+
+        binding.playert20runs.text = runs[0].toString()
+        binding.playerOdruns.text = runs[1].toString()
+        binding.playerTestruns.text = runs[2].toString()
+
+        Log.e("Player Fragment", "Runs onViewCreated: ${runs[0]}, ${runs[1]}")
+    }
+
+    private fun getBattingRecords(careers: List<Career>) {
+        val t20fifties= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.batting?.fifties ?: 0 }
+
+
+        val odififites= careers.filter { it.type =="ODI"}
+            .sumOf { it.batting?.fifties ?: 0 }
+
+
+        val testfifties= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.batting?.fifties ?: 0 }
+
+        val t20Hundreds= careers.filter { it.type =="T20"|| it.type =="T20I"}
+            .sumOf { it.batting?.hundreds ?: 0 }
+
+
+        val odiHundreds= careers.filter { it.type =="ODI"}
+            .sumOf { it.batting?.hundreds ?: 0 }
+
+
+        val testHundreds= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.batting?.hundreds ?: 0 }
+        binding.playert20economy.text = "$t20Hundreds/$t20fifties"
+        binding.playerOdieconomy.text = "$odiHundreds/$odififites"
+        binding.playerTestEconomy.text = "$testHundreds/$testfifties"
+    }
+
+
+    private fun getStrikerate(careers: List<Career>): List<Double> {
+        val strikerate = mutableListOf<Double>()
         val runs = getRuns(careers)
         val balls = getBalls(careers)
-        val t20 =  (runs[0]/balls[0])*100
-        val odi =  (runs[1]/balls[1])*100
-        val test =  (runs[2]/balls[2])*100
+        val t20 =  (runs[0].toDouble()/balls[0].toDouble())*100
+        val odi =  (runs[1].toDouble()/balls[1].toDouble())*100
+        val test =  (runs[2].toDouble()/balls[2].toDouble())*100
         strikerate.add(t20)
         strikerate.add(odi)
         strikerate.add(test)
-        binding.playert20SR.text = t20.toString()
-        binding.playerTestSR.text = test.toString()
-        binding.playerOdSR.text = odi.toString()
+        Log.e("Strike Rate", "Strike Rate: $runs , $balls : $strikerate", )
+
+        binding.playert20SR.text = "%.2f".format(t20)
+        binding.playerTestSR.text ="%.2f".format(test)
+        binding.playerOdSR.text = "%.2f".format(odi)
         return strikerate
 
     }
 
-    private fun getAverage(careers: List<Career>): List<Int> {
+    private fun getAverage(careers: List<Career>): List<Double> {
         val runs = getRuns(careers)
         val inngings = getInnings(careers)
         val notOuts = mutableListOf<Int>()
@@ -139,27 +327,33 @@ class PlayerFragment : Fragment() {
             .sumOf { it.batting?.not_outs ?: 0 }
         notOuts.add(t20)
 
-        val test= careers.filter { it.type =="Test/5day"}
-            .sumOf { it.batting?.innings ?: 0 }
-        notOuts.add(test)
+
 
         val odi= careers.filter { it.type =="ODI"}
-            .sumOf { it.batting?.innings ?: 0 }
+            .sumOf { it.batting?.not_outs ?: 0 }
         notOuts.add(odi)
 
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.batting?.not_outs ?: 0 }
+        notOuts.add(test)
 
-        val average = mutableListOf<Int>()
 
-        val t20average =runs[0]/( inngings[0]-notOuts[0])
-        val odiAverage =runs[1]/( inngings[1]-notOuts[1])
-        val testAverage =runs[2]/( inngings[2]-notOuts[2])
+
+
+
+        val average = mutableListOf<Double>()
+
+        val t20average =runs[0].toDouble()/( inngings[0].toDouble()-notOuts[0].toDouble())
+        Log.e("Average", "getAverage: $notOuts", )
+        val odiAverage =runs[1].toDouble()/( inngings[1].toDouble()-notOuts[1].toDouble())
+        val testAverage =runs[2].toDouble()/( inngings[2].toDouble()-notOuts[2].toDouble())
         average.add(t20average)
         average.add(odiAverage)
         average.add(testAverage)
 
-        binding.playert20average.text = t20average.toString()
-        binding.playerTestaverage.text = testAverage.toString()
-        binding.playerOdiaverage.text = odiAverage.toString()
+        binding.playert20average.text = "%.2f".format(t20average)
+        binding.playerTestaverage.text = "%.2f".format(testAverage).toString()
+        binding.playerOdiaverage.text = "%.2f".format(odiAverage).toString()
 
         return average
 
@@ -172,13 +366,15 @@ class PlayerFragment : Fragment() {
             .maxOf { it.batting?.highest_inning_score ?: 0 }
         highest.add(t20)
 
-        val test= careers.filter { it.type =="Test/5day"}
-            .maxOf { it.batting?.highest_inning_score ?: 0 }
-        highest.add(test)
 
         val odi= careers.filter { it.type =="ODI"}
             .maxOf { it.batting?.highest_inning_score ?: 0 }
         highest.add(odi)
+
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .maxOf { it.batting?.highest_inning_score ?: 0 }
+        highest.add(test)
 
         binding.playert20highest.text = t20.toString()
         binding.playerTesthighest.text = test.toString()
@@ -193,13 +389,15 @@ class PlayerFragment : Fragment() {
             .sumOf { it.batting?.balls_faced ?: 0 }
         balls.add(t20)
 
-        val test= careers.filter { it.type =="Test/5day"}
-            .sumOf { it.batting?.balls_faced ?: 0 }
-        balls.add(test)
+
 
         val odi= careers.filter { it.type =="ODI"}
             .sumOf { it.batting?.balls_faced ?: 0 }
         balls.add(odi)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.batting?.balls_faced ?: 0 }
+        balls.add(test)
 
         binding.playert20balls.text = t20.toString()
         binding.playerTestballs.text = test.toString()
@@ -249,10 +447,6 @@ class PlayerFragment : Fragment() {
         return matches
     }
 
-    fun getCountry(id: Int): String{
-        return ""
-    }
-
     fun getRuns(careers: List<Career>):List<Int>{
 
         val runs = mutableListOf<Int>()
@@ -260,13 +454,16 @@ class PlayerFragment : Fragment() {
             .sumOf { it.batting?.runs_scored ?: 0 }
         runs.add(t20)
 
-        val test= careers.filter { it.type =="Test/5day"}
-            .sumOf { it.batting?.runs_scored ?: 0 }
-        runs.add(test)
+
 
         val odi= careers.filter { it.type =="ODI"}
             .sumOf { it.batting?.runs_scored ?: 0 }
         runs.add(odi)
+
+        val test= careers.filter { it.type =="Test/5day"}
+            .sumOf { it.batting?.runs_scored ?: 0 }
+        runs.add(test)
+        Log.e("Player Fragment", "Runs onViewCreated: ${runs[0]}, ${runs[1]}")
 
         return runs
     }
