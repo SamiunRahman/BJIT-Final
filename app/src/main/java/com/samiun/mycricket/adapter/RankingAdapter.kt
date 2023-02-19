@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.ranking.Team
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.ui.RankingFragmentDirections
 import kotlinx.android.parcel.RawValue
 import kotlinx.android.synthetic.main.batting_card.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
@@ -24,6 +26,7 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
         val teamImage = itemView.ranking_image
         val teamname = itemView.team_name
         val rating = itemView.rating
+        val item = itemView.ranking_item
 
     }
 
@@ -35,6 +38,7 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
 
     override fun onBindViewHolder(holder: RankingViewHolder, position: Int) {
         val info = data[position]
+        info.ranking
         holder.teamRank.text = info.position.toString()
         holder.teamname.text = info.name
         holder.rating.text = info.ranking.rating.toString()
@@ -44,6 +48,11 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
             .placeholder(R.drawable.image_downloading)
             .error(R.drawable.not_found_image)
             .into(holder.teamImage)
+
+        holder.item.setOnClickListener {
+            val action = RankingFragmentDirections.actionRankingFragmentToTeamFragment(info.id)
+            holder.itemView.findNavController().navigate(action)
+        }
 
     }
 

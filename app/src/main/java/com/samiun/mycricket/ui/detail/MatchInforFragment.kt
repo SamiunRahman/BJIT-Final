@@ -5,13 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.samiun.mycricket.MatchInforFragmentArgs
 import com.samiun.mycricket.R
-import com.samiun.mycricket.ScoreCardFragmentArgs
 import com.samiun.mycricket.databinding.FragmentMatchInforBinding
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
+import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MatchInforFragment : Fragment() {
 
@@ -48,6 +52,44 @@ class MatchInforFragment : Fragment() {
         binding.visitorteamSquad.text = visitorSquadtxt
         binding.dateData.text = data.starting_at?.let { Constants.dateFormat(it) }
         binding.timeData.text = data.starting_at?.let { Constants.timeFormat(it) }
+        binding.infoMatchdata.text = data.round
+        val  viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
+
+        GlobalScope.launch {
+            val tossWinner = data.toss_won_team_id?.let { viewModel.findTeamById(it) }
+            val firstUmpire = data.first_umpire_id?.let { viewModel.findOfficialbyId(it) }
+            val secondUmpire = data.second_umpire_id?.let { viewModel.findOfficialbyId(it) }
+            val refree = data.referee_id?.let { viewModel.findOfficialbyId(it) }
+            val leagues = data.league_id?.let { viewModel.findLeaguebyId(it) }
+            val venue = data.venue_id?.let { viewModel.findVenueById(it) }
+
+
+            withContext(Dispatchers.Main){
+                binding.tossData.text = "${tossWinner!!.name} won and Elected ${data.elected}"
+                if (venue != null) {
+                    binding.venuData.text = venue.name
+                    binding.stadiumData.text = venue.name
+                    binding.cityData.text = venue.city
+                }
+                if (firstUmpire != null&& secondUmpire!=null) {
+                    binding.umpireData.text ="${firstUmpire.fullname}, ${secondUmpire.fullname}"
+                }
+                if (refree != null) {
+                    binding.reffreeData.text = refree.fullname
+                }
+                if (leagues != null) {
+                    binding.seriesData.text = leagues.name
+                }
+
+
+
+            }
+
+        }
+
+
+        binding.tossData.text = data.elected
+
 
 
     }

@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/battingfirst_sum_tv"
+                        android:id="@+id/battingfirstSumTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -67,7 +67,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/battingfirst_sum_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/battingfirstSumTv"
                         app:spanCount="1"
                         tools:itemCount="3"
                         tools:listitem="@layout/batting_card" />
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/bowlingfirst_sum_tv"
+                        android:id="@+id/bowlingfirstSumTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
@@ -113,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/bowlingfirst_sum_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/bowlingfirstSumTv"
                         app:spanCount="1"
                         tools:itemCount="3"
                         tools:listitem="@layout/batting_card" />

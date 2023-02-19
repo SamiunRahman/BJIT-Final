@@ -1,7 +1,10 @@
 package com.samiun.mycricket.utils
 
+import android.util.Log
 import java.lang.annotation.RetentionPolicy
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
 import java.util.*
 
 class Constants {
@@ -51,6 +54,18 @@ class Constants {
             val time = outputFormat.format(date)
 
             return time
+        }
+
+        fun calculateAge(dateString: String?): String {
+            try {
+                val dob = LocalDate.parse(dateString)
+                val today = LocalDate.now()
+                return Period.between(dob, today).years.toString()+"Years"
+            }
+            catch (e:Exception){
+                Log.e("Constant Calculate Age Exception", "calculateAge: $e", )
+                return "not available"
+            }
         }
     }
 

@@ -52,8 +52,15 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
 
                 if (hometeam != null) {
 
+                    if(hometeam.name!!.length>15){
+                        holder.homeTeamName.text = hometeam.code
+                    }
+                    else
+                        holder.homeTeamName.text = hometeam.name
 
-                    holder.homeTeamName.text = hometeam.name
+
+
+
                     Glide
                         .with(context)
                         .load(hometeam.image_path)
@@ -67,7 +74,11 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
                 }
 
                 if (awayteam != null) {
-                    holder.awayTeamName.text = awayteam.name
+                    if(awayteam.name!!.length>15){
+                        holder.awayTeamName.text = awayteam.code
+                    }
+                    else
+                        holder.awayTeamName.text = awayteam.name
                     Glide
                         .with(context)
                         .load(awayteam.image_path)

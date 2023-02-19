@@ -30,7 +30,9 @@
             app:destination="@id/teamFragment" />
         <argument
             android:name="fixturewithrun"
-            app:argType="com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity" />
+            app:argType="com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_detailsFragment_to_summeryFragment"
             app:destination="@id/summeryFragment" />
@@ -43,12 +45,19 @@
         <action
             android:id="@+id/action_detailsFragment_to_detailStats"
             app:destination="@id/detailStats" />
+        <action
+            android:id="@+id/action_detailsFragment_to_ballsFragment"
+            app:destination="@id/ballsFragment" />
     </fragment>
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.samiun.mycricket.ui.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player" >
+        <argument
+            android:name="player_id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.samiun.mycricket.ui.TeamFragment"
@@ -57,10 +66,25 @@
         <action
             android:id="@+id/action_teamFragment_to_playerFragment"
             app:destination="@id/playerFragment" />
+        <argument
+            android:name="team_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamScheduleFragment"
+            app:destination="@id/teamScheduleFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamResutlsFragment"
+            app:destination="@id/teamResutlsFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamSquadFragment"
+            app:destination="@id/teamSquadFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamStatsFragment"
+            app:destination="@id/teamStatsFragment" />
     </fragment>
     <fragment
         android:id="@+id/scoreCardFragment"
-        android:name="com.samiun.mycricket.ScoreCardFragment"
+        android:name="com.samiun.mycricket.ui.detail.ScoreCardFragment"
         android:label="fragment_score_card"
         tools:layout="@layout/fragment_score_card" >
         <action
@@ -72,7 +96,7 @@
     </fragment>
     <fragment
         android:id="@+id/matchInforFragment"
-        android:name="com.samiun.mycricket.MatchInforFragment"
+        android:name="com.samiun.mycricket.ui.detail.MatchInforFragment"
         android:label="fragment_match_infor"
         tools:layout="@layout/fragment_match_infor" >
         <argument
@@ -81,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/summeryFragment"
-        android:name="com.samiun.mycricket.SummeryFragment"
+        android:name="com.samiun.mycricket.ui.detail.SummeryFragment"
         android:label="fragment_summery"
         tools:layout="@layout/fragment_summery" >
         <action
@@ -93,7 +117,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailStats"
-        android:name="com.samiun.mycricket.DetailStats"
+        android:name="com.samiun.mycricket.ui.detail.DetailStats"
         android:label="fragment_detail_stats"
         tools:layout="@layout/fragment_detail_stats" >
         <argument
@@ -114,7 +138,57 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.samiun.mycricket.SearchFragment"
+        android:name="com.samiun.mycricket.ui.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamScheduleFragment"
+        android:name="com.samiun.mycricket.ui.team.TeamScheduleFragment"
+        android:label="fragment_team_schedule"
+        tools:layout="@layout/fragment_team_schedule" >
+        <argument
+            android:name="teamdetails"
+            app:argType="com.samiun.mycricket.model.teamDetails.TeamDetailsData" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamResutlsFragment"
+        android:name="com.samiun.mycricket.ui.team.TeamResutlsFragment"
+        android:label="fragment_team_resutls"
+        tools:layout="@layout/fragment_team_resutls" >
+        <argument
+            android:name="teamdetails"
+            app:argType="com.samiun.mycricket.model.teamDetails.TeamDetailsData" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamSquadFragment"
+        android:name="com.samiun.mycricket.ui.team.TeamSquadFragment"
+        android:label="fragment_team_squad"
+        tools:layout="@layout/fragment_team_squad" >
+        <argument
+            android:name="teamdetails"
+            app:argType="com.samiun.mycricket.model.teamDetails.TeamDetailsData" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamStatsFragment"
+        android:name="com.samiun.mycricket.ui.team.TeamStatsFragment"
+        android:label="fragment_team_stats"
+        tools:layout="@layout/fragment_team_stats" >
+        <argument android:name="teamdetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/ballsFragment"
+        android:name="com.samiun.mycricket.ui.detail.BallsFragment"
+        android:label="fragment_balls"
+        tools:layout="@layout/fragment_balls" >
+        <argument
+            android:name="matchdetails"
+            app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
+    </fragment>
 </navigation>

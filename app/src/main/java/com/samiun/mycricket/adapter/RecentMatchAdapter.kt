@@ -52,31 +52,54 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
 
             withContext(Dispatchers.Main) {
-                holder.homescore.text = match.runs?.get(0)?.score.toString()
-                holder.awayscore.text = match.runs?.get(1)?.score.toString()
-                if (hometeam != null) {
-                   if(hometeam.id == match.runs?.get(0)?.team_id) {
-                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
-                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
 
-                   }
-                    else{
-                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
-                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
-                   }
+                try {
+                    holder.homescore.text = match.runs?.get(0)?.score.toString()
+                    holder.awayscore.text = match.runs?.get(1)?.score.toString()
 
-                    holder.homeTeamName.text = hometeam.code
-                    Glide
-                        .with(context)
-                        .load(hometeam.image_path)
-                        .placeholder(R.drawable.image_downloading)
-                        .error(R.drawable.not_found_image)
-                        .into(holder.hometeamImage)
-                } else {
-                    val id = match.id.toString()
-                    holder.homeTeamName.text = id
-                    Log.e("Adapter", "${match.id} ", )
+
+                    if (hometeam != null) {
+
+                        if(hometeam.id == match.runs?.get(0)?.team_id && match.runs!!.isNotEmpty()) {
+                            "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
+                            "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
+
+                        }
+                        else{
+                            "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
+                            "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
+                        }
+
+                    }
+
+
                 }
+                catch(e: Exception){
+                }
+//
+//                if (hometeam != null) {
+//                   if(hometeam.id == match.runs?.get(0)?.team_id && match.runs!!.isNotEmpty()) {
+//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
+//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
+//
+//                   }
+//                    else{
+//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
+//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
+//                   }
+//
+//                    holder.homeTeamName.text = hometeam.code
+//                    Glide
+//                        .with(context)
+//                        .load(hometeam.image_path)
+//                        .placeholder(R.drawable.image_downloading)
+//                        .error(R.drawable.not_found_image)
+//                        .into(holder.hometeamImage)
+//                } else {
+//                    val id = match.id.toString()
+//                    holder.homeTeamName.text = id
+//                    Log.e("Adapter", "${match.id} ", )
+//                }
 
                 if (awayteam != null) {
                     holder.awayTeamName.text = awayteam.code
@@ -90,10 +113,23 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
                     val id = match.id.toString()
                     holder.awayTeamName.text = id
                 }
+                if (hometeam != null) {
+                    holder.homeTeamName.text = hometeam!!.code
+
+                    Glide
+                        .with(context)
+                        .load(hometeam.image_path)
+                        .placeholder(R.drawable.image_downloading)
+                        .error(R.drawable.not_found_image)
+                        .into(holder.hometeamImage)
+                }else {
+                    val id = match.id.toString()
+                    holder.homeTeamName.text = id
+                }
+
             }
 
             holder.cardView.setOnClickListener {
-                Toast.makeText(context, "Mathc CLicked", Toast.LENGTH_SHORT).show()
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(match)
                 holder.itemView.findNavController().navigate(action)
             }
