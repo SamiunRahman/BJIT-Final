@@ -10,6 +10,7 @@ import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.officials.Official
 import com.samiun.mycricket.model.officials.OfficialEntity
+import com.samiun.mycricket.model.player.PlayerEntity
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
@@ -53,8 +54,15 @@ class CricketRepository(private val cricketDao: CricketDao) {
     suspend fun readLeague(id: Int): Leagues{
         return cricketDao.readLeagues(id)
     }
+
+    suspend fun readPlayer(id: Int): PlayerEntity{
+        return cricketDao.readPlayer(id)
+    }
     suspend fun readVenue(id: Int): VenueEntity{
         return cricketDao.readVenueId(id)
+    }
+    suspend fun readCountry(id: Int): Data{
+        return cricketDao.readCountryId(id)
     }
 
 

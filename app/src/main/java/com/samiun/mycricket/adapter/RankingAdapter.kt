@@ -13,6 +13,7 @@ import com.samiun.mycricket.R
 import com.samiun.mycricket.model.ranking.Team
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.RankingFragmentDirections
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.parcel.RawValue
 import kotlinx.android.synthetic.main.batting_card.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
@@ -43,7 +44,7 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
         holder.teamname.text = info.name
         holder.rating.text = info.ranking.rating.toString()
         Glide
-            .with(context)
+            .with(MyApplication.instance)
             .load(info.image_path)
             .placeholder(R.drawable.image_downloading)
             .error(R.drawable.not_found_image)

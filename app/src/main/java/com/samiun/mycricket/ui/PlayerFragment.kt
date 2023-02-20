@@ -20,6 +20,11 @@ import com.samiun.mycricket.model.playerDetails.Career
 import com.samiun.mycricket.model.playerDetails.PlayerDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
+import kotlinx.android.synthetic.main.fragment_match_infor.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlayerFragment : Fragment() {
     private lateinit var viewModel: CricketViewModel
@@ -48,8 +53,19 @@ class PlayerFragment : Fragment() {
             if (it != null) {
                 binding.playerName.text = it.fullname
                 binding.playerAge.text = Constants.calculateAge(it.dateofbirth)
-                binding.playerType.text= it.id.toString()
+                binding.playerType.text= it.position?.name
                // binding.playerCountry.text =getCountry(it.country_id!!)
+                GlobalScope.launch {
+                    val country = it.country_id?.let { it1 -> viewModel.findCountryById(it1) }
+                    withContext(Dispatchers.Main){
+                        if (country != null) {
+                            binding.playerCountry.text = country.name
+                        }
+                        else
+                            binding.playerCountry.visibility= View.GONE
+
+                    }
+                }
 
                 val careers: List<Career> = it.career!!
                 var battingCareer = true
@@ -60,6 +76,13 @@ class PlayerFragment : Fragment() {
                 binding.playerBowling.setOnClickListener {
                     showBowlingStats(careers)
                 }
+
+                Glide
+                    .with(requireContext())
+                    .load(it.image_path)
+                    .placeholder(R.drawable.image_downloading)
+                    .error(R.drawable.not_found_image)
+                    .into(binding.playerImage)
             }
         }
     }

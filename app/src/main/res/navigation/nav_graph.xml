@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_moreFragment"
+            app:destination="@id/moreFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -191,4 +194,9 @@
             android:name="matchdetails"
             app:argType="com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData" />
     </fragment>
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.samiun.mycricket.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" />
 </navigation>

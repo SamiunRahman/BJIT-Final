@@ -1,8 +1,8 @@
-package com.samiun.mycricket.model.playerDetails
+package com.samiun.mycricket.model.ademo
 
+import com.samiun.mycricket.model.playerDetails.Team
 
-
-data class PlayerDetailsData(
+data class Data(
     val battingstyle: String,
     val bowlingstyle: String,
     val career: List<Career>,

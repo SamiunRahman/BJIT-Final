@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.samiun.mycricket.model.teamDetails.TeamDetailsData
+import com.samiun.mycricket.ui.detail.BallsFragment
 import com.samiun.mycricket.ui.team.TeamResutlsFragment
 import com.samiun.mycricket.ui.team.TeamScheduleFragment
 import com.samiun.mycricket.ui.team.TeamSquadFragment

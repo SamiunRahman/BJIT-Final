@@ -15,30 +15,56 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            android:padding="10dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-112dp">
 
             <ImageView
-                android:id="@+id/team_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/player_imagecv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/team_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    tools:src="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/home_team_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/team_image"
-                app:layout_constraintStart_toStartOf="@+id/team_image"
-                app:layout_constraintTop_toBottomOf="@+id/team_image"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/player_imagecv"
+                app:layout_constraintStart_toStartOf="@+id/player_imagecv"
+                app:layout_constraintTop_toBottomOf="@+id/player_imagecv"
                 tools:text="Bangladesh" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -53,7 +79,7 @@
             app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="#E8B1B1">
+            app:tabTextColor="#A59E9E">>
 
             <!-- Add your tabs here -->
         </com.google.android.material.tabs.TabLayout>

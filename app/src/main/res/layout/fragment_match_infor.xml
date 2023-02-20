@@ -36,16 +36,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/squad_line"
-            android:layout_width="2dp"
-            android:layout_height="200dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
-
         <LinearLayout
             android:id="@+id/squad_layout"
             android:layout_width="match_parent"
@@ -87,29 +77,22 @@
             android:padding="5dp"
             app:layout_constraintTop_toBottomOf="@+id/squad_layout">
 
-            <TextView
-                android:id="@+id/localteam_squad"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/localteam_squad_rv"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                tools:text="Player 1,Player 2,Player 3,Player 4,Player 5,Player 6,Player 7,Player 8,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,"
-                android:ellipsize="end"
-                />
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
-            <TextView
-                android:id="@+id/visitorteam_squad"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/visitorteam_squad_rv"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:ellipsize="end"
-                tools:text="Player 1,Player 2,Player 3,Player 4,Player 5,Player 6,Player 7,Player 8,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,Player 1,"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
-                />
+            />
+
 
 
         </LinearLayout>

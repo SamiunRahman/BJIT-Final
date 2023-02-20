@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
+import com.samiun.mycricket.adapter.LineupAdapter
+import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.databinding.FragmentMatchInforBinding
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
+import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +26,8 @@ class MatchInforFragment : Fragment() {
     val gerArgs: MatchInforFragmentArgs by navArgs()
     private var _binding: FragmentMatchInforBinding? = null
     private val binding get() = _binding!!
+    private lateinit var localRV : RecyclerView
+    private lateinit var visitoreRv : RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,22 +40,29 @@ class MatchInforFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val data = gerArgs.matchdetails
-
+        localRV = binding.localteamSquadRv
+        visitoreRv = binding.visitorteamSquadRv
         val localSquadStr = mutableListOf<String>()
         val visitorSquadStr =  mutableListOf<String>()
+        val localSquad = mutableListOf<Lineup>()
+        val visitorSquad =  mutableListOf<Lineup>()
         for(i in data.lineup!!){
             if(i.lineup!!.team_id == data.localteam_id){
-                i.fullname?.let { localSquadStr.add(it)
-                }
+                localSquad.add(i)
             }
             else{
-                i.fullname?.let { visitorSquadStr.add(it) }
+                visitorSquad.add(i)
             }
         }
-        val localSquadtxt = localSquadStr.joinToString(", ")
-        val visitorSquadtxt = visitorSquadStr.joinToString(", ")
-        binding.localteamSquad.text = localSquadtxt
-        binding.visitorteamSquad.text = visitorSquadtxt
+
+        val adapterViewState = localRV.layoutManager?.onSaveInstanceState()
+        localRV.layoutManager?.onRestoreInstanceState(adapterViewState)
+        localRV.adapter = LineupAdapter(requireContext(), localSquad)
+
+        val adapterViewState2 = visitoreRv.layoutManager?.onSaveInstanceState()
+        visitoreRv.layoutManager?.onRestoreInstanceState(adapterViewState)
+        visitoreRv.adapter = LineupAdapter(requireContext(), visitorSquad)
+
         binding.dateData.text = data.starting_at?.let { Constants.dateFormat(it) }
         binding.timeData.text = data.starting_at?.let { Constants.timeFormat(it) }
         binding.infoMatchdata.text = data.round
@@ -63,7 +76,11 @@ class MatchInforFragment : Fragment() {
             val leagues = data.league_id?.let { viewModel.findLeaguebyId(it) }
             val venue = data.venue_id?.let { viewModel.findVenueById(it) }
 
+            val localTeam = data.localteam_id?.let { viewModel.findTeamById(it) }
+            val visitorteam  = data.visitorteam_id?.let { viewModel.findTeamById(it) }
 
+            binding.localteamName.text = localTeam?.name
+            binding.visitorteamName.text = visitorteam?.name
             withContext(Dispatchers.Main){
                 binding.tossData.text = "${tossWinner!!.name} won and Elected ${data.elected}"
                 if (venue != null) {

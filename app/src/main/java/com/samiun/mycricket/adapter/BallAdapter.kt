@@ -20,10 +20,10 @@ class BallsAdapter(private val context: Context, private val viewModel: CricketV
     class BallsViewHolder(
         binding: View
     ): RecyclerView.ViewHolder(binding){
-        val teamRank = itemView.rank_position
-        val teamImage = itemView.ranking_image
-        val teamname = itemView.team_name
-        val rating = itemView.rating
+        val ball = itemView.rank_position
+        val runs = itemView.ranking_image
+        val bolwerToBatsman = itemView.team_name
+        val score = itemView.rating
         val item = itemView.ranking_item
 
     }
@@ -37,15 +37,11 @@ class BallsAdapter(private val context: Context, private val viewModel: CricketV
     override fun onBindViewHolder(holder: BallsViewHolder, position: Int) {
         val info = data[position]
 
-        holder.teamRank.text = info.ball.toString()
-        holder.teamname.text = "${info.bowler?.fullname} to ${info.batsman?.fullname} "
-       // holder.rating.text = info.score.
+        holder.ball.text = info.ball.toString()
+        holder.bolwerToBatsman.text = "${info.bowler?.fullname} to ${info.batsman?.fullname} "
+        holder.score.text = info.score?.name
+        holder.runs.visibility = View.GONE
 
-//
-//        holder.item.setOnClickListener {
-//            val action = RankingFragmentDirections.actionRankingFragmentToTeamFragment(info.id)
-//            holder.itemView.findNavController().navigate(action)
-//        }
 
     }
 

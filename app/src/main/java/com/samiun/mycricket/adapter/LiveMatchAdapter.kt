@@ -14,6 +14,7 @@ import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.liveScore.LiveScoreData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
@@ -44,11 +45,8 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
     override fun onBindViewHolder(holder: LiveMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.note
-        Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
         val runs = match.runs
         holder.status.visibility = View.VISIBLE
-
-       Log.e("Live match", "onBindViewHolder: ${match}", )
 
 
         GlobalScope.launch {
@@ -58,9 +56,6 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
             val run1 = match.runs?.get(0)?.score
             val wicket1 = match.runs?.get(0)?.wickets
             val over1 = match.runs?.get(0)?.overs
-//            val run2 = match.runs?.get(1)?.score
-//            val wicket2 = match.runs?.get(1)?.wickets
-//            val over2 = match.runs?.get(1)?.overs
 
             withContext(Dispatchers.Main) {
 
@@ -77,8 +72,6 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
                                 "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
 
                             }
-
-                         //   holder.awayscore.text = "$run2/$wicket2\n$over2"
                         }
                         else{
                             if(match.runs?.size ?:0 <2){
@@ -91,10 +84,6 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
 
                             Log.e("Live match", "onBindViewHolder: ${match.runs}", )
 
-
-                           // holder.awayscore.text = "$run1/$wicket1\n$over1"
-                           // holder.homescore.text = "$run2/$wicket2\n$over2"
-
                         }
 
                     }
@@ -104,35 +93,12 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
                 catch(e: Exception){
                     Log.e("Live Match Exception", "onBindViewHolder: $e", )
                 }
-//
-//                if (hometeam != null) {
-//                   if(hometeam.id == match.runs?.get(0)?.team_id && match.runs!!.isNotEmpty()) {
-//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
-//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
-//
-//                   }
-//                    else{
-//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
-//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
-//                   }
-//
-//                    holder.homeTeamName.text = hometeam.code
-//                    Glide
-//                        .with(context)
-//                        .load(hometeam.image_path)
-//                        .placeholder(R.drawable.image_downloading)
-//                        .error(R.drawable.not_found_image)
-//                        .into(holder.hometeamImage)
-//                } else {
-//                    val id = match.id.toString()
-//                    holder.homeTeamName.text = id
-//                    Log.e("Adapter", "${match.id} ", )
-//                }
+
 
                 if (awayteam != null) {
                     holder.awayTeamName.text = awayteam.code
                     Glide
-                        .with(context)
+                        .with(MyApplication.instance)
                         .load(awayteam.image_path)
                         .placeholder(R.drawable.image_downloading)
                         .error(R.drawable.not_found_image)
@@ -145,7 +111,7 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
                     holder.homeTeamName.text = hometeam!!.code
 
                     Glide
-                        .with(context)
+                        .with(MyApplication.instance)
                         .load(hometeam.image_path)
                         .placeholder(R.drawable.image_downloading)
                         .error(R.drawable.not_found_image)
