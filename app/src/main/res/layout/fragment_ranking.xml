@@ -30,21 +30,21 @@
 
                 <Button
                     android:id="@+id/gender_man"
-                    android:layout_width="0dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Man"
-                   />
+                    android:fontFamily="@font/actor"
+                    android:text="Man" />
 
                 <Button
                     android:id="@+id/gender_woman"
-                    android:layout_width="0dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Woman"
-                     />
+                    android:fontFamily="@font/actor"
+                    android:text="Woman" />
 
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -61,12 +61,12 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/t20ranking"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="T20"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                     />
+                    android:fontFamily="@font/alata"
+                    android:text="T20" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/odiranking"
@@ -74,16 +74,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ODI"
-                     />
+                    android:fontFamily="@font/alata"
+                    android:text="ODI" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/testranking"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Test"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
+                    android:fontFamily="@font/alata"
+                    android:text="Test" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -103,21 +104,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="@font/actor"
                     android:padding="5dp"
+                    android:text="#"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="#" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
                     android:id="@+id/team_nametv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:fontFamily="@font/actor"
 
+                    android:padding="5dp"
                     android:text="Team"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -130,13 +133,14 @@
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/actor"
                     android:padding="5dp"
+                    android:text="Points"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Points" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

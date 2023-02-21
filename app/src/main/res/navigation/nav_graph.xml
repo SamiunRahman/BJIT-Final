@@ -196,7 +196,7 @@
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.samiun.mycricket.MoreFragment"
+        android:name="com.samiun.mycricket.ui.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
 </navigation>

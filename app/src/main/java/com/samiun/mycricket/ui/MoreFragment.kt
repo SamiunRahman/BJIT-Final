@@ -1,10 +1,11 @@
-package com.samiun.mycricket
+package com.samiun.mycricket.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.samiun.mycricket.R
 
 class MoreFragment : Fragment() {
 

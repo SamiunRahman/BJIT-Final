@@ -5,17 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithdetails.Ball
-import com.samiun.mycricket.model.ranking.Team
-import com.samiun.mycricket.network.overview.CricketViewModel
-import com.samiun.mycricket.ui.RankingFragmentDirections
 import kotlinx.android.synthetic.main.ranking_list.view.*
 
-class BallsAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<Ball>)
+class BallsAdapter(private val context: Context, private var data: List<Ball>)
     : RecyclerView.Adapter<BallsAdapter.BallsViewHolder>(){
     class BallsViewHolder(
         binding: View
@@ -46,7 +41,6 @@ class BallsAdapter(private val context: Context, private val viewModel: CricketV
     }
 
     override fun getItemCount(): Int {
-        // Log.d("Ranking Adapter", "getItemCount: ${data.size}")
         return data.size
 
     }

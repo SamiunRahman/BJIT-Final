@@ -38,33 +38,33 @@
                         android:id="@+id/battingfirst_score_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:background="@color/colorPrimary"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="@font/alata"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text= "Bangladesh"
                         android:textColor="@color/white"
                         android:textSize="15dp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Bangladesh" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/bowlingfirst_score_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:background="@color/colorPrimary"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="@font/alata"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text= "West Indies"
                         android:textColor="@color/white"
                         android:textSize="15dp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="West Indies" />
                   </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -89,26 +89,120 @@
                         android:id="@+id/batting_score_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:background="@color/colorPrimary"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="@font/actor"
                         android:gravity=""
                         android:padding="4dp"
-                        android:layout_marginTop="5dp"
-                        tools:text="Bangladesh Batting"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Bangladesh Batting" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:padding="4dp"
+                        android:paddingBottom="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/batting_score_tv">
+
+                        <TextView
+                            android:id="@+id/playernametv"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Batsman"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/runorover"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/playernametv"
+                            app:layout_constraintStart_toEndOf="@+id/playernametv"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="Run" />
+
+                        <TextView
+                            android:id="@+id/ballormaiden"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/runorover"
+                            app:layout_constraintStart_toEndOf="@+id/runorover"
+                            app:layout_constraintTop_toTopOf="@+id/runorover"
+                            android:text="Ball" />
+
+
+                        <TextView
+                            android:id="@+id/foursorruns"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/ballormaiden"
+                            app:layout_constraintStart_toEndOf="@+id/ballormaiden"
+                            app:layout_constraintTop_toTopOf="@+id/ballormaiden"
+                            android:text="4's" />
+
+
+                        <TextView
+                            android:id="@+id/sixorwicket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/foursorruns"
+                            app:layout_constraintStart_toEndOf="@+id/foursorruns"
+                            app:layout_constraintTop_toTopOf="@+id/foursorruns"
+                            android:text="6's" />
+
+                        <TextView
+                            android:id="@+id/strikerateoreconomy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/sixorwicket"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/sixorwicket"
+                            android:text="Strike Rate" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/battingRv"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="4dp"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/batting_score_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/constraint_item"
                         app:spanCount="1"
                         tools:itemCount="11"
                         tools:listitem="@layout/batting_card" />
@@ -137,17 +231,17 @@
                         android:id="@+id/bowling_score_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:fontFamily="sans-serif-light"
-                        android:padding="4dp"
                         android:layout_marginTop="5dp"
-                        tools:text="West Indies Bowling"
+                        android:background="@color/colorPrimary"
+                        android:fontFamily="@font/actor"
+                        android:padding="4dp"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="West Indies Bowling" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/bowlingRv"
