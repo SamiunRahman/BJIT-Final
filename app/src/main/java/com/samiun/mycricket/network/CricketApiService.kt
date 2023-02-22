@@ -79,14 +79,14 @@ interface CricketApiService{
     ): FixtureWithRun
 
 
-    @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&${Constants.api_token3}")
+    @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&${Constants.api_token1}")
     suspend fun getMatchDetails(
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
     ): FixtureWithDetails
 
 
 
-    @GET("livescores?include=batting,bowling,lineup,balls,runs&${Constants.api_token3}")
+    @GET("livescores?include=batting,bowling,lineup,balls,runs&${Constants.api_token1}")
     suspend fun getLiveMatches(
     ): LiveScore
 
@@ -103,7 +103,7 @@ interface CricketApiService{
 //    ): Fixture
 
 
-    @GET("fixtures?&${Constants.api_token3}")
+    @GET("fixtures?&${Constants.api_token1}")
     suspend fun getFixtures(
         @Query(value = "filter[starts_between]", encoded = false) p1: String
     ): Fixture
@@ -112,7 +112,7 @@ interface CricketApiService{
     suspend fun getFixtureWithRun(
         @Query("filter[starts_between]") p1: String = "${Constants.getTime(-200)},${Constants.getTime(0)}",
         @Query("include") p2: String = "runs",
-        @Query("api_token") p3: String = Constants.api_token2
+        @Query("api_token") p3: String = Constants.api_token
     ): FixtureWithRun
 
 
@@ -120,29 +120,29 @@ interface CricketApiService{
     @GET("players?fields[players]=id,fullname,image_path,dateofbirth&${Constants.api_token1}")
     suspend fun getPlayers(): Players
 
-    @GET("team-rankings?${Constants.api_token3}")
+    @GET("team-rankings?${Constants.api_token1}")
     suspend fun getRanking(): Ranking
 
-    @GET("venues?${Constants.api_token3}")
+    @GET("venues?${Constants.api_token1}")
     suspend fun getVenus(): Venue
 
-    @GET("officials?${Constants.api_token3}")
+    @GET("officials?${Constants.api_token1}")
     suspend fun getOfficials(): Official
 
-    @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&${Constants.api_token3}")
+    @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&${Constants.api_token1}")
     suspend fun getTeamDetails(
         @Path(value = "TEAM_ID", encoded = false) key: Int
     ): TeamDetails
 
 
-    @GET("teams/{TEAM_ID}/squad/23?&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    @GET("teams/{TEAM_ID}/squad/23?&${Constants.api_token1}")
     suspend fun getTeamSquad(
         @Path(value = "TEAM_ID", encoded = false) key: Int
     ): TeamSquad
 
 
 
-    @GET("players/{PLAYER_ID}?include=career,teams&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    @GET("players/{PLAYER_ID}?include=career,teams&${Constants.api_token1}")
     suspend fun getPlayerDetails(
        @Path(value = "PLAYER_ID", encoded = false) key: Int
     ): PlayerDetails
