@@ -1,14 +1,19 @@
 package com.samiun.mycricket.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.findNavController
 import com.samiun.mycricket.R
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.model.fixturewithdetails.Batting
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.ui.DetailsFragmentDirections
+import com.samiun.mycricket.ui.detail.ScoreCardFragmentDirections
 import kotlinx.android.synthetic.main.batting_card.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,6 +30,7 @@ class BattingCardAdapter(private val context:Context, private val viewModel : Cr
             val sixs = itemView.sixorwicket
             val strikerate = itemView.strikerateoreconomy
             val outBy = itemView.out_style
+            val item = itemView.constraint_item
 
         }
 
@@ -46,6 +52,16 @@ class BattingCardAdapter(private val context:Context, private val viewModel : Cr
         holder.fours.text = "${info.four_x}"
         holder.sixs.text = "${info.six_x}"
         holder.strikerate.text = "${info.rate}"
+
+        holder.item.setOnClickListener{
+            try {
+                val action = DetailsFragmentDirections.actionDetailsFragmentToPlayerFragment2(info.player_id!!)
+                holder.itemView.findNavController().navigate(action)
+            }catch (e: Exception){
+                Log.e("Batting Adapter", "onBindViewHolder: $e", )
+
+            }
+        }
         GlobalScope.launch {
             val bowler = info.bowling_player_id?.let { viewModel.findPlayerbyId(it) }
             val catchby = info.catch_stump_player_id?.let { viewModel.findLeaguebyId(it) }

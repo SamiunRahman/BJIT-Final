@@ -91,6 +91,8 @@ class DetailsFragment : Fragment() {
                     }
                 }.attach()
 
+
+
             }
 
         }
@@ -140,5 +142,9 @@ class DetailsFragment : Fragment() {
         }
 
 
+
+
     }
+
+
 }

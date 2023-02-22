@@ -79,28 +79,6 @@ class RankingFragment : Fragment() {
 
         }
 
-//        val toggleGroup = binding.formatGroup
-//        toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
-//            val odiButton = binding.odiranking
-//            if (isChecked) {
-//                odiButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-//            } else {
-//                odiButton.setBackgroundColor(resources.getColor(android.R.color.transparent))
-//            }
-//            val t20button = binding.t20ranking
-//            if (isChecked) {
-//                t20button.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-//            } else {
-//                t20button.setBackgroundColor(resources.getColor(android.R.color.transparent))
-//            }
-//            val testButton = binding.testranking
-//            if (isChecked) {
-//                testButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-//            } else {
-//                testButton.setBackgroundColor(resources.getColor(android.R.color.transparent))
-//            }
-//        }
-
         rankingRecyclerView = binding.rankingRv
         viewModel.getRanking("men", "T20I").observe(viewLifecycleOwner){
             rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)

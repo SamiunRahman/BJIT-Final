@@ -113,15 +113,45 @@ class SummeryFragment : Fragment() {
         val bowlingFirstBowlingSummery = bowlingFirstBowling.sortedWith(compareByDescending<Bowling> { it.wickets }.thenBy { it.runs })
             .take(3)
 
+        try {
+            binding.battingfirstSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
+                battingFirstBattingSummery as MutableList<Batting>, lineup)
+        }
+        catch (e:Exception){
+            binding.battingfirstSumTv.text = "Summery is not Available!"
 
-        binding.battingfirstSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
-            battingFirstBattingSummery as MutableList<Batting>, lineup)
-        binding.battingsecondSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
-            bowlingFirstBattingSummery as MutableList<Batting>, lineup)
+        }
 
-        binding.bowlingfirstSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
-            bowlingFirstBowlingSummery as MutableList<Bowling>, lineup)
-        binding.bowlingsecondSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
-            battingFirstBowlingSummery as MutableList<Bowling>, lineup)
+        try {
+            binding.battingsecondSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
+                bowlingFirstBattingSummery as MutableList<Batting>, lineup)
+
+        }
+        catch (e:Exception){
+            binding.battingsecondSumTv.visibility = View.GONE
+
+        }
+        try {
+
+            binding.bowlingfirstSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
+                bowlingFirstBowlingSummery as MutableList<Bowling>, lineup)
+        }
+        catch (e:Exception){
+            binding.bowlingfirstSumTv.visibility =View.GONE
+
+        }
+
+        try {
+
+            binding.bowlingsecondSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
+                battingFirstBowlingSummery as MutableList<Bowling>, lineup)
+        }
+        catch (e:Exception){
+            binding.bowlingsecondSumTv.visibility = View.GONE
+
+        }
+
+
+
     }
 }

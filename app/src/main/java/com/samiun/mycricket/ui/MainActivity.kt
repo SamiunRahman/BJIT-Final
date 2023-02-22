@@ -17,6 +17,7 @@ import com.samiun.mycricket.R
 import com.samiun.mycricket.databinding.ActivityMainBinding
 import com.samiun.mycricket.utils.ConectivityChecker
 import com.samiun.mycricket.utils.GetCricketWorker
+import kotlinx.android.synthetic.main.fragment_details.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), ConectivityChecker.ConnectivityReceiverListener {
@@ -72,6 +73,5 @@ class MainActivity : AppCompatActivity(), ConectivityChecker.ConnectivityReceive
         }
         isPreviouslyConnected = isConnected
     }
-
 
 }

@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/live_matches_cv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
@@ -28,11 +28,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/drop_down_24"
-
-            android:fontFamily="@font/alata"
             android:gravity="center_vertical|start"
             android:padding="4dp"
-            android:text="Playing XI"
+            android:text="@string/playing_xi"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,8 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/actor"
-                android:text="HomeTeam"
+                android:text="@string/hometeam"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -62,9 +59,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/actor"
                 android:gravity="right"
-                android:text="AwayTeam"
+                android:text="@string/awayteam"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -94,16 +90,12 @@
                 android:layout_weight="1"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
-            />
-
-
-
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/match_infos"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="match_parent"
              android:layout_margin="3dp"
             android:background="@color/black"
             app:cardCornerRadius="5dp"
@@ -114,7 +106,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1000dp">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/info"
@@ -122,12 +114,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:drawableEnd="@drawable/drop_down_24"
-
-                    android:fontFamily="@font/alata"
                     android:gravity="center_vertical|start"
                     android:padding="4dp"
-                    android:text="Match Info"
+                    android:text="@string/match_info"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,8 +137,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
-                        android:text="Match"
+                        android:text="@string/match"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -156,7 +146,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -181,8 +170,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
-                        android:text="series"
+                        android:text="@string/series"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -191,7 +179,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -215,8 +202,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -225,7 +211,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -250,8 +235,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
-                        android:text="time"
+                        android:text="@string/time"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -260,7 +244,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -285,7 +268,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
                         android:text="Toss"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
@@ -295,7 +277,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -320,7 +301,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
                         android:text="Venue"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
@@ -330,7 +310,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -354,7 +333,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
                         android:text="Umpire"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
@@ -364,7 +342,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -389,7 +366,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
                         android:text="reffree"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
@@ -399,7 +375,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -413,7 +388,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/reffreeinfo">
@@ -423,7 +397,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
                         android:text="Stadium"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
@@ -433,7 +406,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/actor"
                         android:gravity="right"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -458,8 +430,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/alata"
-                        android:text="City"
+                        android:text="@string/city"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 

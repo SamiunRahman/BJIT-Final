@@ -1,6 +1,7 @@
 package com.samiun.mycricket.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,13 +54,36 @@ class DetailStats : Fragment() {
         val topBowlers = bowling?.sortedWith(compareByDescending<Bowling> { it.wickets }.thenBy { it.runs })
             ?.take(3)
 
+        GlobalScope.launch {
+            val runs = data.id?.let { viewModel.findFixturebyid(it) }
+            try {
+                val team1runs = runs?.runs?.get(0)?.score
+                val team1wicket = runs?.runs?.get(0)?.wickets
+                val team2runs = runs?.runs?.get(1)?.score
+                val team2wicket = runs?.runs?.get(1)?.wickets
+                val runsperwicket = team1runs?.div(team1wicket!!)
+                val runs2perwicket = team2runs?.div(team2wicket!!)
+            }
+            catch (e: Exception){
+                Log.e("Match Details Stats", "onViewCreated: $e", )
+            }
+
+        }
+
+        try {
+            binding.rvTopBatsman.adapter = BattingCardAdapter(requireContext(), viewModel,
+                topBatters as MutableList<Batting>, data.lineup!!)
+
+            binding.rvMostImpactfulBowler.adapter = BowlingCardAdapter(requireContext(), viewModel,
+                topBowlers as MutableList<Bowling>, data.lineup!!)
+        }
+        catch (e: Exception){
+            Log.e("Detail Stats Exception", "onViewCreated: $e", )
+        }
 
 
-        binding.rvTopBatsman.adapter = BattingCardAdapter(requireContext(), viewModel,
-            topBatters as MutableList<Batting>, data.lineup!!)
-
-        binding.rvMostImpactfulBowler.adapter = BowlingCardAdapter(requireContext(), viewModel,
-            topBowlers as MutableList<Bowling>, data.lineup!!)
+/*        binding.rvMostImpactfulBowler.adapter = BowlingCardAdapter(requireContext(), viewModel,
+            topBowlers as MutableList<Bowling>, data.lineup!!)*/
 
     }
 

@@ -13,36 +13,38 @@ import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
+import com.samiun.mycricket.ui.series.SeriesDetailsFragment
+import com.samiun.mycricket.ui.series.SeriesDetailsFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
 
-class RecentMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureWithRunEntity>)
-    :RecyclerView.Adapter<RecentMatchAdapter.RecentMatchViewHolder>(){
-        class RecentMatchViewHolder(
-            binding: View
-        ): RecyclerView.ViewHolder(binding){
-            val homeTeamName = itemView.home_team
-            val awayTeamName = itemView.away_team
-            val hometeamImage = itemView.home_toss
-            val awayteamImage = itemView.away_toss
-            val notes = itemView.match_notes
-            val homescore = itemView.home_team_score
-            val awayscore = itemView.away_team_score
-            val cardView = itemView.constraint_item
-            val status = itemView.isRecent
+class SeriesRecenMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureWithRunEntity>)
+    :RecyclerView.Adapter<SeriesRecenMatchAdapter.SeriesRecenMatchViewHolder>(){
+    class SeriesRecenMatchViewHolder(
+        binding: View
+    ): RecyclerView.ViewHolder(binding){
+        val homeTeamName = itemView.home_team
+        val awayTeamName = itemView.away_team
+        val hometeamImage = itemView.home_toss
+        val awayteamImage = itemView.away_toss
+        val notes = itemView.match_notes
+        val homescore = itemView.home_team_score
+        val awayscore = itemView.away_team_score
+        val cardView = itemView.constraint_item
+        val status = itemView.isRecent
 
-        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentMatchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesRecenMatchViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.match_list,parent,false)
-        return RecentMatchViewHolder(root)
+        return SeriesRecenMatchViewHolder(root)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onBindViewHolder(holder: RecentMatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SeriesRecenMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.note
         Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
@@ -106,7 +108,7 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
 //            holder.status.text = match.status
 
             holder.cardView.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(match)
+                val action = SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToDetailsFragment(match)
                 holder.itemView.findNavController().navigate(action)
             }
 

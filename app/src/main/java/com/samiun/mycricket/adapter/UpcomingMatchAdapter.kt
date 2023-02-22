@@ -10,11 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixture.FixtureEntity
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.ui.HomeFragmentDirections
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
@@ -33,6 +37,7 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
         val hometeamImage = itemView.home_toss
         val awayteamImage = itemView.away_toss
         val notes = itemView.match_notes
+        val item = itemView.constraint_item
         val homescore = itemView.home_team_score
         val awayscore = itemView.away_team_score
         val status = itemView.isUpcoming
@@ -52,6 +57,14 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val targetDate = dateFormat.parse(match.starting_at)
         holder.status.visibility = View.VISIBLE
+
+        holder.item.setOnClickListener {
+
+            val fixtureWithRun = FixtureWithRunEntity(match.draw_noresult,match.elected,match.first_umpire_id,match.follow_on,match.id,match.last_period,match.league_id,match.live,null,match.localteam_id,match.man_of_match_id,match.man_of_series_id,match.note,match.referee_id,match.resource,
+            match.round,match.rpc_overs,match.rpc_target,null,match.season_id,match.second_umpire_id,match.stage_id,match.starting_at,match.status,match.super_over,match.toss_won_team_id,match.total_overs_played,match.tv_umpire_id,match.type,match.venue_id,null,match.visitorteam_id,match.weather_report,match.winner_team_id)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(fixtureWithRun)
+            holder.itemView.findNavController().navigate(action)
+        }
 
         val countdownTimer = object : CountDownTimer(targetDate.time - System.currentTimeMillis(), 1000) {
 
@@ -81,6 +94,9 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
 
 
         Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
+
+
+
 
 
 

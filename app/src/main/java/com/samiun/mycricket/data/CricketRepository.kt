@@ -24,6 +24,8 @@ class CricketRepository(private val cricketDao: CricketDao) {
 
     val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>> = cricketDao.readFixtureWithRun()
     val readTeamEntity: LiveData<List<TeamEntity>> = cricketDao.readTeamEntity()
+    val readLeagues: LiveData<List<Leagues>> = cricketDao.readLeagues()
+
     val readPlayerData: LiveData<List<PlayerData>> = cricketDao.readPlayerData()
 
     suspend fun addFixturesWithRun(fixtureWithRunEntity:List<FixtureWithRunEntity>){
@@ -46,6 +48,19 @@ class CricketRepository(private val cricketDao: CricketDao) {
     fun readTeam(id: Int): TeamEntity{
         return cricketDao.readTeamId(id)
     }
+
+    fun readFixturewithRun(id: Int): FixtureWithRunEntity{
+        return cricketDao.readFixturewitnrun(id)
+    }
+
+    fun readFixturewithLeagues(id: Int): LiveData<List<FixtureWithRunEntity>>{
+        return cricketDao.readFixtureByLeague(id)
+    }
+
+    fun readFixtureUpcomingbyleague(id: Int): LiveData<List<FixtureEntity>>{
+        return cricketDao.readUpcomingFixturebyleage(id)
+    }
+
 
     suspend fun readOfficial(id: Int): OfficialEntity{
         return cricketDao.readOfficialId(id)

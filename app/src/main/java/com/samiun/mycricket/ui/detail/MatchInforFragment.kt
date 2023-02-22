@@ -81,8 +81,18 @@ class MatchInforFragment : Fragment() {
 
             binding.localteamName.text = localTeam?.name
             binding.visitorteamName.text = visitorteam?.name
+
+
             withContext(Dispatchers.Main){
-                binding.tossData.text = "${tossWinner!!.name} won and Elected ${data.elected}"
+
+
+                try{
+                    binding.tossData.text = "${tossWinner!!.name} won and Elected ${data.elected}"
+
+                }
+                catch (e: Exception){
+
+                }
                 if (venue != null) {
                     binding.venuData.text = venue.name
                     binding.stadiumData.text = venue.name

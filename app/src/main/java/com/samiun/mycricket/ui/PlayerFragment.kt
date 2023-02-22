@@ -51,6 +51,14 @@ class PlayerFragment : Fragment() {
 
         viewModel.getPlayerCareer(PlayerId).observe(viewLifecycleOwner){
             if (it != null) {
+                Log.e("Player Fragment ", "onViewCreated: ${it.image_path}", )
+                Glide
+                    .with(requireContext())
+                    .load(it.image_path)
+                    .placeholder(R.drawable.image_downloading)
+                    .error(R.drawable.not_found_image)
+                    .into(binding.playerImage)
+
                 binding.playerName.text = it.fullname
                 binding.playerAge.text = Constants.calculateAge(it.dateofbirth)
                 binding.playerType.text= it.position?.name
@@ -77,12 +85,7 @@ class PlayerFragment : Fragment() {
                     showBowlingStats(careers)
                 }
 
-                Glide
-                    .with(requireContext())
-                    .load(it.image_path)
-                    .placeholder(R.drawable.image_downloading)
-                    .error(R.drawable.not_found_image)
-                    .into(binding.playerImage)
+
             }
         }
     }
@@ -374,6 +377,7 @@ class PlayerFragment : Fragment() {
 
     private fun getHighest(careers: List<Career>): MutableList<Int> {
         val highest = mutableListOf<Int>()
+
         val t20= careers.filter { it.type =="T20"|| it.type =="T20I"}
             .maxOf { it.batting?.highest_inning_score ?: 0 }
         highest.add(t20)
@@ -387,6 +391,7 @@ class PlayerFragment : Fragment() {
         val test= careers.filter { it.type =="Test/5day"}
             .maxOf { it.batting?.highest_inning_score ?: 0 }
         highest.add(test)
+
 
         binding.playert20highest.text = t20.toString()
         binding.playerTesthighest.text = test.toString()

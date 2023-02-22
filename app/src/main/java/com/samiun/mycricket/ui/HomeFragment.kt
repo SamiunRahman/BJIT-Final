@@ -14,7 +14,6 @@ import com.samiun.mycricket.adapter.LiveMatchAdapter
 import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
-import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 
 private lateinit var topviewModel: CricketViewModel
@@ -88,6 +87,7 @@ class HomeFragment : Fragment() {
                     return@setOnItemSelectedListener true
                 }
                 else ->{
+                    findNavController().navigate(R.id.seriesFragment)
                     Toast.makeText(requireContext(), "More Button Clicked", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
                 }
