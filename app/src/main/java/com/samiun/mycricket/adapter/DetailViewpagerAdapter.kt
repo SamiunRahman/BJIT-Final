@@ -7,10 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
-import com.samiun.mycricket.ui.detail.DetailStats
-import com.samiun.mycricket.ui.detail.MatchInforFragment
-import com.samiun.mycricket.ui.detail.ScoreCardFragment
-import com.samiun.mycricket.ui.detail.SummeryFragment
+import com.samiun.mycricket.ui.detail.*
 
 
 class DetailViewpagerAdapter(
@@ -19,7 +16,7 @@ class DetailViewpagerAdapter(
     val adapterData: FixtureWithDetailsData
 ): FragmentStateAdapter(fragmentManager,lifecycle){
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -52,6 +49,15 @@ class DetailViewpagerAdapter(
                 return fragment
 
             }
+            3->{
+                val fragment = BallsFragment()
+                //args.putParcelable("matchdetails", adapterData)
+                fragment.arguments = Bundle().apply {
+                    putParcelable("matchdetails",adapterData)
+                }
+                return fragment
+
+            }
 
 
             else ->{
@@ -64,4 +70,6 @@ class DetailViewpagerAdapter(
 
         }
     }
+
+
 }

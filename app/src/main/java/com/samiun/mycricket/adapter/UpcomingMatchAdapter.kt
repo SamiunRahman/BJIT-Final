@@ -1,18 +1,31 @@
 package com.samiun.mycricket.adapter
 
 import android.content.Context
+import android.icu.lang.UCharacter.GraphemeClusterBreak.V
+import android.icu.text.SimpleDateFormat
+import android.os.Build
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixture.FixtureEntity
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.ui.HomeFragmentDirections
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
+import java.time.Duration
+import java.time.Instant
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class UpcomingMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureEntity>)
     :RecyclerView.Adapter<UpcomingMatchAdapter.UpcomingMatchViewHolder>(){
@@ -24,22 +37,66 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
         val hometeamImage = itemView.home_toss
         val awayteamImage = itemView.away_toss
         val notes = itemView.match_notes
+        val item = itemView.constraint_item
         val homescore = itemView.home_team_score
         val awayscore = itemView.away_team_score
+        val status = itemView.isUpcoming
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingMatchViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.match_list,parent,false)
-        return UpcomingMatchAdapter.UpcomingMatchViewHolder(root)
+        return UpcomingMatchViewHolder(root)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onBindViewHolder(holder: UpcomingMatchAdapter.UpcomingMatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UpcomingMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.starting_at
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val targetDate = dateFormat.parse(match.starting_at)
+        holder.status.visibility = View.VISIBLE
+
+        holder.item.setOnClickListener {
+
+            val fixtureWithRun = FixtureWithRunEntity(match.draw_noresult,match.elected,match.first_umpire_id,match.follow_on,match.id,match.last_period,match.league_id,match.live,null,match.localteam_id,match.man_of_match_id,match.man_of_series_id,match.note,match.referee_id,match.resource,
+            match.round,match.rpc_overs,match.rpc_target,null,match.season_id,match.second_umpire_id,match.stage_id,match.starting_at,match.status,match.super_over,match.toss_won_team_id,match.total_overs_played,match.tv_umpire_id,match.type,match.venue_id,null,match.visitorteam_id,match.weather_report,match.winner_team_id)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(fixtureWithRun)
+            holder.itemView.findNavController().navigate(action)
+        }
+
+        val countdownTimer = object : CountDownTimer(targetDate.time - System.currentTimeMillis(), 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val remainingTimeInMillis = millisUntilFinished
+
+                val days = TimeUnit.MILLISECONDS.toDays(remainingTimeInMillis)
+                val hours = TimeUnit.MILLISECONDS.toHours(remainingTimeInMillis) % 24
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingTimeInMillis) % 60
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingTimeInMillis) % 60
+
+                val time = StringBuilder()
+                if (days > 0) {
+                    time.append("$days days ")
+                }
+                time.append(String.format("starts in:"+"%02d:%02d:%02d", hours, minutes, seconds))
+                holder.notes.text = time.toString()
+            }
+
+            override fun onFinish() {
+                holder.notes.text = "Match started"
+            }
+        }
+
+        countdownTimer.start()
+
+
+
         Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
+
+
+
 
 
 

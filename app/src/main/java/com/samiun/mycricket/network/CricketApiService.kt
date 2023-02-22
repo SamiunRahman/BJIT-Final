@@ -8,7 +8,6 @@ import com.samiun.mycricket.model.league.League
 import com.samiun.mycricket.model.liveScore.LiveScore
 import com.samiun.mycricket.model.officials.Official
 import com.samiun.mycricket.model.playerDetails.PlayerDetails
-import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.players.Players
 import com.samiun.mycricket.model.ranking.Ranking
 import com.samiun.mycricket.model.team.Teams
@@ -111,7 +110,7 @@ interface CricketApiService{
 
     @GET("fixtures")
     suspend fun getFixtureWithRun(
-        @Query("filter[starts_between]") p1: String = "${Constants.getTime(-100)},${Constants.getTime(0)}",
+        @Query("filter[starts_between]") p1: String = "${Constants.getTime(-200)},${Constants.getTime(0)}",
         @Query("include") p2: String = "runs",
         @Query("api_token") p3: String = Constants.api_token
     ): FixtureWithRun
@@ -119,9 +118,7 @@ interface CricketApiService{
 
 
     @GET("players?fields[players]=id,fullname,image_path,dateofbirth&${Constants.api_token1}")
-    suspend fun getPlayers(
-        //@Query(value = "filter[starts_between]", encoded = false) p1: String
-    ): Players
+    suspend fun getPlayers(): Players
 
     @GET("team-rankings?${Constants.api_token1}")
     suspend fun getRanking(): Ranking
@@ -132,26 +129,20 @@ interface CricketApiService{
     @GET("officials?${Constants.api_token1}")
     suspend fun getOfficials(): Official
 
-
-
-//    https://cricket.sportmonks.com/api/v2.0/venues
-//    https://cricket.sportmonks.com/api/v2.0/officials
-//    https://cricket.sportmonks.com/api/v2.0/leagues
-
     @GET("teams/{TEAM_ID}?include=fixtures,results,squad,country&${Constants.api_token1}")
     suspend fun getTeamDetails(
         @Path(value = "TEAM_ID", encoded = false) key: Int
     ): TeamDetails
 
 
-    @GET("teams/{TEAM_ID}/squad/23?&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    @GET("teams/{TEAM_ID}/squad/23?&${Constants.api_token1}")
     suspend fun getTeamSquad(
         @Path(value = "TEAM_ID", encoded = false) key: Int
     ): TeamSquad
 
 
 
-    @GET("players/{PLAYER_ID}?include=career&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h")
+    @GET("players/{PLAYER_ID}?include=career,teams&${Constants.api_token1}")
     suspend fun getPlayerDetails(
        @Path(value = "PLAYER_ID", encoded = false) key: Int
     ): PlayerDetails

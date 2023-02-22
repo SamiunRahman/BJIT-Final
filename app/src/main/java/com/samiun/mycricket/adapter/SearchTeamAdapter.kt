@@ -16,6 +16,7 @@ import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.RankingFragmentDirections
 import com.samiun.mycricket.ui.SearchFragmentDirections
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.rating
@@ -44,7 +45,7 @@ class SearchTeamAdapter(private val context: Context, private val viewModel: Cri
         holder.teamRank.visibility = View.GONE
         holder.teamname.text = info.name
         Glide
-            .with(context)
+            .with(MyApplication.instance)
             .load(info.image_path)
             .placeholder(R.drawable.image_downloading)
             .error(R.drawable.not_found_image)

@@ -19,30 +19,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/player_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:id="@+id/player_imagecv"
+
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                app:cardUseCompatPadding="true">
+                <ImageView
+                    android:id="@+id/player_image"
+                    android:scaleType="centerCrop"
+
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    tools:src="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/player_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/player_image"
-                app:layout_constraintTop_toTopOf="@+id/player_image"
+                android:textSize="25dp"
+                app:layout_constraintStart_toEndOf="@+id/player_imagecv"
+                app:layout_constraintTop_toTopOf="@+id/player_imagecv"
                 tools:text="Shakib Al Hasan" />
 
             <TextView
                 android:id="@+id/player_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/actor"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.25"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/player_name"
                 app:layout_constraintTop_toBottomOf="@+id/player_name"
@@ -52,7 +72,9 @@
                 android:id="@+id/player_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/actor"
+                android:letterSpacing="0.25"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/player_age"
                 app:layout_constraintTop_toBottomOf="@+id/player_age"
@@ -62,7 +84,9 @@
                 android:id="@+id/player_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/actor"
+                android:letterSpacing="0.25"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/player_type"
                 app:layout_constraintStart_toStartOf="@+id/player_type"
@@ -71,16 +95,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/teamviewpager"
-            android:layout_width="match_parent"
-            android:layout_height="1000dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/team_tab_layout"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp" />
--->
+        <!--
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/teamviewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/team_tab_layout"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:layout_editor_absoluteX="0dp" />
+        -->
 
 
         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -99,6 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:text="Batting" />
 
             <Button
@@ -107,6 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:text="Bowling" />
 
 
@@ -135,14 +161,16 @@
                 app:layout_constraintEnd_toStartOf="@+id/playerOdi"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="#" />
+
             <TextView
                 android:id="@+id/playert20"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alata"
+                android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="T20"
-                android:gravity="center_horizontal"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -153,11 +181,12 @@
             <TextView
                 android:id="@+id/playerOdi"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alata"
+                android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="ODI"
-                android:gravity="center_horizontal"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -168,11 +197,12 @@
             <TextView
                 android:id="@+id/playerTest"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alata"
+                android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Test"
-                android:gravity="center_horizontal"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -197,6 +227,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Match"
@@ -211,14 +242,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1234"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/playerOdimatches"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1234" />
 
 
             <TextView
@@ -226,15 +258,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1234"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/playerTestmathces"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="1234" />
 
             <TextView
                 android:id="@+id/playerTestmathces"
@@ -242,14 +275,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1000" />
 
 
         </LinearLayout>
@@ -261,6 +295,7 @@
             android:clickable="true"
             android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerMatches">
 
@@ -269,6 +304,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Innings"
@@ -280,11 +316,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1234"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="1234" />
 
 
             <TextView
@@ -292,11 +329,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="1000" />
 
             <TextView
                 android:id="@+id/playerTestInnings"
@@ -304,11 +342,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="1000" />
 
 
         </LinearLayout>
@@ -328,6 +367,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Runs"
@@ -339,11 +379,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="10000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="10000" />
 
 
             <TextView
@@ -351,11 +392,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="10000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="10000" />
 
             <TextView
                 android:id="@+id/playerTestruns"
@@ -363,11 +405,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
-                tools:text="1000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="1000" />
 
 
         </LinearLayout>
@@ -387,6 +430,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Balls"
@@ -398,6 +442,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -410,6 +455,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -422,6 +468,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -446,6 +493,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Highest"
@@ -457,6 +505,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -469,6 +518,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -481,6 +531,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -505,6 +556,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Average"
@@ -516,6 +568,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -528,6 +581,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -540,6 +594,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -564,6 +619,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Strike Rate"
@@ -575,6 +631,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -587,6 +644,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -599,6 +657,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -624,6 +683,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alata"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Economy"
@@ -635,6 +695,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -647,6 +708,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -659,6 +721,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:textSize="20sp"

@@ -1,7 +1,6 @@
 package com.samiun.mycricket.utils
 
 import android.util.Log
-import java.lang.annotation.RetentionPolicy
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
@@ -14,8 +13,14 @@ class Constants {
         const val apikey = "Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
 
         //API's
+
+
+
+        const val api_token3 = "api_token=qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
+
         const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
 
+        const val api_token2 ="qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
         const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
         const val COUNTRY_END_POINT = "countries"
         const val LEAGUES_END_POINT ="leagues?$api_token1"

@@ -13,7 +13,9 @@ import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
+import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
 
@@ -30,6 +32,7 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
             val homescore = itemView.home_team_score
             val awayscore = itemView.away_team_score
             val cardView = itemView.constraint_item
+            val status = itemView.isRecent
 
         }
 
@@ -43,10 +46,6 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
         val match = arrayList[position]
         holder.notes.text = match.note
         Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
-
-
-
-
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
@@ -76,35 +75,11 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
                 }
                 catch(e: Exception){
                 }
-//
-//                if (hometeam != null) {
-//                   if(hometeam.id == match.runs?.get(0)?.team_id && match.runs!!.isNotEmpty()) {
-//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.homescore.text = it }
-//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.awayscore.text = it }
-//
-//                   }
-//                    else{
-//                       "${match.runs?.get(1)?.score}/${match.runs?.get(1)?.wickets}\n${match.runs?.get(1)?.overs} over".also { holder.homescore.text = it }
-//                       "${match.runs?.get(0)?.score}/${match.runs?.get(0)?.wickets}\n${match.runs?.get(0)?.overs} over".also { holder.awayscore.text = it }
-//                   }
-//
-//                    holder.homeTeamName.text = hometeam.code
-//                    Glide
-//                        .with(context)
-//                        .load(hometeam.image_path)
-//                        .placeholder(R.drawable.image_downloading)
-//                        .error(R.drawable.not_found_image)
-//                        .into(holder.hometeamImage)
-//                } else {
-//                    val id = match.id.toString()
-//                    holder.homeTeamName.text = id
-//                    Log.e("Adapter", "${match.id} ", )
-//                }
 
                 if (awayteam != null) {
                     holder.awayTeamName.text = awayteam.code
                     Glide
-                        .with(context)
+                        .with(MyApplication.instance)
                         .load(awayteam.image_path)
                         .placeholder(R.drawable.image_downloading)
                         .error(R.drawable.not_found_image)
@@ -115,9 +90,8 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
                 }
                 if (hometeam != null) {
                     holder.homeTeamName.text = hometeam!!.code
-
                     Glide
-                        .with(context)
+                        .with(MyApplication.instance)
                         .load(hometeam.image_path)
                         .placeholder(R.drawable.image_downloading)
                         .error(R.drawable.not_found_image)
@@ -128,11 +102,14 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
                 }
 
             }
+            holder.status.visibility = View.VISIBLE
+//            holder.status.text = match.status
 
             holder.cardView.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(match)
                 holder.itemView.findNavController().navigate(action)
             }
+
 
         }
 

@@ -7,13 +7,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.samiun.mycricket.data.CricketDatabase
 import com.samiun.mycricket.data.CricketRepository
+import com.samiun.mycricket.model.country.Country
 import com.samiun.mycricket.model.country.Data
 import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
+import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.liveScore.LiveScoreData
 import com.samiun.mycricket.model.officials.OfficialEntity
+import com.samiun.mycricket.model.player.PlayerEntity
 import com.samiun.mycricket.model.playerDetails.PlayerDetailsData
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
@@ -77,6 +80,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     val readFixtureWithRunEntity: LiveData<List<FixtureWithRunEntity>>
     val readTeamEntity: LiveData<List<TeamEntity>>
     val readPlayerData: LiveData<List<PlayerData>>
+    val readLeagues: LiveData<List<Leagues>>
 
 
     init{
@@ -85,6 +89,8 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         readFixtureEntity = repository.readFixtureEntity
         readFixtureWithRunEntity = repository.readFixtureWithRunEntity
         readTeamEntity = repository.readTeamEntity
+        readLeagues = repository.readLeagues
+
         readPlayerData = repository.readPlayerData
         //readTeam = repository.readTeam(id)
     }
@@ -111,19 +117,45 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
     }
 
 
+    fun findFixturebyid(id: Int): FixtureWithRunEntity{
+        return repository.readFixturewithRun(id)
+    }
+
+    fun findFixuteByLeague(id: Int): LiveData<List<FixtureWithRunEntity>>{
+        return repository.readFixturewithLeagues(id)
+    }
+
+    fun findUpcomingbyleage(id: Int): LiveData<List<FixtureEntity>>{
+        return repository.readFixtureUpcomingbyleague(id)
+    }
+
     suspend fun findOfficialbyId(id: Int): OfficialEntity{
         viewModelScope.launch(Dispatchers.IO) {  }
         return repository.readOfficial(id)
     }
+
     suspend fun findLeaguebyId(id: Int): Leagues{
         viewModelScope.launch(Dispatchers.IO) {  }
         return repository.readLeague(id)
     }
 
+    suspend fun findPlayerbyId(id: Int): PlayerEntity{
+        viewModelScope.launch(Dispatchers.IO) {  }
+        return repository.readPlayer(id)
+    }
+
+
     suspend fun findVenueById(id: Int): VenueEntity{
         viewModelScope.launch(Dispatchers.IO) {  }
         return repository.readVenue(id)
     }
+
+     suspend fun findCountryById(id: Int): Data {
+        viewModelScope.launch(Dispatchers.IO) {  }
+        return repository.readCountry(id)
+    }
+
+
 
     private fun addCountryList(countryList: List<Data>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -207,6 +239,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
         }
     }
+
     private fun addOfficilas(official: List<OfficialEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addOfficials(official)
@@ -234,12 +267,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         }
     }
 
-
-
-
     fun getFixtures(){
         val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"
-        val endDate = Constants.getTime(30)//"2023-04-10T00:00:00.000000Z"
+        val endDate = Constants.getTime(150)//"2023-04-10T00:00:00.000000Z"
         viewModelScope.launch {
             try {
                 Log.d("Overview Fragment", "Fixtue: ")
@@ -257,8 +287,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
         }
     }
-
-
 
     private fun addFixtureList(fixture: List<FixtureEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -350,7 +378,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
                 _teamDetails.value?.let {
                 }
-                delay(1000)
                 Log.e("get Team Api", "${teamDetails.value!!.name}")
 
             } catch (e: java.lang.Exception) {
@@ -365,7 +392,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
 
     fun getTeamSquad(id: Int): LiveData<TeamSquadData> {
-
         viewModelScope.launch {
             try {
                 // _fixturewithDetails.value = CricketApi.retrofitService.getMatchDetails(fixtureID).data
@@ -381,9 +407,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
                 Log.e("Cricket View Model Get Team Squad","$e")
             }
         }
-
         return teamSquad
-
     }
 
     fun getPlayerCareer(id: Int): LiveData<PlayerDetailsData> {
@@ -396,18 +420,13 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
                 _playerData.value?.let {
                 }
-                delay(1000)
-
             } catch (e: java.lang.Exception) {
                 _fixturewithrun.value = listOf()
                 Log.e("Cricket View Model Get Team Squad","$e")
             }
         }
-
         return playerData
-
     }
-
 
     fun getFixturesWithRun(){
         val startDate = Constants.getTime(0)//"2023-02-26T00:00:00.000000Z"

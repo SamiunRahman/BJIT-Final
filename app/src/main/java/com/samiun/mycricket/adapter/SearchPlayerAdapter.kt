@@ -1,6 +1,7 @@
 package com.samiun.mycricket.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.SearchFragmentDirections
+import com.samiun.mycricket.ui.TeamFragmentDirections
+import com.samiun.mycricket.ui.team.TeamSquadFragment
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.ranking_list.view.*
 import java.util.*
 
@@ -39,7 +43,7 @@ class SearchPlayerAdapter(private val context: Context, private val viewModel: C
         holder.teamRank.visibility = View.GONE
         holder.teamname.text = info.fullname
         Glide
-            .with(context)
+            .with(MyApplication.instance)
             .load(info.image_path)
             .placeholder(R.drawable.image_downloading)
             .error(R.drawable.not_found_image)
@@ -47,8 +51,18 @@ class SearchPlayerAdapter(private val context: Context, private val viewModel: C
 
 
         holder.item.setOnClickListener {
-            val action = SearchFragmentDirections.actionSearchFragmentToPlayerFragment(info.id!!)
-            holder.itemView.findNavController().navigate(action)
+
+            try {
+                val action = SearchFragmentDirections.actionSearchFragmentToPlayerFragment(info.id!!)
+                Log.e("Player Search", "onBindViewHolder: ${info.id}, ${info.fullname}")
+                holder.itemView.findNavController().navigate(action)
+            }
+            catch (e: Exception){
+                val action = TeamFragmentDirections.actionTeamFragmentToPlayerFragment(info.id!!)
+                Log.e("Player Search", "onBindViewHolder: ${info.id}, ${info.fullname}")
+                holder.itemView.findNavController().navigate(action)
+            }
+
         }
 
     }

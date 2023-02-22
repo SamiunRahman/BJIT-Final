@@ -82,11 +82,16 @@ class DetailsFragment : Fragment() {
                         2 -> {
                             tab.text = "Score"
                         }
+                        3->{
+                            tab.text= "Live"
+                        }
                         else -> {
                             tab.text = "Statistics"
                         }
                     }
                 }.attach()
+
+
 
             }
 
@@ -137,5 +142,9 @@ class DetailsFragment : Fragment() {
         }
 
 
+
+
     }
+
+
 }
