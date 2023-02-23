@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:singleSelection="true">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/gender_man"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
@@ -37,7 +37,7 @@
                     android:fontFamily="@font/actor"
                     android:text="Man" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/gender_woman"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
