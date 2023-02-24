@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.LeaguesAdapter
@@ -41,6 +42,28 @@ class SeriesHome : Fragment() {
             seriesRv.adapter = LeaguesAdapter(requireContext(), viewModel, it!!)
 
         }
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home_bottom_nav->{
+
+                    findNavController().navigate(R.id.homeFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ranking_bottom_nav->{
+                    findNavController().navigate(R.id.rankingFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.search_bottom_nav->{
+                    findNavController().navigate(R.id.searchFragment)
+                    return@setOnItemSelectedListener true
+                }
+                else ->{
+                    return@setOnItemSelectedListener true
+                }
+            }
+        }
     }
+
 
 }

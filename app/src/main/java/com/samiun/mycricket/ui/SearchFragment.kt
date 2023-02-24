@@ -4,9 +4,11 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.SearchPlayerAdapter
@@ -72,6 +74,27 @@ class SearchFragment : Fragment() {
                 searchRecyclerview.adapter =SearchPlayerAdapter(requireContext(), viewModel, it!!)
                 playerList = it
                 isTeamList = false
+            }
+        }
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home_bottom_nav->{
+
+                    findNavController().navigate(R.id.homeFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ranking_bottom_nav->{
+                    findNavController().navigate(R.id.rankingFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.search_bottom_nav->{
+                    return@setOnItemSelectedListener true
+                }
+                else ->{
+                    findNavController().navigate(R.id.seriesFragment)
+                    return@setOnItemSelectedListener true
+                }
             }
         }
 

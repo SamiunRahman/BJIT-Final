@@ -25,7 +25,8 @@ class DetailViewpagerAdapter(
 
         when(position){
             0->{
-                val fragment = MatchInforFragment()
+                val fragment = BallsFragment()
+                //args.putParcelable("matchdetails", adapterData)
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }
@@ -37,8 +38,6 @@ class DetailViewpagerAdapter(
                     putParcelable("matchdetails",adapterData)
                 }
                 return fragment
-
-
             }
             2->{
                 val fragment = ScoreCardFragment()
@@ -47,21 +46,9 @@ class DetailViewpagerAdapter(
                     putParcelable("matchdetails",adapterData)
                 }
                 return fragment
-
             }
-            3->{
-                val fragment = BallsFragment()
-                //args.putParcelable("matchdetails", adapterData)
-                fragment.arguments = Bundle().apply {
-                    putParcelable("matchdetails",adapterData)
-                }
-                return fragment
-
-            }
-
-
-            else ->{
-                val fragment = DetailStats()
+            else->{
+                val fragment = MatchInforFragment()
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }

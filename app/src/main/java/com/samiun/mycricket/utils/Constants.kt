@@ -14,14 +14,16 @@ class Constants {
 
         //API's
 
-
+      //  hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY
 
         const val api_token3 = "api_token=qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
 
-        const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
+        const val api_token1 ="api_token=hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
+        //const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
 
         const val api_token2 ="qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
-        const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
+       // const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
+        const val api_token ="hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
         const val COUNTRY_END_POINT = "countries"
         const val LEAGUES_END_POINT ="leagues?$api_token1"
 
@@ -71,6 +73,91 @@ class Constants {
                 Log.e("Constant Calculate Age Exception", "calculateAge: $e", )
                 return "not available"
             }
+        }
+
+        fun homedata(results: List<com.samiun.mycricket.model.teamDetails.Result>?, id: Int): List<Any> {
+            val info = mutableListOf<Any>()
+            var total = 0
+            var home = 0
+            var away = 0
+            var percentage = 0.0
+
+            if(results!=null){
+                for(result in results){
+                    if(result in results){
+                        if(result.localteam_id ==id){
+                            total++
+                            if(result.winner_team_id ==id){
+                                home++
+                            }
+                            else{
+                                away++
+                            }
+                        }
+                    }
+                }
+            }
+            percentage =( home.toDouble()/total.toDouble())*100
+            info.add(total)
+            info.add(home)
+            info.add(away)
+            info.add(percentage)
+            return info
+        }
+
+
+
+        fun awaydata(results: List<com.samiun.mycricket.model.teamDetails.Result>?, id: Int): List<Any> {
+            val info = mutableListOf<Any>()
+            var total = 0
+            var home = 0
+            var away = 0
+            var percentage = 0.0
+
+            if(results!=null){
+                for(result in results){
+                    if(result in results){
+                        if(result.localteam_id !=id){
+                            total++
+                            if(result.winner_team_id ==id){
+                                home++
+                            }
+                            else{
+                                away++
+                            }
+                        }
+                    }
+                }
+            }
+            percentage =( home.toDouble()/total.toDouble())*100
+            info.add(total)
+            info.add(home)
+            info.add(away)
+            info.add(percentage)
+            return info
+        }
+        fun totalTeamWon(results: List<com.samiun.mycricket.model.teamDetails.Result>?, id: Int?): Int {
+            var won = 0
+            if (results != null) {
+                for (result in results) {
+                    if (result.winner_team_id == id) {
+                        won++
+                    }
+                }
+            }
+            return won
+        }
+
+        fun totalOtherWon(results: List<com.samiun.mycricket.model.teamDetails.Result>?, id: Int?): Int {
+            var won = 0
+            if (results != null) {
+                for (result in results) {
+                    if (result.winner_team_id != id && result.winner_team_id!=null) {
+                        won++
+                    }
+                }
+            }
+            return won
         }
     }
 

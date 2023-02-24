@@ -10,389 +10,45 @@
     android:outlineAmbientShadowColor="@color/purple_200"
     android:outlineSpotShadowColor="@color/teal_200"
     android:id="@+id/swipe_to_refresh">
-
-    <ScrollView
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/ranking_type"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:checkedButton="@id/ranking_test"
+        app:singleSelection="true">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/squad_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/match_infos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="@color/black"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/squad_layout">
+        <Button
+            android:id="@+id/ranking_test"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetLeft="0.5dp"
+            android:insetRight="0.5dp"
+            android:text="Test" />
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+        <Button
+            android:id="@+id/ranking_odi"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetLeft="0.2dp"
+            android:insetRight="0.2dp"
+            android:text="Odi" />
 
-                    <Button
-                        android:id="@+id/info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_vertical|start"
-                        android:padding="4dp"
-                        android:text="@string/match_info"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/ranking_t20i"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetLeft="0.2dp"
+            android:insetRight="0.2dp"
+            android:text="T20" />
 
-                    <LinearLayout
-                        android:id="@+id/matchtype"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/info">
-
-                        <TextView
-                            android:id="@+id/info_match"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/match"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/info_matchdata"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="Group Stage" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/series_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EAE7E7"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/matchtype">
-
-                        <TextView
-                            android:id="@+id/matchseries"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/series"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/series_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="New Zeland Tour of India in 2024" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/dateinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/series_layout">
-
-                        <TextView
-                            android:id="@+id/match_date"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/date"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/date_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="24 september, 2024" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/timeinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EAE7E7"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dateinfo">
-
-                        <TextView
-                            android:id="@+id/match_time"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/time"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/time_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="8:30 pm (Local Time)" />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/tossinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/timeinfo">
-
-                        <TextView
-                            android:id="@+id/match_toss"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Toss"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/toss_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="India Opt to Batting" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/venueinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EAE7E7"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tossinfo">
-
-                        <TextView
-                            android:id="@+id/match_venue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Venue"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/venu_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="Narendra Modi Stadium, Ahmedabad" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/umpireinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/venueinfo">
-
-                        <TextView
-                            android:id="@+id/match_umpires"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Umpire"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/umpire_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="Shabaz Choudry, Rashid Riaz" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/reffreeinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EAE7E7"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/umpireinfo">
-
-                        <TextView
-                            android:id="@+id/match_reffree"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="reffree"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/reffree_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="MD. Javed" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/stadiuminfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/reffreeinfo">
-
-                        <TextView
-                            android:id="@+id/match_stadium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Stadium"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/stadium_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="Narendra Modi Cricket Ground" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/cityinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EAE7E7"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/stadiuminfo">
-
-                        <TextView
-                            android:id="@+id/match_city"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/city"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/city_data"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/actor"
-                            android:gravity="right"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:text="Kanpur" />
-
-
-                    </LinearLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
 

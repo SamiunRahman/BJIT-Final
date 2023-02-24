@@ -42,8 +42,6 @@ class TeamResutlsFragment : Fragment() {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
 
 
-
-
         teamRestulRecyclerview = binding.teamRecentMatches
         val adapterViewState = teamRestulRecyclerview.layoutManager?.onSaveInstanceState()
         teamRestulRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)

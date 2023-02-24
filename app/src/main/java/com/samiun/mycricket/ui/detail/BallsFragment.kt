@@ -1,6 +1,7 @@
 package com.samiun.mycricket.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,12 @@ class BallsFragment : Fragment() {
         val adapterViewState = ballsRv.layoutManager?.onSaveInstanceState()
         ballsRv.layoutManager?.onRestoreInstanceState(adapterViewState)
         ballsRv.adapter = ballsdesc?.let { BallsAdapter(requireContext(), it) }
+
+        viewModel.fixturewithDetails.observe(viewLifecycleOwner){
+            if(it!= null){
+                Log.d("Balls Fragment", "onViewCreated: $it")
+            }
+        }
     }
 
 }

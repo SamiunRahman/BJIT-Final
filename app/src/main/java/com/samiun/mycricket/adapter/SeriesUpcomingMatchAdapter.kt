@@ -21,6 +21,7 @@ import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.teamDetails.TeamDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
+import com.samiun.mycricket.ui.series.SeriesDetailsFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
@@ -30,9 +31,9 @@ import java.time.Instant
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class UpcomingMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureEntity>)
-    :RecyclerView.Adapter<UpcomingMatchAdapter.UpcomingMatchViewHolder>(){
-    class UpcomingMatchViewHolder(
+class SeriesUpcomingMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureEntity>)
+    :RecyclerView.Adapter<SeriesUpcomingMatchAdapter.SeriesUpcomingMatchViewHolder>(){
+    class SeriesUpcomingMatchViewHolder(
         binding: View
     ): RecyclerView.ViewHolder(binding){
         val homeTeamName = itemView.home_team
@@ -48,13 +49,13 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingMatchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesUpcomingMatchViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.match_list,parent,false)
-        return UpcomingMatchViewHolder(root)
+        return SeriesUpcomingMatchViewHolder(root)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onBindViewHolder(holder: UpcomingMatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SeriesUpcomingMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.starting_at
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -65,8 +66,8 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
         holder.item.setOnClickListener {
 
             val fixtureWithRun = FixtureWithRunEntity(match.draw_noresult,match.elected,match.first_umpire_id,match.follow_on,match.id,match.last_period,match.league_id,match.live,null,match.localteam_id,match.man_of_match_id,match.man_of_series_id,match.note,match.referee_id,match.resource,
-            match.round,match.rpc_overs,match.rpc_target,null,match.season_id,match.second_umpire_id,match.stage_id,match.starting_at,match.status,match.super_over,match.toss_won_team_id,match.total_overs_played,match.tv_umpire_id,match.type,match.venue_id,null,match.visitorteam_id,match.weather_report,match.winner_team_id)
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(fixtureWithRun)
+                match.round,match.rpc_overs,match.rpc_target,null,match.season_id,match.second_umpire_id,match.stage_id,match.starting_at,match.status,match.super_over,match.toss_won_team_id,match.total_overs_played,match.tv_umpire_id,match.type,match.venue_id,null,match.visitorteam_id,match.weather_report,match.winner_team_id)
+            val action = SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToDetailsFragment(fixtureWithRun)
             holder.itemView.findNavController().navigate(action)
         }
 
