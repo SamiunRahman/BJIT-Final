@@ -1,4 +1,4 @@
-package com.samiun.mycricket.data
+package com.samiun.mycricket.database
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -12,7 +12,6 @@ import com.samiun.mycricket.model.officials.OfficialEntity
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
-import com.samiun.mycricket.model.team.Teams
 import com.samiun.mycricket.model.venue.VenueEntity
 import com.samiun.mycricket.utils.AnyTypeConverter
 import com.samiun.mycricket.utils.Constants

@@ -25,7 +25,6 @@ class BallsAdapter(private val context: Context, private var data: List<Ball>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BallsViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.ranking_list,parent,false)
-        Toast.makeText(context, "Oncreateviewholder", Toast.LENGTH_SHORT).show()
         return BallsViewHolder(root)
     }
 
@@ -36,8 +35,6 @@ class BallsAdapter(private val context: Context, private var data: List<Ball>)
         holder.bolwerToBatsman.text = "${info.bowler?.fullname} to ${info.batsman?.fullname} "
         holder.score.text = info.score?.name
         holder.runs.visibility = View.GONE
-
-
     }
 
     override fun getItemCount(): Int {

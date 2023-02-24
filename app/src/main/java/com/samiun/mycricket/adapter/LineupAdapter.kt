@@ -51,7 +51,6 @@ class LineupAdapter(private val context: Context, private var data: List<Lineup>
     }
 
     override fun getItemCount(): Int {
-        // Log.d("Ranking Adapter", "getItemCount: ${data.size}")
         return data.size
 
     }

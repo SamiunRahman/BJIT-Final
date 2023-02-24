@@ -6,12 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.liveScore.LiveScoreData
+import com.samiun.mycricket.model.teamDetails.TeamDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
@@ -47,15 +50,13 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
         holder.notes.text = match.note
         val runs = match.runs
         holder.status.visibility = View.VISIBLE
+        var locatTeam: TeamDetailsData
+        var vistorTeam: TeamDetailsData
 
 
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
-
-            val run1 = match.runs?.get(0)?.score
-            val wicket1 = match.runs?.get(0)?.wickets
-            val over1 = match.runs?.get(0)?.overs
 
             withContext(Dispatchers.Main) {
 
@@ -136,6 +137,14 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
 
     override fun getItemCount(): Int {
         return  arrayList.size
+    }
+
+    fun updateData(liveMatchList: List<LiveScoreData>?) {
+
+        if (liveMatchList != null) {
+            arrayList = liveMatchList
+        }
+        notifyDataSetChanged()
     }
 
 }

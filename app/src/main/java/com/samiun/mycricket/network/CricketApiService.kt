@@ -84,7 +84,10 @@ interface CricketApiService{
         @Path(value = "FIXTURE_ID", encoded = false) key: Int
     ): FixtureWithDetails
 
-
+    @GET("fixtures/{FIXTURE_ID}?include=runs&${Constants.api_token1}")
+    suspend fun getRuns(
+        @Path(value = "FIXTURE_ID", encoded = false) key: Int
+    ): FixtureWithRun
 
     @GET("livescores?include=batting,bowling,lineup,balls,runs&${Constants.api_token1}")
     suspend fun getLiveMatches(

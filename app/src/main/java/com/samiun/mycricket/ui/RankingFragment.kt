@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.RankingAdapter
 import com.samiun.mycricket.databinding.FragmentRankingBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
+import kotlinx.android.synthetic.main.match_list.*
 
 
 class RankingFragment : Fragment() {
@@ -79,19 +82,45 @@ class RankingFragment : Fragment() {
 
         }
 
-        rankingRecyclerView = binding.rankingRv
-        viewModel.getRanking("men", "T20I").observe(viewLifecycleOwner){
-            rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)
-            Log.d("Ranking", "onViewCreated: ${it.team}")
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home_bottom_nav->{
+
+                    findNavController().navigate(R.id.homeFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ranking_bottom_nav->{
+                    Toast.makeText(requireContext(), "You are on ranking Fragment", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.search_bottom_nav->{
+                    findNavController().navigate(R.id.searchFragment)
+                    return@setOnItemSelectedListener true
+                }
+                else ->{
+                    findNavController().navigate(R.id.seriesFragment)
+                    return@setOnItemSelectedListener true
+                }
+            }
         }
+
+        rankingRecyclerView = binding.rankingRv
+        rankingAdapter(gender,format)
+
 
         }
 
     fun rankingAdapter(gender:String, format: String){
-        viewModel.getRanking(gender, format).observe(viewLifecycleOwner){
-            rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)
-            Log.d("Ranking", "onViewCreated: ${it.team}")
+        try {
+            viewModel.getRanking(gender, format).observe(viewLifecycleOwner){
+                if(it!=null){
+                    rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)
+                }
+            }
+        }catch (e:Exception){
+            Log.e("Ranking Fragment Exception", "rankingAdapter:$e ", )
         }
+
     }
 
 }

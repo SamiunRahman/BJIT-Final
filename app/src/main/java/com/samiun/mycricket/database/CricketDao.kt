@@ -1,14 +1,11 @@
-package com.samiun.mycricket.data
+package com.samiun.mycricket.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.samiun.mycricket.model.country.Data
-import com.samiun.mycricket.model.fixture.Fixture
 import com.samiun.mycricket.model.fixture.FixtureEntity
-import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.league.Leagues
 import com.samiun.mycricket.model.officials.OfficialEntity
-import com.samiun.mycricket.model.player.Player
 import com.samiun.mycricket.model.player.PlayerEntity
 import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData

@@ -10,11 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
-import com.samiun.mycricket.adapter.RecentMatchAdapter
-import com.samiun.mycricket.adapter.SearchTeamAdapter
-import com.samiun.mycricket.adapter.SeriesRecenMatchAdapter
-import com.samiun.mycricket.adapter.UpcomingMatchAdapter
-import com.samiun.mycricket.databinding.FragmentDetailStatsBinding
+import com.samiun.mycricket.adapter.*
 import com.samiun.mycricket.databinding.FragmentSeriesDetailsBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
 
@@ -58,7 +54,7 @@ class SeriesDetailsFragment : Fragment() {
             viewModel.findUpcomingbyleage(id).observe(viewLifecycleOwner){
                 val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
                 seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-               // seriesRv.adapter = SeriesRecenMatchAdapter(requireContext(), viewModel, it!!)
+                seriesRv.adapter = SeriesUpcomingMatchAdapter(requireContext(), viewModel, it!!)
 
             }
         }

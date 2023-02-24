@@ -145,7 +145,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.samiun.mycricket.ui.SearchFragment"
-        android:label="Search 🔍"
+        android:label="Search "
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_teamFragment"
@@ -186,7 +186,8 @@
         android:name="com.samiun.mycricket.ui.team.TeamStatsFragment"
         android:label="Statistics"
         tools:layout="@layout/fragment_team_stats">
-        <argument android:name="teamdetails" />
+        <argument android:name="teamdetails"
+            app:argType="com.samiun.mycricket.model.teamDetails.TeamDetailsData" />
     </fragment>
     <fragment
         android:id="@+id/ballsFragment"

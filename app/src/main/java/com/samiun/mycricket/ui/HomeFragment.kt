@@ -1,6 +1,8 @@
 package com.samiun.mycricket.ui
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +17,13 @@ import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
+import kotlinx.coroutines.delay
 
 private lateinit var topviewModel: CricketViewModel
 
 class HomeFragment : Fragment() {
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var liveMatchAdapter: LiveMatchAdapter
     private lateinit var viewModel: CricketViewModel
     private lateinit var recentRecyclerView:RecyclerView
     private lateinit var upcomingRecyclerView: RecyclerView
@@ -42,6 +47,12 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Remove any pending runnables from the handler to avoid memory leaks
+        handler.removeCallbacksAndMessages(null)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
         topviewModel = viewModel
@@ -50,11 +61,23 @@ class HomeFragment : Fragment() {
 
         liveRecyclerView = binding.liveMatchesRv
 
-        viewModel.getLiveMatch().observe(viewLifecycleOwner){
+        liveMatchAdapter = LiveMatchAdapter(requireContext(), viewModel, emptyList())
+        liveRecyclerView.adapter = liveMatchAdapter
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                viewModel.getLiveMatch().observe(viewLifecycleOwner) { liveMatchList ->
+                    liveMatchAdapter.updateData(liveMatchList)
+                    // Schedule the function to be executed again after 1 minute
+                    handler.postDelayed(this, 60000)
+                }
+            }
+        }, 0)
+
+/*        viewModel.getLiveMatch().observe(viewLifecycleOwner){
             val adapterViewState = liveRecyclerView.layoutManager?.onSaveInstanceState()
             liveRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             liveRecyclerView.adapter = LiveMatchAdapter(requireContext(), viewModel, it)
-        }
+        }*/
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
@@ -72,23 +95,18 @@ class HomeFragment : Fragment() {
             when(it.itemId){
                 R.id.home_bottom_nav->{
 
-                    Toast.makeText(requireContext(), "You are on home!", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
                 }
                 R.id.ranking_bottom_nav->{
                     findNavController().navigate(R.id.rankingFragment)
-
-                    Toast.makeText(requireContext(), "Ranking Button Clicked", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
                 }
                 R.id.search_bottom_nav->{
                     findNavController().navigate(R.id.searchFragment)
-                    Toast.makeText(requireContext(), "Search Button Clicked", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
                 }
                 else ->{
                     findNavController().navigate(R.id.seriesFragment)
-                    Toast.makeText(requireContext(), "More Button Clicked", Toast.LENGTH_SHORT).show()
                     return@setOnItemSelectedListener true
                 }
             }
