@@ -3,11 +3,11 @@ package com.samiun.mycricket.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +17,7 @@ import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
-import kotlinx.coroutines.delay
+import com.samiun.mycricket.utils.WinningPercentage
 
 private lateinit var topviewModel: CricketViewModel
 
@@ -67,6 +67,10 @@ class HomeFragment : Fragment() {
             override fun run() {
                 viewModel.getLiveMatch().observe(viewLifecycleOwner) { liveMatchList ->
                     liveMatchAdapter.updateData(liveMatchList)
+                    if(liveMatchList.isEmpty()){
+                        binding.noLiveMatches.visibility = view.visibility
+                    }
+
                     // Schedule the function to be executed again after 1 minute
                     handler.postDelayed(this, 60000)
                 }
@@ -81,7 +85,10 @@ class HomeFragment : Fragment() {
         viewModel.readFixtureWithRunEntity.observe(viewLifecycleOwner){
             val adapterViewState = recentRecyclerView.layoutManager?.onSaveInstanceState()
             recentRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
-            recentRecyclerView.adapter = RecentMatchAdapter(requireContext(), viewModel, viewModel.readFixtureWithRunEntity.value!!)
+            recentRecyclerView.adapter = RecentMatchAdapter(
+                viewModel,
+                viewModel.readFixtureWithRunEntity.value!!
+            )
         }
 
         upcomingRecyclerView = binding.upcomingMatchesRv
@@ -90,18 +97,24 @@ class HomeFragment : Fragment() {
             upcomingRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             upcomingRecyclerView.adapter = UpcomingMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
         }
+        val percentage = calculateBangladeshWinningPercentage()
+        Log.e("HomeFragment winning percentage", "onViewCreated: $percentage", )
+
+        binding.bottomNav?.let {
+            it.menu.getItem(0).isChecked = true
+        }
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
+                R.id.homeFragment->{
 
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
+                R.id.rankingFragment->{
                     findNavController().navigate(R.id.rankingFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     findNavController().navigate(R.id.searchFragment)
                     return@setOnItemSelectedListener true
                 }
@@ -125,6 +138,31 @@ class HomeFragment : Fragment() {
         topviewModel.getVenus()
         topviewModel.getLiveMatch()
 
+    }
+
+    fun calculateBangladeshWinningPercentage(): Double {
+        val indiaRating = 239
+        val bangladeshRating = 176
+        val indiaOverallWinningPercentage = 0.79
+        val bangladeshOverallWinningPercentage = 0.56
+        val bangladeshHomeWinningPercentage = 0.65
+        val indiaAwayWinningPercentage = 0.47
+
+        val indiaScore = 50
+        val indiaWickets = 4
+        val indiaOvers = 9
+        val indiaRunRate = indiaScore.toDouble() / (indiaOvers+indiaWickets)
+
+        val bangladeshRunRate = indiaRunRate * (bangladeshRating.toDouble() / indiaRating.toDouble())
+        val bangladeshExpectedScore = bangladeshRunRate * indiaOvers
+        val bangladeshTarget = bangladeshExpectedScore + 1
+
+        val indiaChances = indiaOverallWinningPercentage * indiaAwayWinningPercentage
+        val bangladeshChances = bangladeshOverallWinningPercentage * bangladeshHomeWinningPercentage
+
+        val bangladeshWinningPercentage = (bangladeshChances) / (bangladeshChances + indiaChances) * 100
+
+        return bangladeshWinningPercentage
     }
 
 

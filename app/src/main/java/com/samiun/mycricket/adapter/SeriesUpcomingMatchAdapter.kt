@@ -1,37 +1,28 @@
 package com.samiun.mycricket.adapter
 
-import android.app.Application
-import android.content.Context
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import android.icu.text.SimpleDateFormat
-import android.os.Build
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixture.FixtureEntity
-import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
-import com.samiun.mycricket.model.teamDetails.TeamDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
-import com.samiun.mycricket.ui.HomeFragmentDirections
 import com.samiun.mycricket.ui.series.SeriesDetailsFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
-import java.time.Duration
-import java.time.Instant
 import java.util.*
-import java.util.concurrent.TimeUnit
 
-class SeriesUpcomingMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureEntity>)
+class SeriesUpcomingMatchAdapter(
+    private val viewModel: CricketViewModel,
+    private var arrayList: List<FixtureEntity>
+)
     :RecyclerView.Adapter<SeriesUpcomingMatchAdapter.SeriesUpcomingMatchViewHolder>(){
     class SeriesUpcomingMatchViewHolder(
         binding: View
@@ -42,8 +33,6 @@ class SeriesUpcomingMatchAdapter(private val context: Context, private val viewM
         val awayteamImage = itemView.away_toss
         val notes = itemView.match_notes
         val item = itemView.constraint_item
-        val homescore = itemView.home_team_score
-        val awayscore = itemView.away_team_score
         val status = itemView.isUpcoming
 
 
@@ -101,7 +90,7 @@ class SeriesUpcomingMatchAdapter(private val context: Context, private val viewM
                 } else {
                     val id = match.id.toString()
                     holder.homeTeamName.text = id
-                    Log.e("Adapter", "${match.id} ", )
+                    Log.e("SeriesUpcoming Adapter", "${match.id} ")
                 }
 
                 if (awayteam != null) {

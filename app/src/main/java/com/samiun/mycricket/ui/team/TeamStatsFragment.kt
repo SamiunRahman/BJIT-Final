@@ -48,7 +48,7 @@ class TeamStatsFragment : Fragment() {
         val totalmatches = results?.size
         val totalteamwon = totalTeamWon(results,data.id)
         val totalOtherwon = totalOtherWon(results,data.id)
-        var totalPercentage:Double =0.0
+        var totalPercentage: Double
         try {
             totalPercentage=(totalteamwon.toDouble()/ (totalmatches?.toDouble()!!)) *100
 
@@ -69,13 +69,15 @@ class TeamStatsFragment : Fragment() {
             binding.home.text = "Home\n(${homeData.get(0)})"
             binding.hometeamwon.text = "${homeData.get(1)}"
             binding.homeotherwon.text = "${homeData.get(2)}"
-            binding.homepercentage.text = "${homeData.get(3)}"
+            val percentage = homeData.get(3)
+            binding.homepercentage.text = "%.2f".format(percentage)
         }
         if (awayData != null) {
             binding.away.text = "Away\n(${awayData.get(0)})"
             binding.awayteamwon.text = "${awayData.get(1)}"
             binding.awayotherwon.text = "${awayData.get(2)}"
-            binding.awaypercentage.text = "${awayData.get(3)}"
+            val percentage = awayData.get(3)
+            binding.awaypercentage.text = "%.2f".format(percentage)
         }
 
 

@@ -1,7 +1,6 @@
 package com.samiun.mycricket.ui.series
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.*
 import com.samiun.mycricket.databinding.FragmentSeriesDetailsBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -37,7 +35,7 @@ class SeriesDetailsFragment : Fragment() {
         viewModel.findFixuteByLeague(id).observe(viewLifecycleOwner){
             val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
             seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-            seriesRv.adapter = SeriesRecenMatchAdapter(requireContext(), viewModel, it!!)
+            seriesRv.adapter = SeriesRecenMatchAdapter(viewModel, it!!)
 
         }
 
@@ -45,7 +43,7 @@ class SeriesDetailsFragment : Fragment() {
             viewModel.findFixuteByLeague(id).observe(viewLifecycleOwner){
                 val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
                 seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-                seriesRv.adapter = SeriesRecenMatchAdapter(requireContext(), viewModel, it!!)
+                seriesRv.adapter = SeriesRecenMatchAdapter(viewModel, it!!)
 
             }
         }
@@ -54,7 +52,7 @@ class SeriesDetailsFragment : Fragment() {
             viewModel.findUpcomingbyleage(id).observe(viewLifecycleOwner){
                 val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
                 seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-                seriesRv.adapter = SeriesUpcomingMatchAdapter(requireContext(), viewModel, it!!)
+                seriesRv.adapter = SeriesUpcomingMatchAdapter(viewModel, it!!)
 
             }
         }

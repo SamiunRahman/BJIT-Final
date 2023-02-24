@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.samiun.mycricket.model.teamDetails.TeamDetailsData
-import com.samiun.mycricket.ui.detail.BallsFragment
 import com.samiun.mycricket.ui.team.TeamResutlsFragment
 import com.samiun.mycricket.ui.team.TeamScheduleFragment
 import com.samiun.mycricket.ui.team.TeamSquadFragment
@@ -23,8 +22,7 @@ class TeamDetailViewPagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        val args = Bundle()
-
+        Bundle()
         when(position){
             0->{
                 val fragment = TeamScheduleFragment()
@@ -39,20 +37,14 @@ class TeamDetailViewPagerAdapter(
                     putParcelable("teamdetails",adapterData)
                 }
                 return fragment
-
-
             }
             2->{
                 val fragment = TeamSquadFragment()
-                //args.putParcelable("teamdetails", adapterData)
                 fragment.arguments = Bundle().apply {
                     putParcelable("teamdetails",adapterData)
                 }
                 return fragment
-
             }
-
-
             else ->{
                 val fragment = TeamStatsFragment()
                 fragment.arguments = Bundle().apply {

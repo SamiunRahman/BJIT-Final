@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 class CricketViewModel(application: Application): AndroidViewModel(application){
 
     //For API
+    var viewpargerpage =0
     private val _countries = MutableLiveData<List<Data>>()
     private val countries: LiveData<List<Data>> = _countries
     private val _leagues = MutableLiveData<List<Leagues>>()
@@ -358,10 +359,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
                 _liveScore.value = CricketApi.retrofitService.getLiveMatches().data
                 _liveScore.value?.let {
                 }
-                Log.e("get details Api", "${liveScore.value?.get(0)?.runs?.get(0)?.score}")
 
             } catch (e: java.lang.Exception) {
-                Log.e("Cricket View Model Live Score By Match","$e")
+                Log.e("Live Score By Match","$e")
             }
         }
 
@@ -369,7 +369,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
     }
 
-    fun getRuns(id:Int): LiveData<List<FixtureWithRunEntity>> {
+/*    fun getRuns(id:Int): LiveData<List<FixtureWithRunEntity>> {
 
         viewModelScope.launch {
             try {
@@ -384,7 +384,7 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
             }
         }
         return fixturewithrun
-    }
+    }*/
 
 
     fun getTeamDetails(id: Int): LiveData<TeamDetailsData?> {

@@ -1,6 +1,5 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.players.PlayerData
-import com.samiun.mycricket.model.team.TeamEntity
-import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.SearchFragmentDirections
 import com.samiun.mycricket.ui.TeamFragmentDirections
-import com.samiun.mycricket.ui.team.TeamSquadFragment
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.ranking_list.view.*
 import java.util.*
 
-class SearchPlayerAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<PlayerData>)
+class SearchPlayerAdapter(
+    private var data: List<PlayerData>
+)
     : RecyclerView.Adapter<SearchPlayerAdapter.SearchPlayerViewHolder>(){
     class SearchPlayerViewHolder(
         binding: View

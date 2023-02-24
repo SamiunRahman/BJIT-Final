@@ -1,19 +1,15 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
-import com.samiun.mycricket.ui.HomeFragmentDirections
-import com.samiun.mycricket.ui.series.SeriesDetailsFragment
 import com.samiun.mycricket.ui.series.SeriesDetailsFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -21,7 +17,10 @@ import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
 
-class SeriesRecenMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureWithRunEntity>)
+class SeriesRecenMatchAdapter(
+    private val viewModel: CricketViewModel,
+    private var arrayList: List<FixtureWithRunEntity>
+)
     :RecyclerView.Adapter<SeriesRecenMatchAdapter.SeriesRecenMatchViewHolder>(){
     class SeriesRecenMatchViewHolder(
         binding: View
@@ -76,6 +75,7 @@ class SeriesRecenMatchAdapter(private val context: Context, private val viewMode
 
                 }
                 catch(e: Exception){
+                    Log.e("SeriesRecentMatch Adapter Exception", "onBindViewHolder: $e" )
                 }
 
                 if (awayteam != null) {

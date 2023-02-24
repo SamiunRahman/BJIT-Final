@@ -1,6 +1,5 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.league.Leagues
-import com.samiun.mycricket.model.team.TeamEntity
-import com.samiun.mycricket.network.overview.CricketViewModel
-import com.samiun.mycricket.ui.SearchFragmentDirections
 import com.samiun.mycricket.ui.SeriesHomeDirections
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.ranking_list.view.*
-import java.util.*
 
-class LeaguesAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<Leagues>)
+class LeaguesAdapter(private var data: List<Leagues>)
     : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
     class LeaguesViewHolder(
         binding: View
@@ -27,7 +22,6 @@ class LeaguesAdapter(private val context: Context, private val viewModel: Cricke
         val leaguename = itemView.team_name
         val rating = itemView.rating
         val item = itemView.ranking_item
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeaguesViewHolder {
@@ -51,7 +45,6 @@ class LeaguesAdapter(private val context: Context, private val viewModel: Cricke
             holder.itemView.findNavController().navigate(action)
         }
     }
-
     override fun getItemCount(): Int {
         return data.size
 

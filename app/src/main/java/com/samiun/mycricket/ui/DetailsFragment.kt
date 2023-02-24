@@ -41,7 +41,14 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.viewpargerpage = binding.viewPager.currentItem // store the current position
+    }
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val match = navArgs.fixturewithrun
@@ -64,18 +71,18 @@ class DetailsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        handler.postDelayed(object : Runnable {
+/*        handler.postDelayed(object : Runnable {
             override fun run() {
                 viewModel.getRuns(match.id!!).observe(viewLifecycleOwner) {
                     // Schedule the function to be executed again after 1 minute
                     if(it!=null){
-                        val runs = it.get(0).runs
+                        //val runs = it.get(0).runs
 
                     }
                     handler.postDelayed(this, 60000)
                 }
             }
-        }, 0)
+        }, 0)*/
 
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
@@ -144,6 +151,7 @@ class DetailsFragment : Fragment() {
 
                 val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle, it)
                 viewpager.adapter = tabAdapter
+                viewpager.setCurrentItem(viewModel.viewpargerpage, true)
                 TabLayoutMediator(tabLayout, viewpager) { tab, position ->
                     when (position) {
                         0 -> {
@@ -161,8 +169,6 @@ class DetailsFragment : Fragment() {
 
                     }
                 }.attach()
-
-                Log.e("Handler Exception", "getMatchData: ", )
             }
         }
     }

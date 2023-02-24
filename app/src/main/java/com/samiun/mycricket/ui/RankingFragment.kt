@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -40,7 +40,6 @@ class RankingFragment : Fragment() {
         _binding = FragmentRankingBinding.inflate(inflater)
         return binding.root
     }
-
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
@@ -49,51 +48,78 @@ class RankingFragment : Fragment() {
         rankingAdapter(gender,format)
 
         binding.genderMan.setOnClickListener {
+            binding.genderMan.isChecked = true
+
             gender = "men"
 
             ///binding.genderMan.setBackgroundColor(R.color.colorOnPrimary)
             binding.testranking.visibility = View.VISIBLE
             rankingAdapter(gender,format)
-            Log.d("Man Ranking", "onViewCreated:$gender $format ")
         }
         binding.genderWoman.setOnClickListener {
+            binding.genderWoman.isChecked = true
+
             gender = "women"
             binding.testranking.visibility = View.GONE
             rankingAdapter(gender,format)
-            Log.d("Woman Ranking", "onViewCreated:$gender $format ")
 
         }
         binding.testranking.setOnClickListener {
+            binding.testranking.isChecked = true
+
             format = "TEST"
             rankingAdapter(gender,format)
-            Log.d("Test Ranking", "onViewCreated:$gender $format ")
 
         }
         binding.t20ranking.setOnClickListener {
+            binding.t20ranking.isChecked = true
             format = "T20I"
             rankingAdapter(gender,format)
-            Log.d("T20 Ranking", "onViewCreated:$gender $format ")
-
         }
         binding.odiranking.setOnClickListener {
+            binding.odiranking.isChecked = true
             format = "ODI"
             rankingAdapter(gender,format)
-            Log.d("ODI Ranking", "onViewCreated:$gender $format ")
+        }
 
+        val blueColor: Int = ContextCompat.getColor(requireContext(), R.color.teal_200)
+        val whiteColor: Int = ContextCompat.getColor(requireContext(), R.color.colorOnPrimary)
+//        binding.t20ranking.setBackgroundColor(R.color.teal_200)
+//        binding.genderMan.setBackgroundColor(R.color.teal_200)
+        binding.t20ranking.setBackgroundColor(blueColor)
+        binding.genderMan.setBackgroundColor(blueColor)
+        binding.t20ranking.isChecked = true
+        binding.genderMan.isChecked = true
+        binding.formatGroup.addOnButtonCheckedListener{_, checkedId, isChecked ->
+            when (checkedId) {
+                R.id.t20ranking -> binding.t20ranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
+                R.id.odiranking -> binding.odiranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
+                R.id.testranking -> binding.testranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
+            }
+        }
+
+
+        binding.genderGroup.addOnButtonCheckedListener{_, checkedId, isChecked ->
+            when (checkedId) {
+                R.id.gender_man -> binding.genderMan.setBackgroundColor(if (isChecked) blueColor else whiteColor)
+                R.id.gender_woman -> binding.genderWoman.setBackgroundColor(if (isChecked) blueColor else whiteColor)
+            }
+        }
+
+        binding.bottomNav?.let {
+            it.menu.getItem(1).isChecked = true
         }
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
-
+                R.id.rankingFragment->{
+                    return@setOnItemSelectedListener true
+                }
+                R.id.homeFragment->{
                     findNavController().navigate(R.id.homeFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
-                    Toast.makeText(requireContext(), "You are on ranking Fragment", Toast.LENGTH_SHORT).show()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     findNavController().navigate(R.id.searchFragment)
                     return@setOnItemSelectedListener true
                 }
@@ -114,7 +140,7 @@ class RankingFragment : Fragment() {
         try {
             viewModel.getRanking(gender, format).observe(viewLifecycleOwner){
                 if(it!=null){
-                    rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)
+                    rankingRecyclerView.adapter = RankingAdapter(it.team!!)
                 }
             }
         }catch (e:Exception){

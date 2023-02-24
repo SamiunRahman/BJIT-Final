@@ -2,8 +2,8 @@ package com.samiun.mycricket.utils
 
 import android.util.Log
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.Period
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Constants {
@@ -18,12 +18,12 @@ class Constants {
 
         const val api_token3 = "api_token=qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
 
-        const val api_token1 ="api_token=hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
-        //const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
+        //const val api_token1 ="api_token=hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
+        const val api_token1 ="api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h"
 
         const val api_token2 ="qEx13JbWRD8rtNU6dGUIpQIx6aHxawElzDxMs4EkGNpOMTrvqyjqZSHQdZIK"
-       // const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
-        const val api_token ="hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
+        const val api_token ="0ElKvYYdKqBDgRJc367869n3iPEljCurdPpqnjIMFcj3HqqHvAL35XJGXios"
+        //const val api_token ="hNf2oXFWaRWVINxXWzIZczPrbbH1db5WMoQ6osus2XhsK3Z5wI4D3Nsf8vTY"
         const val COUNTRY_END_POINT = "countries"
         const val LEAGUES_END_POINT ="leagues?$api_token1"
 
@@ -54,6 +54,7 @@ class Constants {
             return outputDate
         }
         fun timeFormat(inputDate: String): String{
+
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
             val outputFormat = SimpleDateFormat("hh:mm a")
 
@@ -61,6 +62,23 @@ class Constants {
             val time = outputFormat.format(date)
 
             return time
+        }
+        fun upcomingtimeFormat(inputDate: String): String{
+
+            val inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val outputFormat = DateTimeFormatter.ofPattern("hh:mm a")
+
+            val instant = Instant.parse(inputDate)
+            val date = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+            val time = outputFormat.format(date)
+
+            return time
+        }
+        fun convertDateTime(dateTimeString: String): String {
+            val formatter = DateTimeFormatter.ofPattern("dd MMMM h a")
+            val instant = Instant.parse(dateTimeString)
+            val date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime()
+            return formatter.format(date)
         }
 
         fun calculateAge(dateString: String?): String {

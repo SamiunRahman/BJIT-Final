@@ -13,7 +13,6 @@ import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.model.fixturewithdetails.Batting
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
-import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
@@ -74,10 +73,7 @@ class ScoreCardFragment : Fragment() {
             battingFirstId  = data.visitorteam_id!!
         }
 
-        var battingcardString1 = ""
-        var battingcardString2 = ""
-        var bowlingcardString1 = ""
-        var bowlingcardString2 = ""
+
 
 
 
@@ -88,13 +84,6 @@ class ScoreCardFragment : Fragment() {
             withContext(Dispatchers.Main){
                 battingFirstBtn.text = battingFirstTeam.code
                 bowlingFirstBtn.text = bowlingFirstTeam.code
-                battingcardString1 = "${battingFirstTeam.name}  Batting"
-                battingcardString2 = "${bowlingFirstTeam.name}  Batting"
-                bowlingcardString1 = "${battingFirstTeam.name}  Bowling"
-                bowlingcardString2 = "${bowlingFirstTeam.name}  Bowling"
-
-                binding.battingScoreTv.text = battingcardString1
-                binding.bowlingScoreTv.text = bowlingcardString2
 
             }
 
@@ -128,16 +117,11 @@ class ScoreCardFragment : Fragment() {
         binding.battingfirstScoreBtn.setOnClickListener{
             battingAdapter(viewModel, battingFirstBatting, lineup)
             bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
-            binding.battingScoreTv.text = battingcardString1
-            binding.bowlingScoreTv.text = bowlingcardString2
 
         }
         binding.bowlingfirstScoreBtn.setOnClickListener {
             battingAdapter(viewModel,bowlingFirstBatting, lineup)
             bowlingAdapter(viewModel,battingFirstBowling,lineup)
-            binding.battingScoreTv.text = battingcardString2
-            binding.bowlingScoreTv.text = bowlingcardString1
-
         }
 
     }
@@ -149,7 +133,7 @@ class ScoreCardFragment : Fragment() {
     ) {
         val adapterViewState = bowlingRV.layoutManager?.onSaveInstanceState()
         bowlingRV.layoutManager?.onRestoreInstanceState(adapterViewState)
-        bowlingRV.adapter = BowlingCardAdapter(requireContext(), viewModel, bowling, lineup)
+        bowlingRV.adapter = BowlingCardAdapter(bowling, lineup)
     }
 
     private fun battingAdapter(
@@ -159,6 +143,6 @@ class ScoreCardFragment : Fragment() {
     ) {
         val adapterViewState = battingRV.layoutManager?.onSaveInstanceState()
         battingRV.layoutManager?.onRestoreInstanceState(adapterViewState)
-        battingRV.adapter = BattingCardAdapter(requireContext(), viewModel, batting, lineup)
+        battingRV.adapter = BattingCardAdapter(viewModel, batting, lineup)
     }
 }

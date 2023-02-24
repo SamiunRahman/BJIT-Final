@@ -62,7 +62,7 @@ interface CricketDao {
     @Query("select * from Fixturerun where  league_id = :id order by starting_at desc")
     fun readFixtureByLeague(id: Int):LiveData <List<FixtureWithRunEntity>>
 
-    @Query("select * from Fixtures where  league_id = :id order by starting_at desc")
+    @Query("select * from Fixtures where  league_id = :id order by starting_at")
     fun readUpcomingFixturebyleage(id: Int):LiveData <List<FixtureEntity>>
 
     @Query("select * from teams order by name")

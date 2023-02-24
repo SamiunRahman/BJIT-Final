@@ -1,6 +1,5 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
-import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.DetailsFragmentDirections
 import kotlinx.android.synthetic.main.batting_card.view.*
 
-class BowlingCardAdapter(private val context: Context, private val viewModel : CricketViewModel, private var arrayList:MutableList<Bowling>, private val lineup:List<Lineup>)
-    : RecyclerView.Adapter<BowlingCardAdapter.BowlingCardViewHolder>(){
+class BowlingCardAdapter(
+    private var arrayList: MutableList<Bowling>,
+    private val lineup: List<Lineup>
+) : RecyclerView.Adapter<BowlingCardAdapter.BowlingCardViewHolder>() {
     class BowlingCardViewHolder(
         binding: View
-    ): RecyclerView.ViewHolder(binding){
+    ) : RecyclerView.ViewHolder(binding) {
         val playerName = itemView.playername
         val runs = itemView.runorover
         val balls = itemView.ballormaiden
@@ -26,19 +26,18 @@ class BowlingCardAdapter(private val context: Context, private val viewModel : C
         val sixs = itemView.sixorwicket
         val strikerate = itemView.strikerateoreconomy
         val item = itemView.constraint_item
-
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BowlingCardAdapter.BowlingCardViewHolder {
-        val root = LayoutInflater.from(parent.context).inflate(R .layout.batting_card,parent,false)
-        return BowlingCardAdapter.BowlingCardViewHolder(root)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BowlingCardViewHolder {
+        val root = LayoutInflater.from(parent.context).inflate(R.layout.batting_card, parent, false)
+        return BowlingCardViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: BowlingCardAdapter.BowlingCardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BowlingCardViewHolder, position: Int) {
         val info = arrayList[position]
-        for(i in lineup!!){
-            if(info.player_id== i.id){
-                holder.playerName.text = "${i.firstname} ${i.lastname}"
+        for (i in lineup) {
+            if (info.player_id == i.id) {
+                "${i.firstname} ${i.lastname}".also { holder.playerName.text = it }
             }
         }
         holder.runs.text = "${info.overs}"
@@ -48,12 +47,13 @@ class BowlingCardAdapter(private val context: Context, private val viewModel : C
         holder.strikerate.text = "${info.rate}"
 
 
-        holder.item.setOnClickListener{
+        holder.item.setOnClickListener {
             try {
-                val action = DetailsFragmentDirections.actionDetailsFragmentToPlayerFragment2(info.player_id!!)
+                val action =
+                    DetailsFragmentDirections.actionDetailsFragmentToPlayerFragment2(info.player_id!!)
                 holder.itemView.findNavController().navigate(action)
-            }catch (e: Exception){
-                Log.e("Batting Adapter", "onBindViewHolder: $e", )
+            } catch (e: Exception) {
+                Log.e("Batting Adapter", "onBindViewHolder: $e")
 
             }
         }

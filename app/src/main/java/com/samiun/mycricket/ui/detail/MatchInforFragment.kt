@@ -1,6 +1,7 @@
 package com.samiun.mycricket.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.LineupAdapter
-import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.databinding.FragmentMatchInforBinding
-import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
@@ -42,8 +40,6 @@ class MatchInforFragment : Fragment() {
         val data = gerArgs.matchdetails
         localRV = binding.localteamSquadRv
         visitoreRv = binding.visitorteamSquadRv
-        val localSquadStr = mutableListOf<String>()
-        val visitorSquadStr =  mutableListOf<String>()
         val localSquad = mutableListOf<Lineup>()
         val visitorSquad =  mutableListOf<Lineup>()
         for(i in data.lineup!!){
@@ -57,11 +53,11 @@ class MatchInforFragment : Fragment() {
 
         val adapterViewState = localRV.layoutManager?.onSaveInstanceState()
         localRV.layoutManager?.onRestoreInstanceState(adapterViewState)
-        localRV.adapter = LineupAdapter(requireContext(), localSquad)
+        localRV.adapter = LineupAdapter(localSquad)
 
         val adapterViewState2 = visitoreRv.layoutManager?.onSaveInstanceState()
-        visitoreRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-        visitoreRv.adapter = LineupAdapter(requireContext(), visitorSquad)
+        visitoreRv.layoutManager?.onRestoreInstanceState(adapterViewState2)
+        visitoreRv.adapter = LineupAdapter(visitorSquad)
 
         binding.dateData.text = data.starting_at?.let { Constants.dateFormat(it) }
         binding.timeData.text = data.starting_at?.let { Constants.timeFormat(it) }
@@ -81,6 +77,21 @@ class MatchInforFragment : Fragment() {
 
             binding.localteamName.text = localTeam?.name
             binding.visitorteamName.text = visitorteam?.name
+            if(data.man_of_match_id!=null){
+                binding.momlayout.visibility = View.VISIBLE
+                binding.momdata.text = viewModel.findPlayerbyId(data.man_of_match_id!!).fullname
+            }
+
+            if(data.man_of_series_id!=null){
+                try {
+                    binding.moslayout.visibility = View.VISIBLE
+                    binding.momdata.text = viewModel.findPlayerbyId(data.man_of_series_id as Int)?.fullname
+                }
+                catch (e:Exception){
+                    Log.e("Match MOS Exception", "onViewCreated: $e", )
+                }
+
+            }
 
 
             withContext(Dispatchers.Main){

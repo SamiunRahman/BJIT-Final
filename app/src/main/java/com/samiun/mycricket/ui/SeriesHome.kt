@@ -10,11 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.LeaguesAdapter
-import com.samiun.mycricket.adapter.SearchTeamAdapter
-import com.samiun.mycricket.databinding.FragmentSearchBinding
 import com.samiun.mycricket.databinding.FragmentSeriesBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class SeriesHome : Fragment() {
 
@@ -39,22 +36,25 @@ class SeriesHome : Fragment() {
         viewModel.readLeagues.observe(viewLifecycleOwner){
             val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
             seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-            seriesRv.adapter = LeaguesAdapter(requireContext(), viewModel, it!!)
+            seriesRv.adapter = LeaguesAdapter(it!!)
 
+        }
+
+        binding.bottomNav?.let {
+            it.menu.getItem(3).isChecked = true
         }
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
-
+                R.id.homeFragment->{
                     findNavController().navigate(R.id.homeFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
+                R.id.rankingFragment->{
                     findNavController().navigate(R.id.rankingFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     findNavController().navigate(R.id.searchFragment)
                     return@setOnItemSelectedListener true
                 }
