@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 class CricketViewModel(application: Application): AndroidViewModel(application){
 
     //For API
+    var viewpargerpage =0
     private val _countries = MutableLiveData<List<Data>>()
     private val countries: LiveData<List<Data>> = _countries
     private val _leagues = MutableLiveData<List<Leagues>>()

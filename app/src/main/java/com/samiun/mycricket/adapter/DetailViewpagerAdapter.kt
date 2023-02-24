@@ -20,13 +20,10 @@ class DetailViewpagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        val args = Bundle()
-        Log.e("Get Details", "adapter: ${adapterData?.lineup?.size}")
-
+        Bundle()
         when(position){
             0->{
                 val fragment = BallsFragment()
-                //args.putParcelable("matchdetails", adapterData)
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }
@@ -41,7 +38,6 @@ class DetailViewpagerAdapter(
             }
             2->{
                 val fragment = ScoreCardFragment()
-                //args.putParcelable("matchdetails", adapterData)
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }
@@ -54,7 +50,6 @@ class DetailViewpagerAdapter(
                 }
                 return fragment
             }
-
         }
     }
 

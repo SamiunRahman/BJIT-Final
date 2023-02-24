@@ -4,7 +4,6 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -52,7 +51,7 @@ class SearchFragment : Fragment() {
         viewModel.readTeamEntity.observe(viewLifecycleOwner){
             val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
             searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
-            searchRecyclerview.adapter = SearchTeamAdapter(requireContext(), viewModel, it!!)
+            searchRecyclerview.adapter = SearchTeamAdapter(it!!)
             teamList = it
 
         }
@@ -61,7 +60,7 @@ class SearchFragment : Fragment() {
             viewModel.readTeamEntity.observe(viewLifecycleOwner){
                 val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
                 searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
-                searchRecyclerview.adapter = SearchTeamAdapter(requireContext(), viewModel, it!!)
+                searchRecyclerview.adapter = SearchTeamAdapter(it!!)
                 teamList = it
                 isTeamList = true
             }
@@ -71,10 +70,14 @@ class SearchFragment : Fragment() {
             viewModel.readPlayerData.observe(viewLifecycleOwner){
                 val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
                 searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
-                searchRecyclerview.adapter =SearchPlayerAdapter(requireContext(), viewModel, it!!)
+                searchRecyclerview.adapter =SearchPlayerAdapter(it!!)
                 playerList = it
                 isTeamList = false
             }
+        }
+
+        binding.bottomNav?.let {
+            it.menu.getItem(2).isChecked = true
         }
 
         binding.bottomNav.setOnItemSelectedListener {

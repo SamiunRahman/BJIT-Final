@@ -7,15 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.LeaguesAdapter
-import com.samiun.mycricket.adapter.SearchTeamAdapter
-import com.samiun.mycricket.databinding.FragmentSearchBinding
 import com.samiun.mycricket.databinding.FragmentSeriesBinding
 import com.samiun.mycricket.network.overview.CricketViewModel
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class SeriesHome : Fragment() {
 
@@ -40,8 +36,12 @@ class SeriesHome : Fragment() {
         viewModel.readLeagues.observe(viewLifecycleOwner){
             val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
             seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
-            seriesRv.adapter = LeaguesAdapter(requireContext(), viewModel, it!!)
+            seriesRv.adapter = LeaguesAdapter(it!!)
 
+        }
+
+        binding.bottomNav?.let {
+            it.menu.getItem(3).isChecked = true
         }
 
         binding.bottomNav.setOnItemSelectedListener {

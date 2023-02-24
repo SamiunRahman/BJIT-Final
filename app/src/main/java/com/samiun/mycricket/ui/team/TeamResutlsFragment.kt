@@ -8,14 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.R
-import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.TeamResultsAdapter
-import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentTeamResutlsBinding
-import com.samiun.mycricket.databinding.FragmentTeamScheduleBinding
-import com.samiun.mycricket.model.fixture.FixtureEntity
-import com.samiun.mycricket.model.fixturewithrun.FixtureWithRun
 import com.samiun.mycricket.network.overview.CricketViewModel
 
 
@@ -45,7 +39,7 @@ class TeamResutlsFragment : Fragment() {
         teamRestulRecyclerview = binding.teamRecentMatches
         val adapterViewState = teamRestulRecyclerview.layoutManager?.onSaveInstanceState()
         teamRestulRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
-        teamRestulRecyclerview.adapter =  TeamResultsAdapter(requireContext(), viewModel, data.results!!)
+        teamRestulRecyclerview.adapter =  TeamResultsAdapter(viewModel, data.results!!)
 
     }
 }

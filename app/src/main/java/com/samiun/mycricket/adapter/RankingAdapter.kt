@@ -1,24 +1,18 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.ranking.Team
-import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.RankingFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
-import kotlinx.android.parcel.RawValue
-import kotlinx.android.synthetic.main.batting_card.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
 
-class RankingAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<Team>)
+class RankingAdapter(private var data: List<Team>)
     : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>(){
     class RankingViewHolder(
         binding: View

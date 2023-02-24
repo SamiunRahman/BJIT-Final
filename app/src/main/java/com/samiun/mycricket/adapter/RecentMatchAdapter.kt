@@ -1,11 +1,9 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +17,10 @@ import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
 import kotlinx.coroutines.*
 
-class RecentMatchAdapter(private val context: Context, private val viewModel: CricketViewModel,private var arrayList: List<FixtureWithRunEntity>)
+class RecentMatchAdapter(
+    private val viewModel: CricketViewModel,
+    private var arrayList: List<FixtureWithRunEntity>
+)
     :RecyclerView.Adapter<RecentMatchAdapter.RecentMatchViewHolder>(){
         class RecentMatchViewHolder(
             binding: View
@@ -45,7 +46,7 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
     override fun onBindViewHolder(holder: RecentMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.note
-        Log.e("Fixture with run", "onBindViewHolder:${match.id} ", )
+        Log.e("Fixture with run", "onBindViewHolder:${match.id} " )
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
             val awayteam = match.visitorteam_id?.let { viewModel.findTeamById(it) }
@@ -74,6 +75,7 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
 
                 }
                 catch(e: Exception){
+                    Log.e("RecentMatch Adapter Exception", "onBindViewHolder: $e", )
                 }
 
                 if (awayteam != null) {
@@ -89,7 +91,7 @@ class RecentMatchAdapter(private val context: Context, private val viewModel: Cr
                     holder.awayTeamName.text = id
                 }
                 if (hometeam != null) {
-                    holder.homeTeamName.text = hometeam!!.code
+                    holder.homeTeamName.text = hometeam.code
                     Glide
                         .with(MyApplication.instance)
                         .load(hometeam.image_path)

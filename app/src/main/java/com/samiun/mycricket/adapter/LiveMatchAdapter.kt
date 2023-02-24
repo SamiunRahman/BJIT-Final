@@ -1,6 +1,5 @@
 package com.samiun. mycricket.adapter
 
-
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,13 +50,6 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
         val match = arrayList[position]
         holder.notes.text = match.note
         val runs = match.runs
-
-/*
-        val homeData = match.localteam_id?.let { Constants.homedata(results, it) }
-        val awayData = match.visitorteam_id?.let { Constants.homedata(results, it) }
-*/
-
-
         holder.status.visibility = View.VISIBLE
         var locatTeam: TeamDetailsData
         var vistorTeam: TeamDetailsData

@@ -41,7 +41,14 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.viewpargerpage = binding.viewPager.currentItem // store the current position
+    }
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val match = navArgs.fixturewithrun
@@ -144,6 +151,7 @@ class DetailsFragment : Fragment() {
 
                 val tabAdapter = DetailViewpagerAdapter(childFragmentManager, lifecycle, it)
                 viewpager.adapter = tabAdapter
+                viewpager.setCurrentItem(viewModel.viewpargerpage, true)
                 TabLayoutMediator(tabLayout, viewpager) { tab, position ->
                     when (position) {
                         0 -> {

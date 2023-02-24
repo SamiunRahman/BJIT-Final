@@ -40,7 +40,7 @@ class TeamSquadFragment : Fragment() {
         viewModel.getTeamSquad(data.id!!).observe(viewLifecycleOwner){
             val adapterViewState = teamSquadRecyclerview.layoutManager?.onSaveInstanceState()
             teamSquadRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
-            teamSquadRecyclerview.adapter = SearchPlayerAdapter(requireContext(), viewModel, squadtoPlayer(it))
+            teamSquadRecyclerview.adapter = SearchPlayerAdapter(squadtoPlayer(it))
         }
 
     }

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,7 +40,6 @@ class RankingFragment : Fragment() {
         _binding = FragmentRankingBinding.inflate(inflater)
         return binding.root
     }
-
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
@@ -108,10 +106,13 @@ class RankingFragment : Fragment() {
             }
         }
 
+        binding.bottomNav?.let {
+            it.menu.getItem(1).isChecked = true
+        }
+
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.rankingFragment->{
-
                     return@setOnItemSelectedListener true
                 }
                 R.id.homeFragment->{
@@ -127,7 +128,6 @@ class RankingFragment : Fragment() {
                     return@setOnItemSelectedListener true
                 }
             }
-
         }
 
         rankingRecyclerView = binding.rankingRv
@@ -140,7 +140,7 @@ class RankingFragment : Fragment() {
         try {
             viewModel.getRanking(gender, format).observe(viewLifecycleOwner){
                 if(it!=null){
-                    rankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it.team!!)
+                    rankingRecyclerView.adapter = RankingAdapter(it.team!!)
                 }
             }
         }catch (e:Exception){

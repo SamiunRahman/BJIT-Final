@@ -1,28 +1,20 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samiun.mycricket.R
-import com.samiun.mycricket.model.ranking.Team
 import com.samiun.mycricket.model.team.TeamEntity
-import com.samiun.mycricket.network.overview.CricketViewModel
-import com.samiun.mycricket.ui.RankingFragmentDirections
 import com.samiun.mycricket.ui.SearchFragmentDirections
 import com.samiun.mycricket.utils.MyApplication
-import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.*
 import kotlinx.android.synthetic.main.ranking_list.view.rating
 import java.util.*
 
-class SearchTeamAdapter(private val context: Context, private val viewModel: CricketViewModel, private var data: List<TeamEntity>)
+class SearchTeamAdapter(private var data: List<TeamEntity>)
     : RecyclerView.Adapter<SearchTeamAdapter.SearchTeamViewHolder>(){
     class SearchTeamViewHolder(
         binding: View
