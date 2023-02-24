@@ -79,16 +79,16 @@ class SearchFragment : Fragment() {
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
+                R.id.homeFragment->{
 
                     findNavController().navigate(R.id.homeFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
+                R.id.rankingFragment->{
                     findNavController().navigate(R.id.rankingFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     return@setOnItemSelectedListener true
                 }
                 else ->{

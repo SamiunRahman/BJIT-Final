@@ -67,6 +67,10 @@ class HomeFragment : Fragment() {
             override fun run() {
                 viewModel.getLiveMatch().observe(viewLifecycleOwner) { liveMatchList ->
                     liveMatchAdapter.updateData(liveMatchList)
+                    if(liveMatchList.isEmpty()){
+                        binding.noLiveMatches.visibility = view.visibility
+                    }
+
                     // Schedule the function to be executed again after 1 minute
                     handler.postDelayed(this, 60000)
                 }
@@ -93,15 +97,15 @@ class HomeFragment : Fragment() {
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
+                R.id.homeFragment->{
 
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
+                R.id.rankingFragment->{
                     findNavController().navigate(R.id.rankingFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     findNavController().navigate(R.id.searchFragment)
                     return@setOnItemSelectedListener true
                 }

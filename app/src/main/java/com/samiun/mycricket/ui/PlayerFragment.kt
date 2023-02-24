@@ -1,23 +1,17 @@
 package com.samiun.mycricket.ui
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.android.material.tabs.TabLayoutMediator
 import com.samiun.mycricket.R
-import com.samiun.mycricket.adapter.TeamDetailViewPagerAdapter
 import com.samiun.mycricket.databinding.FragmentPlayerBinding
-import com.samiun.mycricket.databinding.FragmentTeamBinding
 import com.samiun.mycricket.model.playerDetails.Career
-import com.samiun.mycricket.model.playerDetails.PlayerDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
 import kotlinx.android.synthetic.main.fragment_match_infor.*

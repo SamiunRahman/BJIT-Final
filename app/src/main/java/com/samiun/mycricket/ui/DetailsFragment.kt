@@ -64,18 +64,18 @@ class DetailsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        handler.postDelayed(object : Runnable {
+/*        handler.postDelayed(object : Runnable {
             override fun run() {
                 viewModel.getRuns(match.id!!).observe(viewLifecycleOwner) {
                     // Schedule the function to be executed again after 1 minute
                     if(it!=null){
-                        val runs = it.get(0).runs
+                        //val runs = it.get(0).runs
 
                     }
                     handler.postDelayed(this, 60000)
                 }
             }
-        }, 0)
+        }, 0)*/
 
         GlobalScope.launch {
             val hometeam = match.localteam_id?.let { viewModel.findTeamById(it) }
@@ -161,8 +161,6 @@ class DetailsFragment : Fragment() {
 
                     }
                 }.attach()
-
-                Log.e("Handler Exception", "getMatchData: ", )
             }
         }
     }

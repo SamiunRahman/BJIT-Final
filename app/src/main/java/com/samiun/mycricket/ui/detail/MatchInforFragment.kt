@@ -1,6 +1,7 @@
 package com.samiun.mycricket.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -81,6 +82,21 @@ class MatchInforFragment : Fragment() {
 
             binding.localteamName.text = localTeam?.name
             binding.visitorteamName.text = visitorteam?.name
+            if(data.man_of_match_id!=null){
+                binding.momlayout.visibility = View.VISIBLE
+                binding.momdata.text = viewModel.findPlayerbyId(data.man_of_match_id!!).fullname
+            }
+
+            if(data.man_of_series_id!=null){
+                try {
+                    binding.moslayout.visibility = View.VISIBLE
+                    binding.momdata.text = viewModel.findPlayerbyId(data.man_of_series_id as Int)?.fullname
+                }
+                catch (e:Exception){
+                    Log.e("Match MOS Exception", "onViewCreated: $e", )
+                }
+
+            }
 
 
             withContext(Dispatchers.Main){

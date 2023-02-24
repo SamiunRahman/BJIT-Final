@@ -33,7 +33,6 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.ranking_list,parent,false)
-        Toast.makeText(context, "Oncreateviewholder", Toast.LENGTH_SHORT).show()
         return RankingViewHolder(root)
     }
 
@@ -58,8 +57,6 @@ class RankingAdapter(private val context: Context, private val viewModel: Cricke
     }
 
     override fun getItemCount(): Int {
-       // Log.d("Ranking Adapter", "getItemCount: ${data.size}")
         return data.size
-
     }
 }

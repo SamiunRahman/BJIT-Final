@@ -7,18 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.BattingCardAdapter
 import com.samiun.mycricket.adapter.BowlingCardAdapter
-import com.samiun.mycricket.databinding.FragmentScoreCardBinding
 import com.samiun.mycricket.databinding.FragmentSummeryBinding
 import com.samiun.mycricket.model.fixturewithdetails.Batting
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
-import com.samiun.mycricket.model.fixturewithdetails.Lineup
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
-import kotlinx.android.parcel.RawValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -114,8 +109,10 @@ class SummeryFragment : Fragment() {
             .take(3)
 
         try {
-            binding.battingfirstSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
-                battingFirstBattingSummery as MutableList<Batting>, lineup)
+            binding.battingfirstSumRv.adapter = BattingCardAdapter(
+                viewModel, battingFirstBattingSummery as MutableList<Batting>,
+                lineup
+            )
         }
         catch (e:Exception){
             binding.battingfirstSumTv.text = "Summery is not Available!"
@@ -123,8 +120,10 @@ class SummeryFragment : Fragment() {
         }
 
         try {
-            binding.battingsecondSumRv.adapter = BattingCardAdapter(requireContext(), viewModel,
-                bowlingFirstBattingSummery as MutableList<Batting>, lineup)
+            binding.battingsecondSumRv.adapter = BattingCardAdapter(
+                viewModel, bowlingFirstBattingSummery as MutableList<Batting>,
+                lineup
+            )
 
         }
         catch (e:Exception){
@@ -133,8 +132,9 @@ class SummeryFragment : Fragment() {
         }
         try {
 
-            binding.bowlingfirstSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
-                bowlingFirstBowlingSummery as MutableList<Bowling>, lineup)
+            binding.bowlingfirstSumRv.adapter = BowlingCardAdapter(
+                bowlingFirstBowlingSummery as MutableList<Bowling>, lineup
+            )
         }
         catch (e:Exception){
             binding.bowlingfirstSumTv.visibility =View.GONE
@@ -143,8 +143,9 @@ class SummeryFragment : Fragment() {
 
         try {
 
-            binding.bowlingsecondSumRv.adapter = BowlingCardAdapter(requireContext(), viewModel,
-                battingFirstBowlingSummery as MutableList<Bowling>, lineup)
+            binding.bowlingsecondSumRv.adapter = BowlingCardAdapter(
+                battingFirstBowlingSummery as MutableList<Bowling>, lineup
+            )
         }
         catch (e:Exception){
             binding.bowlingsecondSumTv.visibility = View.GONE

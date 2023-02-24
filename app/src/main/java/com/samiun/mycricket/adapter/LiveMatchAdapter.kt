@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.samiun.mycricket.R
+import com.samiun.mycricket.adapter.TeamDetailViewPagerAdapter
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.model.liveScore.LiveScoreData
 import com.samiun.mycricket.model.teamDetails.TeamDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.HomeFragmentDirections
+import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
@@ -49,6 +51,13 @@ class LiveMatchAdapter(private val context: Context, private val viewModel: Cric
         val match = arrayList[position]
         holder.notes.text = match.note
         val runs = match.runs
+
+/*
+        val homeData = match.localteam_id?.let { Constants.homedata(results, it) }
+        val awayData = match.visitorteam_id?.let { Constants.homedata(results, it) }
+*/
+
+
         holder.status.visibility = View.VISIBLE
         var locatTeam: TeamDetailsData
         var vistorTeam: TeamDetailsData

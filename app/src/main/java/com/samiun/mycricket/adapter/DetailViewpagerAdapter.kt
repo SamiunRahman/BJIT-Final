@@ -16,7 +16,7 @@ class DetailViewpagerAdapter(
     val adapterData: FixtureWithDetailsData
 ): FragmentStateAdapter(fragmentManager,lifecycle){
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
     override fun createFragment(position: Int): Fragment {

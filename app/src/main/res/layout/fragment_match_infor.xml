@@ -155,6 +155,73 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/momlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:background="#EAE7E7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/matchtype">
+
+                    <TextView
+                        android:id="@+id/momtv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Man of the Match"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/momdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        tools:text="Shakib Al Hasan" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/moslayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/momlayout">
+
+                    <TextView
+                        android:id="@+id/mos_match"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Man of the Series"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/mos_matchdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        tools:text="Mustafizur Rahman" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/series_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,7 +230,7 @@
                     android:background="#EAE7E7"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/matchtype">
+                    app:layout_constraintTop_toBottomOf="@+id/moslayout">
 
                     <TextView
                         android:id="@+id/matchseries"

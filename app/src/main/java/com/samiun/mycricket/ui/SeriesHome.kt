@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.LeaguesAdapter
@@ -45,16 +46,15 @@ class SeriesHome : Fragment() {
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home_bottom_nav->{
-
+                R.id.homeFragment->{
                     findNavController().navigate(R.id.homeFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.ranking_bottom_nav->{
+                R.id.rankingFragment->{
                     findNavController().navigate(R.id.rankingFragment)
                     return@setOnItemSelectedListener true
                 }
-                R.id.search_bottom_nav->{
+                R.id.searchFragment->{
                     findNavController().navigate(R.id.searchFragment)
                     return@setOnItemSelectedListener true
                 }

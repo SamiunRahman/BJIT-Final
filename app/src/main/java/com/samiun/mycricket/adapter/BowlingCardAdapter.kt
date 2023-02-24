@@ -1,6 +1,5 @@
 package com.samiun.mycricket.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.samiun.mycricket.R
 import com.samiun.mycricket.model.fixturewithdetails.Bowling
 import com.samiun.mycricket.model.fixturewithdetails.Lineup
-import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.DetailsFragmentDirections
 import kotlinx.android.synthetic.main.batting_card.view.*
 
-class BowlingCardAdapter(private val context: Context, private val viewModel : CricketViewModel, private var arrayList:MutableList<Bowling>, private val lineup:List<Lineup>)
+class BowlingCardAdapter(
+    private var arrayList: MutableList<Bowling>,
+    private val lineup: List<Lineup>
+)
     : RecyclerView.Adapter<BowlingCardAdapter.BowlingCardViewHolder>(){
     class BowlingCardViewHolder(
         binding: View
@@ -29,16 +30,16 @@ class BowlingCardAdapter(private val context: Context, private val viewModel : C
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BowlingCardAdapter.BowlingCardViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BowlingCardViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R .layout.batting_card,parent,false)
-        return BowlingCardAdapter.BowlingCardViewHolder(root)
+        return BowlingCardViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: BowlingCardAdapter.BowlingCardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BowlingCardViewHolder, position: Int) {
         val info = arrayList[position]
-        for(i in lineup!!){
+        for(i in lineup){
             if(info.player_id== i.id){
-                holder.playerName.text = "${i.firstname} ${i.lastname}"
+                "${i.firstname} ${i.lastname}".also { holder.playerName.text = it }
             }
         }
         holder.runs.text = "${info.overs}"
