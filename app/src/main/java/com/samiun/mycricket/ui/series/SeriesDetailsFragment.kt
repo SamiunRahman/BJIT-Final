@@ -38,8 +38,11 @@ class SeriesDetailsFragment : Fragment() {
             seriesRv.adapter = SeriesRecenMatchAdapter(viewModel, it!!)
 
         }
+        binding.recentseries.isChecked = true
+
 
         binding.recentseries.setOnClickListener {
+            binding.recentseries.isChecked = true
             viewModel.findFixuteByLeague(id).observe(viewLifecycleOwner){
                 val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
                 seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)
@@ -49,6 +52,7 @@ class SeriesDetailsFragment : Fragment() {
         }
 
         binding.upcomingseries.setOnClickListener {
+            binding.upcomingseries.isChecked = true
             viewModel.findUpcomingbyleage(id).observe(viewLifecycleOwner){
                 val adapterViewState = seriesRv.layoutManager?.onSaveInstanceState()
                 seriesRv.layoutManager?.onRestoreInstanceState(adapterViewState)

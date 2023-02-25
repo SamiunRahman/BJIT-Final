@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.samiun.mycricket.R
 import com.samiun.mycricket.adapter.BattingCardAdapter
 import com.samiun.mycricket.adapter.BowlingCardAdapter
 import com.samiun.mycricket.databinding.FragmentScoreCardBinding
@@ -73,6 +74,10 @@ class ScoreCardFragment : Fragment() {
             battingFirstId  = data.visitorteam_id!!
         }
 
+        var battingstring1 =""
+        var battingstring2 =""
+        var bowlingstring1 =""
+        var bowlingstring2 =""
 
 
 
@@ -84,6 +89,14 @@ class ScoreCardFragment : Fragment() {
             withContext(Dispatchers.Main){
                 battingFirstBtn.text = battingFirstTeam.code
                 bowlingFirstBtn.text = bowlingFirstTeam.code
+                binding.battingScoreTv.text = battingstring1
+                binding.battingScoreTv.text = bowlingstring2
+                battingstring1 ="${battingFirstTeam.code} Batting"
+                battingstring2 ="${battingFirstTeam.code} Bowling"
+                bowlingstring1 ="${bowlingFirstTeam.code} Batting"
+                bowlingstring2 ="${bowlingFirstTeam.code} Bowling"
+                binding.battingScoreTv.text = battingstring1
+                binding.bowlingScoreTv.text = bowlingstring2
 
             }
 
@@ -111,15 +124,24 @@ class ScoreCardFragment : Fragment() {
             }
         }
 
+
+        binding.battingfirstScoreBtn.isChecked = true
+
         battingAdapter(viewModel,battingFirstBatting,lineup)
         bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
 
         binding.battingfirstScoreBtn.setOnClickListener{
+            binding.battingfirstScoreBtn.isChecked = true
+            binding.battingScoreTv.text = battingstring1
+            binding.bowlingScoreTv.text = bowlingstring2
             battingAdapter(viewModel, battingFirstBatting, lineup)
             bowlingAdapter(viewModel,bowlingFirstBowling,lineup)
 
         }
         binding.bowlingfirstScoreBtn.setOnClickListener {
+            binding.battingScoreTv.text = bowlingstring1
+            binding.bowlingScoreTv.text = battingstring2
+            binding.bowlingfirstScoreBtn.isChecked = true
             battingAdapter(viewModel,bowlingFirstBatting, lineup)
             bowlingAdapter(viewModel,battingFirstBowling,lineup)
         }

@@ -55,8 +55,11 @@ class SearchFragment : Fragment() {
             teamList = it
 
         }
+        binding.teamSearch.isChecked = true
 
         binding.teamSearch.setOnClickListener {
+            binding.teamSearch.isChecked = true
+
             viewModel.readTeamEntity.observe(viewLifecycleOwner){
                 val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
                 searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)
@@ -67,6 +70,8 @@ class SearchFragment : Fragment() {
         }
 
         binding.playerSearch.setOnClickListener {
+            binding.playerSearch.isChecked = true
+
             viewModel.readPlayerData.observe(viewLifecycleOwner){
                 val adapterViewState = searchRecyclerview.layoutManager?.onSaveInstanceState()
                 searchRecyclerview.layoutManager?.onRestoreInstanceState(adapterViewState)

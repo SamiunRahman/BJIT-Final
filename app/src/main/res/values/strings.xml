@@ -12,4 +12,10 @@
     <string name="city">City</string>
     <string name="time">time</string>
     <string name="no_live_matches">No Live Matches on your subscription!</string>
+    <string name="team">Team</string>
+    <string name="player">Player</string>
+    <string name="image">Image</string>
+    <string name="name">Name</string>
+    <string name="recent">Recent</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

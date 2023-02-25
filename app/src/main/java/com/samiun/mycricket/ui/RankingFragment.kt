@@ -82,29 +82,8 @@ class RankingFragment : Fragment() {
             rankingAdapter(gender,format)
         }
 
-        val blueColor: Int = ContextCompat.getColor(requireContext(), R.color.teal_200)
-        val whiteColor: Int = ContextCompat.getColor(requireContext(), R.color.colorOnPrimary)
-//        binding.t20ranking.setBackgroundColor(R.color.teal_200)
-//        binding.genderMan.setBackgroundColor(R.color.teal_200)
-        binding.t20ranking.setBackgroundColor(blueColor)
-        binding.genderMan.setBackgroundColor(blueColor)
         binding.t20ranking.isChecked = true
         binding.genderMan.isChecked = true
-        binding.formatGroup.addOnButtonCheckedListener{_, checkedId, isChecked ->
-            when (checkedId) {
-                R.id.t20ranking -> binding.t20ranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
-                R.id.odiranking -> binding.odiranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
-                R.id.testranking -> binding.testranking.setBackgroundColor(if (isChecked) blueColor else whiteColor)
-            }
-        }
-
-
-        binding.genderGroup.addOnButtonCheckedListener{_, checkedId, isChecked ->
-            when (checkedId) {
-                R.id.gender_man -> binding.genderMan.setBackgroundColor(if (isChecked) blueColor else whiteColor)
-                R.id.gender_woman -> binding.genderWoman.setBackgroundColor(if (isChecked) blueColor else whiteColor)
-            }
-        }
 
         binding.bottomNav?.let {
             it.menu.getItem(1).isChecked = true

@@ -10,11 +10,11 @@
     <color name="selected">#FFFFFFFF</color>
     <color name="notselected">#ffA59E9E</color>
     <color name="primaryColor">#212121</color>
-    <color name="primaryLightColor">#484848</color>
-    <color name="primaryDarkColor">#000000</color>
+    <color name="primaryLightColor">#01579B</color>
+    <color name="primaryDarkColor">#1A237E</color>
     <color name="primaryTextColor">#ffffff</color>
-    <color name="colorPrimary">#232121</color>
-    <color name="colorPrimaryVariant">#FFBF5757</color>
+    <color name="colorPrimary">#3776D8</color>
+    <color name="colorPrimaryVariant">#311B92</color>
     <color name="colorOnPrimary">#FFFFFFFF</color>
     <color name="colorSecondary">#FFE80E4F</color>
     <color name="colorSecondaryVariant">#FFE80E4F</color>

@@ -27,29 +27,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:checkedButton="@+id/search_type_group"
+                android:layout_margin="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:singleSelection="true">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/player_search"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/alata"
-                    android:text="Player"
+                    android:text="@string/player"
                     android:textColor="@color/black" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/team_search"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/alata"
-                    android:text="Team"
+                    android:text="@string/team"
                     android:textColor="@color/black" />
 
 
@@ -73,7 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/alata"
                     android:padding="5dp"
-                    android:text="Image"
+                    android:text="@string/image"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +88,7 @@
                     android:fontFamily="@font/alata"
 
                     android:padding="5dp"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

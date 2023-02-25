@@ -8,28 +8,29 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/ranking_type"
+        android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:singleSelection="true">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/recentseries"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Recent" />
+            android:text="@string/recent" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/upcomingseries"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upcoming" />
+            android:text="@string/upcoming" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
