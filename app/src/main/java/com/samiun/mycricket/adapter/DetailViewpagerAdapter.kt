@@ -23,11 +23,12 @@ class DetailViewpagerAdapter(
         Bundle()
         when(position){
             0->{
-                val fragment = BallsFragment()
+                val fragment = MatchInforFragment()
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }
                 return fragment
+
             }
             1-> {
                 val fragment = SummeryFragment()
@@ -44,11 +45,12 @@ class DetailViewpagerAdapter(
                 return fragment
             }
             else->{
-                val fragment = MatchInforFragment()
+                val fragment = BallsFragment()
                 fragment.arguments = Bundle().apply {
                     putParcelable("matchdetails",adapterData)
                 }
                 return fragment
+
             }
         }
     }

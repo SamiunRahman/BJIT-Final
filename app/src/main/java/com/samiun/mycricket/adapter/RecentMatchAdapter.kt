@@ -105,7 +105,7 @@ class RecentMatchAdapter(
 
             }
             holder.status.visibility = View.VISIBLE
-//            holder.status.text = match.status
+            holder.status.text = match.status
 
             holder.cardView.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(match)

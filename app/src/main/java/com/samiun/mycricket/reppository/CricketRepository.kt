@@ -12,6 +12,7 @@ import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.model.venue.VenueEntity
+import com.samiun.mycricket.utils.Constants
 
 class CricketRepository(private val cricketDao: CricketDao) {
     val readFixtureEntity:LiveData<List<FixtureEntity>> = cricketDao.readAllFixtures()
@@ -96,6 +97,10 @@ class CricketRepository(private val cricketDao: CricketDao) {
 
     suspend fun getRanking(gender:String, format:String): RankingData{
         return cricketDao.getRanking(gender,format)
+    }
+
+    suspend fun deleteStartedMatches(){
+        cricketDao.deleteStartedMatches("${Constants.getTime(0)}")
     }
 
 

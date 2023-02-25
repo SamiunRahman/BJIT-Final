@@ -44,8 +44,8 @@ class GetCricketWorker(appContext: Context, workerParams: WorkerParameters) :
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Bowled Updates")
-            .setContentText("New matches have been added to the app.")
+            .setContentTitle("Bowled Cricket")
+            .setContentText("New matches have been added to the app")
             .setAutoCancel(true)
 
         notificationManager.notify(notificationId, notificationBuilder.build())

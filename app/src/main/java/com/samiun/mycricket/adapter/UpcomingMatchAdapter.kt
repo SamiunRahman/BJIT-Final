@@ -58,9 +58,8 @@ class UpcomingMatchAdapter(private val context: Context, private val viewModel: 
     override fun onBindViewHolder(holder: UpcomingMatchViewHolder, position: Int) {
         val match = arrayList[position]
         holder.notes.text = match.starting_at?.let { Constants.upcomingtimeFormat(it) }
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        val targetDate = dateFormat.parse(match.starting_at)
         holder.status.visibility = View.VISIBLE
+        holder.status.text = match.starting_at?.let { Constants.dateFormat(it) }
 
 
         holder.item.setOnClickListener {

@@ -85,7 +85,7 @@
             app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="#A59E9E">
+            app:tabTextColor="#575656">
 
             <!-- Add your tabs here -->
         </com.google.android.material.tabs.TabLayout>

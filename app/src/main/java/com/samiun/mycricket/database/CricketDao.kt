@@ -1,4 +1,5 @@
 package com.samiun.mycricket.database
+import android.provider.SyncStateContract.Constants
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.samiun.mycricket.model.country.Data
@@ -11,6 +12,7 @@ import com.samiun.mycricket.model.players.PlayerData
 import com.samiun.mycricket.model.ranking.RankingData
 import com.samiun.mycricket.model.team.TeamEntity
 import com.samiun.mycricket.model.venue.VenueEntity
+import java.time.ZonedDateTime
 
 @Dao
 interface CricketDao {
@@ -96,6 +98,8 @@ interface CricketDao {
     @Query("select * from players where id = :id")
     fun readPlayer(id: Int): PlayerEntity
 
+    @Query("delete from fixtures where starting_at >:time")
+    fun deleteStartedMatches(time: String)
 
 
 

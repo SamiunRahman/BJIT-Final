@@ -59,6 +59,9 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this)[CricketViewModel::class.java]
         topviewModel = viewModel
 
+        viewModel.deleteStartedMatches()
+
+
         recentRecyclerView = binding.recentMatchesRv
 
         liveRecyclerView = binding.liveMatchesRv

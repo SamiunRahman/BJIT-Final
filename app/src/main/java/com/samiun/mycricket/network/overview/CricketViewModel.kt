@@ -475,4 +475,9 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return result
     }
 
+    fun deleteStartedMatches() {
+        viewModelScope.launch(Dispatchers.IO) {
+                repository.deleteStartedMatches()
+        }    }
+
 }

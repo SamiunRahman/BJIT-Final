@@ -155,7 +155,7 @@ class DetailsFragment : Fragment() {
                 TabLayoutMediator(tabLayout, viewpager) { tab, position ->
                     when (position) {
                         0 -> {
-                            tab.text = "Live"
+                            tab.text = "Info"
                         }
                         1 -> {
                             tab.text = "Summery"
@@ -164,7 +164,7 @@ class DetailsFragment : Fragment() {
                             tab.text = "Score"
                         }
                         else->{
-                            tab.text= "Info"
+                            tab.text= "Live"
                         }
 
                     }
