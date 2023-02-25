@@ -16,7 +16,9 @@ import com.samiun.mycricket.adapter.LiveMatchAdapter
 import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
+import com.samiun.mycricket.model.fixturewithrun.Run
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.WinningPercentage
 
 private lateinit var topviewModel: CricketViewModel
@@ -91,14 +93,13 @@ class HomeFragment : Fragment() {
             )
         }
 
+
         upcomingRecyclerView = binding.upcomingMatchesRv
         viewModel.readFixtureEntity.observe(viewLifecycleOwner){
             val adapterViewState = upcomingRecyclerView.layoutManager?.onSaveInstanceState()
             upcomingRecyclerView.layoutManager?.onRestoreInstanceState(adapterViewState)
             upcomingRecyclerView.adapter = UpcomingMatchAdapter(requireContext(), viewModel, viewModel.readFixtureEntity.value!!)
         }
-        val percentage = calculateBangladeshWinningPercentage()
-        Log.e("HomeFragment winning percentage", "onViewCreated: $percentage", )
 
         binding.bottomNav?.let {
             it.menu.getItem(0).isChecked = true
@@ -140,30 +141,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun calculateBangladeshWinningPercentage(): Double {
-        val indiaRating = 239
-        val bangladeshRating = 176
-        val indiaOverallWinningPercentage = 0.79
-        val bangladeshOverallWinningPercentage = 0.56
-        val bangladeshHomeWinningPercentage = 0.65
-        val indiaAwayWinningPercentage = 0.47
 
-        val indiaScore = 50
-        val indiaWickets = 4
-        val indiaOvers = 9
-        val indiaRunRate = indiaScore.toDouble() / (indiaOvers+indiaWickets)
-
-        val bangladeshRunRate = indiaRunRate * (bangladeshRating.toDouble() / indiaRating.toDouble())
-        val bangladeshExpectedScore = bangladeshRunRate * indiaOvers
-        val bangladeshTarget = bangladeshExpectedScore + 1
-
-        val indiaChances = indiaOverallWinningPercentage * indiaAwayWinningPercentage
-        val bangladeshChances = bangladeshOverallWinningPercentage * bangladeshHomeWinningPercentage
-
-        val bangladeshWinningPercentage = (bangladeshChances) / (bangladeshChances + indiaChances) * 100
-
-        return bangladeshWinningPercentage
-    }
 
 
 }

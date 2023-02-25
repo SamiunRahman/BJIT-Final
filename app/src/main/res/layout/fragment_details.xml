@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/white"
+                android:background="@drawable/bottom_nav_shape"
                 app:layout_constraintEnd_toEndOf="@+id/home_image"
                 app:layout_constraintStart_toStartOf="@+id/home_image"
                 app:layout_constraintTop_toBottomOf="@+id/home_image"
