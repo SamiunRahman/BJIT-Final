@@ -142,7 +142,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
-                android:background="#006064"
+                android:background="@drawable/bottom_nav_shape"
                 android:textColor="@color/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

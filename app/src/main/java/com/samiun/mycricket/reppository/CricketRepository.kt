@@ -50,6 +50,9 @@ class CricketRepository(private val cricketDao: CricketDao) {
     fun readFixturewithRun(id: Int): FixtureWithRunEntity{
         return cricketDao.readFixturewitnrun(id)
     }
+    fun readFixtureEntity(id: Int): FixtureEntity{
+        return cricketDao.readFixtureEntity(id)
+    }
 
     fun readFixturewithLeagues(id: Int): LiveData<List<FixtureWithRunEntity>>{
         return cricketDao.readFixtureByLeague(id)

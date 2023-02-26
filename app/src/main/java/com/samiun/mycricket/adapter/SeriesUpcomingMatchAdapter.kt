@@ -13,6 +13,7 @@ import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithrun.FixtureWithRunEntity
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.ui.series.SeriesDetailsFragmentDirections
+import com.samiun.mycricket.utils.Constants
 import com.samiun.mycricket.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.match_list.view.*
@@ -46,10 +47,11 @@ class SeriesUpcomingMatchAdapter(
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: SeriesUpcomingMatchViewHolder, position: Int) {
         val match = arrayList[position]
-        holder.notes.text = match.starting_at
+        holder.notes.text = match.starting_at?.let { Constants.upcomingtimeFormat(it) }
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val targetDate = dateFormat.parse(match.starting_at)
         holder.status.visibility = View.VISIBLE
+        holder.status.text = match.starting_at?.let { Constants.dateFormat(it) }
 
 
         holder.item.setOnClickListener {

@@ -1,4 +1,5 @@
 package com.samiun.mycricket.network.overview
+import FixtureAlarmReceiver
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -26,6 +27,7 @@ import com.samiun.mycricket.model.teamsquad.TeamSquadData
 import com.samiun.mycricket.model.venue.VenueEntity
 import com.samiun.mycricket.network.CricketApi
 import com.samiun.mycricket.utils.Constants
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -120,6 +122,10 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
     fun findFixturebyid(id: Int): FixtureWithRunEntity{
         return repository.readFixturewithRun(id)
+    }
+
+    fun fixtureById(id: Int): FixtureEntity{
+        return repository.readFixtureEntity(id)
     }
 
     fun findFixuteByLeague(id: Int): LiveData<List<FixtureWithRunEntity>>{
@@ -293,6 +299,15 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
 
     private fun addFixtureList(fixture: List<FixtureEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
+/*
+            for(match in fixture){
+                val fixtureAlarmReceiver = FixtureAlarmReceiver()
+                fixtureAlarmReceiver.scheduleFixtureAlarm(MyApplication.instance,match)
+                Log.d("Alarm VM ", "addFixtureList: ")
+            }
+
+*/
+
             repository.addFixtures(fixture)
             Log.d("FIXTURE", "FIXTURE: ${fixture.get(0).elected}")
         }

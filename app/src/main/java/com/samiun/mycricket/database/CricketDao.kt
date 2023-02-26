@@ -61,6 +61,9 @@ interface CricketDao {
     @Query("select * from Fixturerun where id = :id")
     fun readFixturewitnrun(id: Int): FixtureWithRunEntity
 
+    @Query("select * from Fixtures where id = :id")
+    fun readFixtureEntity(id: Int): FixtureEntity
+
     @Query("select * from Fixturerun where  league_id = :id order by starting_at desc")
     fun readFixtureByLeague(id: Int):LiveData <List<FixtureWithRunEntity>>
 
@@ -98,7 +101,7 @@ interface CricketDao {
     @Query("select * from players where id = :id")
     fun readPlayer(id: Int): PlayerEntity
 
-    @Query("delete from fixtures where starting_at >:time")
+    @Query("delete from fixtures where starting_at <:time")
     fun deleteStartedMatches(time: String)
 
 

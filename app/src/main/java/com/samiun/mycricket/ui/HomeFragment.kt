@@ -16,6 +16,7 @@ import com.samiun.mycricket.adapter.LiveMatchAdapter
 import com.samiun.mycricket.adapter.RecentMatchAdapter
 import com.samiun.mycricket.adapter.UpcomingMatchAdapter
 import com.samiun.mycricket.databinding.FragmentHomeBinding
+import com.samiun.mycricket.model.fixture.FixtureEntity
 import com.samiun.mycricket.model.fixturewithrun.Run
 import com.samiun.mycricket.network.overview.CricketViewModel
 import com.samiun.mycricket.utils.Constants
@@ -143,6 +144,11 @@ class HomeFragment : Fragment() {
         topviewModel.getLiveMatch()
 
     }
+    fun getFixtureByid(id: Int): FixtureEntity {
+      return  topviewModel.fixtureById(id)
+
+    }
+
 
 
 
