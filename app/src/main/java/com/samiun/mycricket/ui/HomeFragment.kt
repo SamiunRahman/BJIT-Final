@@ -132,10 +132,10 @@ class HomeFragment : Fragment() {
         }
     }
     fun getArticlesBackgroud() {
+        topviewModel.getTeams()
         topviewModel.getCountries()
         topviewModel.getLeagues()
         topviewModel.getFixtures()
-        topviewModel.getTeams()
         topviewModel.getFixturesWithRun()
         topviewModel.getRanking()
         topviewModel.getPlayers()

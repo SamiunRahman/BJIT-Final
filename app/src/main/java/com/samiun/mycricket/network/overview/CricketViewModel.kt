@@ -93,15 +93,12 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         readFixtureWithRunEntity = repository.readFixtureWithRunEntity
         readTeamEntity = repository.readTeamEntity
         readLeagues = repository.readLeagues
-
         readPlayerData = repository.readPlayerData
-        //readTeam = repository.readTeam(id)
     }
 
     fun getCountries(){
         viewModelScope.launch {
             try {
-               // Log.d("Overview Fragment", "getCountries: ")
                 _countries.value = CricketApi.retrofitService.getCountries(Constants.apikey).data
                 countries.value?.let { Log.d("Api", "getCountries: ${it.get(0).name}") }
 
@@ -383,23 +380,6 @@ class CricketViewModel(application: Application): AndroidViewModel(application){
         return liveScore
 
     }
-
-/*    fun getRuns(id:Int): LiveData<List<FixtureWithRunEntity>> {
-
-        viewModelScope.launch {
-            try {
-                Log.d("Runs By match", "Fixtuer: ")
-                _fixturewithrun.value = CricketApi.retrofitService.getRuns(id).data
-                _fixturewithrun.value?.let {
-                }
-                Log.e("get details Api", "${liveScore.value?.get(0)?.runs?.get(0)?.score}")
-
-            } catch (e: java.lang.Exception) {
-                Log.e("Cricket View Model Live Score By Match","$e")
-            }
-        }
-        return fixturewithrun
-    }*/
 
 
     fun getTeamDetails(id: Int): LiveData<TeamDetailsData?> {

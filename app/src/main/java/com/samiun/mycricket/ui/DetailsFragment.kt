@@ -19,6 +19,7 @@ import com.samiun.mycricket.adapter.DetailViewpagerAdapter
 import com.samiun.mycricket.databinding.FragmentDetailsBinding
 import com.samiun.mycricket.model.fixturewithdetails.FixtureWithDetailsData
 import com.samiun.mycricket.network.overview.CricketViewModel
+import com.samiun.mycricket.utils.MyApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -127,14 +128,14 @@ class DetailsFragment : Fragment() {
                     }
                 }
                 Glide
-                    .with(requireContext())
+                    .with(MyApplication.instance)
                     .load(hometeam.image_path)
                     .placeholder(R.drawable.image_downloading)
                     .error(R.drawable.not_found_image)
                     .into(binding.homeImage)
 
                 Glide
-                    .with(requireContext())
+                    .with(MyApplication.instance)
                     .load(awayteam.image_path)
                     .placeholder(R.drawable.image_downloading)
                     .error(R.drawable.not_found_image)

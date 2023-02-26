@@ -55,28 +55,9 @@ interface CricketApiService{
     @GET(LEAGUES_END_POINT)
     suspend fun getLeagues(): League
 
-
-
-
     @GET(TEAM_END_POINT)
     suspend fun getTeams(): Teams
 
-    @GET(UPCOMING_END_POINT)
-    suspend fun getUpcoming(): Fixture
-
-//    @GET("teams/{team_id}")
-//    suspend fun getTeamById(
-//        @Path("team_id") team_id: Int,
-//        @Query("api_token") api_token: String = API_TOKEN
-//    ): Teams
-    //https://cricket.sportmonks.com/api/v2.0/fixtures/:FIXTURE_ID?include=runs&api_token=FMRNjV3cC2q6xE31ya2oXBTizo4H1AMoYDXtPWszp62FBn6FMz7UAWXvaWWd
-
-    @GET("fixtures")
-    suspend fun getFixturewithRun(
-        @Query("fixture_id") fixture_id: Int,
-        @Query("api_token") apiToken: String,
-        @Query("include") runs: String
-    ): FixtureWithRun
 
 
     @GET("fixtures/{FIXTURE_ID}?include=batting,bowling,lineup,balls&${Constants.api_token1}")
@@ -92,18 +73,6 @@ interface CricketApiService{
     @GET("livescores?include=batting,bowling,lineup,balls,runs&${Constants.api_token1}")
     suspend fun getLiveMatches(
     ): LiveScore
-
-
-    //teams/10?include=fixtures,results,squad,country&api_token=Wy9K8UlUMHGRkfslTawlhRtVk3v47DIhh2VCgfPhfww0ox42CiJ5aECYEe7h
-
-
-//
-//    @GET("fixtures?filter[starts_between]={START_DATE},{END_DATE}&${Constants.api_token1}")
-//    suspend fun getFixture(
-//        @Query(value = "START_DATE", encoded = false) startDate: String,
-//        @Query(value = "END_DATE", encoded = false) endDate: String
-//
-//    ): Fixture
 
 
     @GET("fixtures?&${Constants.api_token1}")
